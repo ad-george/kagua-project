@@ -148,7 +148,7 @@ curl -X POST http://127.0.0.1:8000/analyze \
 
 ## 📖 Documentation
 
-- [Full Track B Documentation](docs/Track B Core API.docx)
+- [Full Track B Documentation](docs/TrackBCoreAPI.docx)
 - [Integration Checklist](INTEGRATION_CHECKLIST.md)
 - [API Contract](shared/contract.py)
 
@@ -159,7 +159,7 @@ curl -X POST http://127.0.0.1:8000/analyze \
 This is a collaborative project between two developers:
 
 - **Track A**: AI & Knowledge Service
-- **Track B**: Core API & Data Layer (you are here)
+- **Track B**: Core API & Data Layer
 
 Both tracks communicate through a strict JSON contract.
 
