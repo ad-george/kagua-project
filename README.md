@@ -148,7 +148,7 @@ curl -X POST http://127.0.0.1:8000/analyze \
 
 ## 📖 Documentation
 
-- [Full Track B Documentation](docs/track-b-documentation.md)
+- [Full Track B Documentation](docs/Track B Core API.docx)
 - [Integration Checklist](INTEGRATION_CHECKLIST.md)
 - [API Contract](shared/contract.py)
 
