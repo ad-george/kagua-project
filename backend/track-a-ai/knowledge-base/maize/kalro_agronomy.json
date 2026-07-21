@@ -1,0 +1,136 @@
+{
+  "id": "maize_kalro_agronomy_practices",
+  "crop": "Maize",
+  "topic": "Agronomic Practices",
+  "source": {
+    "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+    "document": "Maize TIMPs Volume 1",
+    "country": "Kenya",
+    "document_type": "Technical Guide",
+    "publication_year": "2019",
+    "url": "https://keep.kalro.org/appfiles/media/vc_files/MAIZE_TIMPS_Volume-1_for_Upload.pdf"
+  },
+  "verification_sources": [
+    {
+      "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+      "document": "Maize TIMPs Volume 1"
+    },
+    {
+      "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+      "document": "Maize Extension and Training Manual"
+    },
+    {
+      "organization": "Ministry of Agriculture and Livestock Development (KCEP-CRAL)",
+      "document": "Maize Extension and Training Manual"
+    },
+    {
+      "organization": "Food and Agriculture Organization (FAO)",
+      "document": "Save and Grow: Maize"
+    },
+    {
+      "organization": "CIMMYT",
+      "document": "Sustainable Intensification of Maize-Based Farming Systems"
+    }
+  ],
+  "document_summary": "Core operational manual covering early field preparation, moisture-driven planting timing, plant density competition mechanics, critical early weed-free windows, and sloping-land water conservation structures.",
+  "information_scope": [
+    "Land preparation timing and seedbed qualities",
+    "Moisture-driven planting parameters over calendar dates",
+    "Plant population dynamics and resource competition",
+    "Critical weed-free windows during early development",
+    "Soil and water conservation frameworks for sloped fields"
+  ],
+  "common_farmer_observations": [
+    "Maize seedlings emerging unevenly or in fragmented waves across the field.",
+    "Certain areas of the plot holding standing water while other sections dry out rapidly.",
+    "Weeds sprouting and establishing ahead of or right alongside the emerging maize seedlings.",
+    "Plants looking thin and spindly as they compete for sunlight because they are spaced too closely.",
+    "Large patches of bare ground left in the field where seeds failed to sprout or establish.",
+    "Topsoil and water visibly washing down sloping fields after heavy downpours.",
+    "The soil surface forming a hard, crusted layer after intense rainstorms."
+  ],
+  "clarifying_questions": [
+    "Was your land fully cleared and prepared well before the actual start of the seasonal rains?",
+    "Did you plant your seeds promptly after the first effective, deep-soaking rainfall?",
+    "Is your field flat, gently rolling, or on a steep hill?",
+    "Does your soil let water drain away naturally, or does it tend to puddle and waterlog?",
+    "Are weeds popping up ahead of your maize seedlings or coming up later?",
+    "Are you growing your maize as a single, pure crop or intercropping it with other plants?",
+    "Is your farm located in a highland, medium altitude, dryland, or coastal farming zone?",
+    "Have you noticed soil wash or erosion problems during previous rainy seasons?"
+  ],
+  "context_factors": [
+    "Planting timing should be guided by effective, deep soil moisture rather than fixed calendar dates.",
+    "Optimal plant spacing changes by agroecological zone based on regional rainfall and yield potential.",
+    "Plant density directly shapes how heavily crops compete for water, soil nutrients, and sunlight.",
+    "Weed competition during the first few weeks of growth has the biggest impact on final maize yields.",
+    "The choice of tillage system must balance local soil conditions, rainfall patterns, and conservation goals.",
+    "Field slope, soil texture, and rainfall intensity together determine the local risk of soil erosion.",
+    "Conservation structures should be chosen to match the specific demands of the local environment."
+  ],
+  "why_information_may_differ": [
+    "Ideal spacing setups vary significantly between high-rainfall, medium-rainfall, and dry semi-arid regions.",
+    "Conventional plowing, minimum tillage, and zero-till conservation agriculture each offer distinct pros and cons depending on the farm.",
+    "The best soil conservation structures change based on the steepness of the slope, rainfall habits, and soil type.",
+    "Planting timelines vary because the start, reliability, and length of seasonal rains differ by region."
+  ],
+  "trusted_learning_points": [
+    "Complete land preparation before the rains begin so you can plant on time once effective soil moisture arrives.",
+    "Maintain uniform plant spacing to give every seedling equal access to sunlight, water, and nutrients.",
+    "Keep plant populations within recommended regional limits to avoid overcrowding and resource competition.",
+    "Focus your main weed management efforts on the critical first few weeks after crop emergence.",
+    "Leave crop residues, use cover crops, and minimize plowing to build soil health in conservation systems.",
+    "Use contour farming, terracing, and grass filter strips to slow down runoff and stop erosion on sloping land.",
+    "Build up soil organic matter continuously to improve water infiltration and support healthy crop growth.",
+    "Combine different soil and water conservation practices to fit the specific needs of your terrain."
+  ],
+  "possible_conflicting_information": [
+    "Conventional plowing is effective for clearing early weeds and loosening seedbeds, whereas conservation agriculture relies on minimal soil disturbance to preserve long-term soil structure. Similarly, leaving crop residues on the surface helps hold soil moisture and stop erosion, but if residue-borne diseases are active in the area, adjustments may be needed. Higher plant populations can boost yields when rain is abundant but can worsen crop failure during a drought."
+  ],
+  "when_more_information_is_needed": [
+    "When looking for the precise plant spacing configuration recommended for your specific agroecological zone.",
+    "When weighing whether to stick with conventional plowing or transition to a conservation tillage setup.",
+    "When designing and building physical soil conservation barriers on steeply sloped land.",
+    "When troubleshooting poor or uneven seedling emergence caused by soil crusting or drainage blocks.",
+    "When interpreting laboratory soil test results to improve long-term soil structure and health."
+  ],
+  "continue_learning": [
+    "Study how local rainfall variations shape successful planting decisions from season to season.",
+    "Learn how plant density adjustments help manage moisture risks in dry regions.",
+    "Explore how different tillage approaches change the water-holding capacity of your soil."
+  ],
+  "uncertainties": [
+    "The ideal planting date shifts every season because the start of the rains is inherently unpredictable.",
+    "No single plowing or tillage approach is a perfect fit for every type of soil and farming system.",
+    "Recommended spacing dimensions can change over time as local agricultural offices update their guides.",
+    "How well soil conservation structures work depends on regular maintenance and unpredictable rain intensity."
+  ],
+  "related_topics": [
+    "Soil fertility",
+    "Soil testing",
+    "Land preparation",
+    "Planting",
+    "Rainfall",
+    "Crop rotation",
+    "Weed management"
+  ],
+  "agronomic_principles": [
+    "Sowing windows must be driven by soil moisture thresholds rather than arbitrary calendar dates.",
+    "Yield optimization requires balancing plant populations against the moisture limits of the local climate.",
+    "Early-stage weed management protects crops during their most vulnerable phase of growth."
+  ],
+  "major_pests": [],
+  "major_diseases": [],
+  "knowledge_notes": {
+    "fertilizer_rates_removed": true,
+    "chemical_weed_control_removed": true,
+    "product_names_removed": true,
+    "focus": "Understanding why agronomic practices differ between locations rather than prescribing fixed recommendations."
+  },
+  "safety_filters": {
+    "chemical_recommendations_removed": true,
+    "product_names_removed": true,
+    "fertilizer_rates_removed": true,
+    "dosages_removed": true
+  }
+}

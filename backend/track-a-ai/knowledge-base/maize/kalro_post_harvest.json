@@ -1,0 +1,159 @@
+{
+  "id": "maize_harvest_post_harvest_handling",
+  "crop": "Maize",
+  "topic": "Harvesting, Post-Harvest Handling, Storage and Grain Quality",
+  "source": {
+    "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+    "document": "Maize TIMPs Volume 1",
+    "country": "Kenya",
+    "document_type": "Technical Manual",
+    "publication_year": "2019",
+    "url": "https://keep.kalro.org/appfiles/media/vc_files/MAIZE_TIMPS_Volume-1_for_Upload.pdf"
+  },
+  "verification_sources": [
+    {
+      "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+      "document": "Maize TIMPs Volume 1"
+    },
+    {
+      "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+      "document": "Maize Extension and Training Manual"
+    },
+    {
+      "organization": "Ministry of Agriculture and Livestock Development (KCEP-CRAL)",
+      "document": "Maize Extension and Training Manual"
+    },
+    {
+      "organization": "Food and Agriculture Organization (FAO)",
+      "document": "Post-Harvest Management and Safe Grain Storage Guidance"
+    },
+    {
+      "organization": "Plantwise (CABI)",
+      "document": "Post-Harvest Management Knowledge Bank Resources"
+    },
+    {
+      "organization": "Kenya Plant Health Inspectorate Service (KEPHIS)",
+      "document": "Seed and Grain Quality Guidance"
+    }
+  ],
+  "document_summary": "Post-harvest protocol book focusing on physiological maturity indicators, proper open-air drying, pallet stacking guidelines, and grading metrics used across commercial markets.",
+  "information_scope": [
+    "Maturity tracking and optimal harvest timing",
+    "Drying systems and safe moisture testing concepts",
+    "Storage structure organization and stack hygiene",
+    "Grain quality indicators and market classification principles"
+  ],
+  "common_farmer_observations": [
+    "The protective outer husks on the cobs gradually turning brown, dry, and papery.",
+    "Individual grains becoming hard and resisting denting when pressed with a fingernail.",
+    "Heavy cobs drooping visibly downward on the stalk as they reach full maturity.",
+    "Grains cracking, splintering, or breaking easily during shelling if they are excessively dry.",
+    "Fuzzy mold developing quickly on grain that was bagged and stored before drying enough.",
+    "Moisture beads, musty smells, or insect movement appearing inside stored bags over time.",
+    "Certain bags spoiling significantly faster than others due to hidden differences in moisture."
+  ],
+  "clarifying_questions": [
+    "Did you wait to harvest until after the crop reached full physiological maturity markers?",
+    "Was the mature crop exposed to extended rainfall while still standing out in the field?",
+    "Was the shelled grain dried down thoroughly before being moved into long-term storage?",
+    "Did you dry your grain on clean tarpaulins to prevent direct contact with bare soil?",
+    "Is your storage facility completely dry, swept clean, and well-protected from moisture?",
+    "Are your grain bags stacked up off the floor on pallets and positioned away from the walls?",
+    "Do you routinely check your stored grain for insect activity, rodents, mold, or hot spots?",
+    "Have you mixed leftover grain from old harvests into your newly bagged maize?"
+  ],
+  "context_factors": [
+    "When you time your harvest has a massive effect on final grain quality and safe storage life.",
+    "Unseasonal rain during the harvest window introduces major drying challenges and spoilage risks.",
+    "Storing grain with high internal moisture guarantees mold growth and invites storage pests.",
+    "Rough handling or aggressive mechanical shelling cracks kernels, increasing storage losses.",
+    "Poor air circulation inside the store causes humidity to build up around the bags.",
+    "Good storage hygiene directly reduces the survival of resident insects and fungal spores.",
+    "Rodents and birds cause direct weight losses and contaminate grain with droppings."
+  ],
+  "why_information_may_differ": [
+    "The time needed to dry grain varies widely with local weather, ambient humidity, and drying methods.",
+    "Traditional cribs and modern sealed storage setups provide different levels of pest protection.",
+    "Recommended storage setups shift based on local climate conditions and available tools.",
+    "A clean external look is not enough to prove that grain is safe or dry on the inside."
+  ],
+  "trusted_learning_points": [
+    "Harvest your crop at the correct maturity stage to protect baseline grain quality.",
+    "Continue the drying process until the grain reaches a verified safe moisture level for storage.",
+    "Use calibrated moisture meters for reliable dryness checks; traditional testing gives only rough guesses.",
+    "Clean storage spaces thoroughly before loading to reduce insect and fungal risks.",
+    "Use hermetic storage technologies correctly to cut off the oxygen supply that pests need to survive.",
+    "Set up a regular inspection schedule to catch moisture build-up, insects, or mold early.",
+    "Keep grain consistently dry throughout storage to protect quality and secure food safety.",
+    "Remember that final grain quality depends on care across the entire post-harvest chain."
+  ],
+  "grain_quality_concepts": {
+    "quality_indicators": [
+      "Clean, well-sorted grain with minimal chaff, stones, or foreign material.",
+      "Plump, fully-formed, and completely mature kernels.",
+      "Minimal signs of insect chewing or weevil exit holes.",
+      "No visible fungal mold growth or dark discoloration on the kernels.",
+      "Good uniformity in kernel type, color, and size.",
+      "A stable, verified safe internal moisture content."
+    ],
+    "learning_points": [
+      "Official grading systems evaluate grain quality using a combination of visual and physical traits.",
+      "Different commercial buyers or regulatory agencies use tailored grading specifications based on end use.",
+      "Commercial grain quality grading and essential biological food safety are related but separate concepts."
+    ]
+  },
+  "possible_conflicting_information": [
+    "Traditional practices like biting kernels or shaking bags provide helpful hints but cannot accurately measure internal moisture. Grain that feels dry on the outside can still hold high moisture inside. The absence of visible insects or mold is no guarantee against hidden infestations or mycotoxins."
+  ],
+  "when_more_information_is_needed": [
+    "When confirming exact grain moisture levels before locking up stocks for long-term storage.",
+    "When checking if a batch of moldy grain can be safely diverted for specific animal uses.",
+    "When choosing which storage bag or silo technology fits your local climate best.",
+    "When translating official market grading rules to prepare grain for commercial sales.",
+    "When tracking down the cause of unexpected grain spoilage despite following standard storage rules."
+  ],
+  "continue_learning": [
+    "Learn to separate the markers for physiological field maturity from safe storage dryness.",
+    "Study how grain moisture levels interact with ambient temperature to drive or stop pest activity.",
+    "Explore how hermetic systems function differently from conventional woven storage bags."
+  ],
+  "uncertainties": [
+    "Visual and touch checks alone cannot reliably confirm internal moisture or food safety.",
+    "Total drying time changes constantly depending on daily sunshine and humidity shifts.",
+    "How well any storage setup performs depends heavily on daily upkeep and proper use.",
+    "Confirming certain quality and safety standards requires specialized laboratory analysis."
+  ],
+  "related_topics": [
+    "Grain maturity",
+    "Grain quality",
+    "Drying",
+    "Storage",
+    "Post-harvest handling",
+    "Food safety"
+  ],
+  "agronomic_principles": [
+    "Post-harvest quality preservation is a cumulative process requiring continuous care from field to kitchen.",
+    "Internal moisture thresholds determine the biological stability of stored grain organisms.",
+    "Objective, tool-based validation outperforms traditional sensory estimates for quality monitoring."
+  ],
+  "major_pests": [
+    "Lesser Grain Weevil",
+    "Larger Grain Borer",
+    "Maize Weevil"
+  ],
+  "major_diseases": [
+    "Ear Rot (Fusarium and Aspergillus)"
+  ],
+  "knowledge_notes": {
+    "grade_thresholds_removed": true,
+    "exact_moisture_threshold_tables_removed": true,
+    "operational_storage_spec specifications_simplified": true,
+    "focus": "Help farmers understand the principles behind good harvesting, drying, storage and grain quality rather than memorizing numerical standards."
+  },
+  "safety_filters": {
+    "chemical_recommendations_removed": true,
+    "product_names_removed": true,
+    "fertilizer_rates_removed": true,
+    "dosages_removed": true
+  }
+}

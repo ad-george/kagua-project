@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ── Card shell ── */
+.summary-card {
+  background: #FFFFFF;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 16px;
+  padding: 28px 24px;
+  font-family: 'Inter', system-ui, sans-serif;
+  margin-bottom: 24px;
+}
+
+/* ── Card title ── */
+.summary-card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1E3A5F;
+  margin: 0 0 20px;
+  letter-spacing: -0.01em;
+}
+
+/* ── Field rows ── */
+.summary-card-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.summary-card-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.summary-card-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6B7280;
+}
+
+.summary-card-value {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1F2937;
+  line-height: 1.4;
+}
+
+/* ── Audio player row ── */
+.summary-card-audio {
+  margin-bottom: 20px;
+}
+
+/* ── Divider ── */
+.summary-card-divider {
+  height: 1px;
+  background-color: #F3F4F6;
+  margin: 0 0 20px;
+}
+
+/* ── Checklist section ── */
+.summary-card-checklist-heading {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #6B7280;
+  margin: 0 0 12px;
+}
+
+.summary-card-checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ── Each checklist item ── */
+.summary-card-check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.93rem;
+  color: #374151;
+  line-height: 1.5;
+}
+
+/* The circular tick icon — CSS only, no emoji */
+.summary-card-check-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #27AE60;
+  position: relative;
+  margin-top: 2px;
+}
+
+.summary-card-check-icon::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 3px;
+  width: 5px;
+  height: 8px;
+  border: 2px solid #FFFFFF;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+/* ── Warning item variant ── */
+.summary-card-check-item--warning {
+  color: #92400E;
+}
+
+.summary-card-warn-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #F59E0B;
+  position: relative;
+  margin-top: 2px;
+}
+
+/* Exclamation mark */
+.summary-card-warn-icon::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 3px;
+  width: 2px;
+  height: 6px;
+  background: #FFFFFF;
+  border-radius: 1px;
+}
+
+.summary-card-warn-icon::after {
+  content: '';
+  position: absolute;
+  left: 7px;
+  bottom: 3px;
+  width: 2px;
+  height: 2px;
+  background: #FFFFFF;
+  border-radius: 50%;
+}

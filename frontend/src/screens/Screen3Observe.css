@@ -1,0 +1,280 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body {
+  background-color: #F8FAFC;
+  margin: 0;
+}
+
+/* ── Container ── */
+.screen3-container {
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 20px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* ── Brand ── */
+.screen3-brand {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #2E86C1;
+  margin: 0 0 20px;
+}
+
+/* ── Title ── */
+.screen3-title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #1F2937;
+  line-height: 1.25;
+  margin: 0 0 10px;
+}
+
+/* ── Subtitle ── */
+.screen3-subtitle {
+  font-size: 1rem;
+  color: #6B7280;
+  line-height: 1.6;
+  margin: 0 0 28px;
+}
+
+/* ── Options list ── */
+.screen3-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+/* ── Each option card ── */
+.screen3-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #FFFFFF;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 10px;
+  padding: 14px 16px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #1F2937;
+  font-weight: 500;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.screen3-option:hover {
+  border-color: #2E86C1;
+  background-color: #F0F7FF;
+}
+
+.screen3-option--selected {
+  border-color: #2E86C1;
+  background-color: #EFF6FF;
+  color: #1E3A5F;
+}
+
+/* Hide native checkbox */
+.screen3-checkbox-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Custom checkbox */
+.screen3-checkbox {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #D1D5DB;
+  border-radius: 5px;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.screen3-option--selected .screen3-checkbox {
+  border-color: #2E86C1;
+  background-color: #2E86C1;
+}
+
+.screen3-checkbox-tick {
+  color: #FFFFFF;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* ── Other observation section ── */
+.screen3-other {
+  margin-bottom: 24px;
+}
+
+.screen3-other-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1F2937;
+  margin: 0 0 12px;
+}
+
+.screen3-other-voice {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* or divider */
+.screen3-other-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+  color: #9CA3AF;
+  font-size: 0.85rem;
+}
+
+.screen3-other-divider::before,
+.screen3-other-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #E5E7EB;
+}
+
+/* Type instead button */
+.screen3-type-btn {
+  background: #FFFFFF;
+  border: 1.5px solid #D1D5DB;
+  color: #1E3A5F;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 14px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.screen3-type-btn:hover {
+  border-color: #2E86C1;
+  background-color: #F0F7FF;
+}
+
+/* Text mode input card */
+.screen3-other-input-card {
+  background: #FFFFFF;
+  border: 1.5px solid #D1D5DB;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.screen3-other-input-card:focus-within {
+  border-color: #2E86C1;
+  box-shadow: 0 0 0 3px rgba(46, 134, 193, 0.12);
+}
+
+.screen3-voice-switch-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  background: #F8FAFC;
+  border: none;
+  color: #2E86C1;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 10px 16px;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.screen3-voice-switch-btn:hover {
+  background-color: #EFF6FF;
+}
+
+.screen3-other-input-divider {
+  height: 1px;
+  background: #E5E7EB;
+}
+
+.screen3-other-input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: #1F2937;
+  background: #FFFFFF;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.screen3-other-input::placeholder {
+  color: #9CA3AF;
+}
+
+/* ── Continue button ── */
+.screen3-continue-btn {
+  background-color: #1E3A5F;
+  color: #FFFFFF;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 16px 24px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  letter-spacing: 0.01em;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.screen3-continue-btn:hover:not(:disabled) {
+  background-color: #2E86C1;
+}
+
+.screen3-continue-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.screen3-continue-btn:disabled {
+  background-color: #D1D5DB;
+  color: #9CA3AF;
+  cursor: not-allowed;
+}
+
+/* ── Responsive ── */
+@media (min-width: 640px) {
+  .screen3-container {
+    padding: 56px 32px 48px;
+  }
+
+  .screen3-title {
+    font-size: 2.1rem;
+  }
+}
+
+@media (max-width: 359px) {
+  .screen3-title {
+    font-size: 1.65rem;
+  }
+}

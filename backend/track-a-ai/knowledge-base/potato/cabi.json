@@ -1,0 +1,104 @@
+{
+  "id": "potato_cabi_pest_disease_management",
+  "crop": "Potato",
+  "topic": "Integrated Pest and Disease Management",
+  "source": {
+    "organization": "Plantwise (CABI)",
+    "document": "Pest Management Decision Guides & Knowledge Bank Records",
+    "country": "Kenya",
+    "document_type": "Pest Management Guide",
+    "publication_year": "2020",
+    "url": "https://www.cabi.org/projects/surveillance-of-potato-diseases-in-kenya/"
+  },
+  "verification_sources": [
+    {
+      "organization": "Plantwise (CABI)",
+      "document": "Plantwise Knowledge Bank and Pest Management Decision Guides"
+    }
+  ],
+  "document_summary": "A specialized, non-chemical pest and pathogen management sheet providing ecological tracking indices, vector-pathogen linkages, and biosecurity sanitation rules to break pest lifecycles without synthetic intervention.",
+  "information_scope": [
+    "Aphid vector populations and virus transmission dynamics",
+    "Bacterial wilt tracking via physical water suspension tests",
+    "Moth tracking and tunneling symptoms in field and storage spaces",
+    "Sanitation of field tool vectors to eliminate mechanical disease spread",
+    "Natural bio-fumigation mechanisms using non-host green manure"
+  ],
+  "common_farmer_observations": [
+    "Leaf margins rolling steadily upwards, curling inward, or developing severe mosaic mottling patterns.",
+    "High ant activity running up and down potato stems, pointing to hidden colonies of sticky, honeydew-producing insects.",
+    "Fine, irregular mines or dark internal tunnels packed with dry insect waste inside leaf layers, stems, or harvested tubers.",
+    "Potato plants wilting completely and uniformly during the warmth of the afternoon despite the soil being perfectly damp.",
+    "A milky, stringy stream of white threads emerging slowly when a cut infected stem is suspended inside clean water.",
+    "Tiny, soft-bodied insect colonies tightly crowding the lower surfaces of young foliage, causing leaves to cup or distort."
+  ],
+  "clarifying_questions": [
+    "Are your potato leaves curling inward while the plant looks rigid and erect, or is the entire plant dropping flat despite damp soil?",
+    "When you cut across a wilting stem and hold it still in a clear glass of water, do you see white, thread-like streams leaking out?",
+    "Can you find tiny tunnels packed with dark dust inside the leaves, or are the skins of your stored tubers showing clean bored holes?"
+  ],
+  "context_factors": [
+    "Warmer, lower-altitude environments accelerate aphid breeding cycles and escalate the speed of viral disease spread.",
+    "Alternative solanaceous weeds, volunteer potatoes, or historical tomato residues serve as permanent green bridges for viruses and bacteria between seasons.",
+    "Runoff water moving down from an uphill field can carry water-borne pathogens directly into down-slope clean plots."
+  ],
+  "why_information_may_differ": [
+    "The presence, movement, and intensity of insect vectors vary wildly across distinct altitude bands and localized wind corridors.",
+    "Insecticides fail to stop certain fast-spreading viruses because vectors infect the leaf tissue during quick, exploratory feeding before a chemical can kill them.",
+    "The efficacy of homemade botanical extracts shifts depending on seasonal oil concentrations and extraction methods."
+  ],
+  "trusted_learning_points": [
+    "Understand that aphid monitoring with yellow water traps is vital because they transmit hidden viruses, even when their direct feeding damage looks minor.",
+    "Never cut seed potatoes into pieces with un-sanitized knives; planting whole tubers completely prevents the mechanical spread of internal viroids.",
+    "Clean and thoroughly disinfect all tools, crates, boots, and machinery when transitioning between distinct field boundaries.",
+    "Utilize natural bio-fumigation by plowing under specific green crops (like fresh mustard or radish) into wet soil well before planting to suppress subsurface pests.",
+    "Incorporate homemade physical protections, such as placing protective cardboard collars around young emerging stems, to block boring caterpillars.",
+    "Handpick and safely destroy visible pests, egg masses, or sluggish vectors during regular early-morning field walk-throughs."
+  ],
+  "possible_conflicting_information": [
+    "Standard industrial guides detail intense chemical spraying schedules for vectors, whereas integrated biological systems prioritize habitat disruption, trap cropping, and conservation of local predatory insects."
+  ],
+  "when_more_information_is_needed": [
+    "When field scouting captures highly unusual, aggressive insect vector migrations that overwhelm basic companion cropping defenses.",
+    "When seeking local clearance on officially approved biological control agents like predatory wasps or specialized fungal pathogens."
+  ],
+  "continue_learning": [
+    "Explore interactive Plantwise Knowledge Bank portals to study diagnostic imagery of viral transmission vectors and biological management tactics."
+  ],
+  "uncertainties": [
+    "The precise transmission parameters of persistent bacteria through secondary weed hosts along non-cultivated field boundaries.",
+    "The performance longevity of traditional botanical mixtures under highly erratic seasonal rainfall patterns."
+  ],
+  "related_topics": [
+    "Field Scouting and Disease Monitoring",
+    "Integrated Pest Management (IPM)",
+    "Rogueing and Field Sanitation"
+  ],
+  "agronomic_principles": [
+    "Vector management relies on breaking the transmission link before exploratory feeding occurs on young crop canopies.",
+    "Tool hygiene acts as a primary barrier against the unmitigated mechanical transmission of vascular bacteria.",
+    "Managing the field perimeter is as critical as managing the crop matrix to eliminate biological green bridges."
+  ],
+  "major_pests": [
+    "Potato Tuber Moth (Phthorimaea operculella)",
+    "Aphids (Green Peach Aphid, Potato Aphid)",
+    "Red Spider Mites"
+  ],
+  "major_diseases": [
+    "Bacterial Wilt (Ralstonia solanacearum)",
+    "Potato Virus Y (PVY)",
+    "Potato Leafroll Virus (PLRV)"
+  ],
+  "knowledge_notes": {
+    "focus": "Help farmers understand principles rather than memorize procedures.",
+    "prescriptions_removed": true,
+    "numeric_thresholds_removed": true,
+    "chemical_recommendations_removed": true
+  },
+  "safety_filters": {
+    "chemical_recommendations_removed": true,
+    "product_names_removed": true,
+    "fertilizer_rates_removed": true,
+    "dosages_removed": true
+  }
+}

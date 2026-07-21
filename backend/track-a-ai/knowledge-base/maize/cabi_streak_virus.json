@@ -1,0 +1,117 @@
+{
+  "id": "maize_cabi_maize_streak_virus",
+  "crop": "Maize",
+  "topic": "Viral Diseases and Insect Vectors (Maize Streak Virus)",
+  "source": {
+    "organization": "Plantwise (CABI)",
+    "document": "Pest Management Decision Guide: Maize Streak Virus in Maize",
+    "country": "Kenya",
+    "document_type": "Pest Management Guide",
+    "publication_year": "2020",
+    "url": "https://plantwiseplusknowledgebank.org/action/doSearch?AllField=Viral+Diseases+and+Insect+Vectors+%28Maize+Streak+Virus%29&target=articles-chapters&content=articlesChapters&SeriesKey=plantwise"
+  },
+  "verification_sources": [
+    {
+      "organization": "Plantwise (CABI)",
+      "document": "Pest Management Decision Guide: Maize Streak Virus in Maize"
+    },
+    {
+      "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+      "document": "Maize TIMPs Volume 1"
+    },
+    {
+      "organization": "Ministry of Agriculture and Livestock Development (KCEP-CRAL)",
+      "document": "Maize Extension and Training Manual"
+    }
+  ],
+  "document_summary": "Technical guide outlining the non-curable nature of Maize Streak Virus, vector-host tracking mechanics, grass weed reservoirs, and the vital role of early-stage plant protection.",
+  "information_scope": [
+    "Planting timelines and crop establishment vulnerabilities",
+    "Insect vector identification and feeding behavior tracking",
+    "Weed boundary management and alternative host reservoirs",
+    "Certified seed utilization and viral resistance profiles"
+  ],
+  "common_farmer_observations": [
+    "Small, pale green, yellow, or white spots developing distinctly on young emerging leaves.",
+    "Broken, narrow yellow or white streaks running continuously parallel to the leaf veins.",
+    "Maize foliage developing a highly characteristic uniformly streaked or striped appearance.",
+    "Severe stunting of the maize plant accompanied by a sharp loss of overall vigor.",
+    "Forming small, misshapen, or poorly filled cobs when infection occurs during early growth.",
+    "Tiny leafhopper insects observed jumping or moving rapidly when the plant canopy is disturbed."
+  ],
+  "clarifying_questions": [
+    "Did the narrow streaks first show up on the newly emerging young leaves or older mature foliage?",
+    "Are the streaks uniformly narrow and parallel to the veins, or are they wide, irregular blotches?",
+    "Did you notice these symptoms appearing while the maize plant was still in its initial vegetative stages?",
+    "Can you see small, active leafhoppers present on the maize leaves or among nearby grasses?",
+    "Are wild grassy weeds or volunteer cereal plants growing unchecked within or directly around the field margins?"
+  ],
+  "context_factors": [
+    "Young, establishing maize seedlings are exponentially more vulnerable to severe viral damage than older, mature plants.",
+    "Leafhopper insects serve as the exclusive transmission vectors, moving the virus mechanically from infected hosts to healthy crops.",
+    "Volunteer crops and surrounding wild grass species act as permanent, destructive reservoirs for both the virus and its vectors.",
+    "Delayed planting timelines often directly expose emerging crops to peak migratory leafhopper populations.",
+    "Vector abundance changes dramatically based on seasonal moisture, geography, and surrounding wild vegetation types."
+  ],
+  "why_information_may_differ": [
+    "The ultimate impact on yield depends entirely on the specific growth stage at which the plant is inoculated.",
+    "Leafhopper pressure fluctuates violently between distinct agroecological zones and seasonal transitions.",
+    "Different seed varieties display widely divergent baseline tolerances or structural resistance to viral expressions."
+  ],
+  "trusted_learning_points": [
+    "Understand that Maize Streak Virus is a viral condition and cannot be cured or reversed once a plant becomes infected.",
+    "Recognize that the virus spreads solely via leafhopper feeding action rather than through casual plant-to-plant contact.",
+    "Prioritize protective measures during early growth, as early-stage infection causes the most severe yield losses.",
+    "Implement strict field sanitation, timely regional planting calendars, and rigorous management of alternative host grasses.",
+    "Utilize verified certified seed and resistant or tolerant varieties to significantly mitigate field risks."
+  ],
+  "possible_conflicting_information": [
+    "Some historical local guides suggest prioritizing immediate rogueing of infected plants, while advanced integrated frameworks focus heavily on controlling the vector populations and destroying wild grass reservoirs.",
+    "The optimal planting date window varies by agroecological zone because seasonal leafhopper breeding cycles respond to distinct local climates."
+  ],
+  "when_more_information_is_needed": [
+    "When trying to distinguish Maize Streak Virus streaks from nutrient deficiencies or complex conditions like Maize Lethal Necrosis.",
+    "When identifying the specific leafhopper species active in a particular locality to map out migration behaviors.",
+    "When confirming if a newly introduced hybrid seed line carries verified genetic resistance to local virus strains."
+  ],
+  "continue_learning": [
+    "Learn to accurately separate viral streaking from cold-induced patterns or localized nutrient shortages.",
+    "Study how the management of wild perennial grasses around field perimeters changes vector pressure."
+  ],
+  "uncertainties": [
+    "Visual symptoms can easily overlap with other emerging viral combinations under field conditions.",
+    "Predicting exact seasonal leafhopper population spikes remains difficult due to localized weather variability.",
+    "The structural performance of resistant seed varieties can vary if local virus strains adapt or diversify."
+  ],
+  "related_topics": [
+    "Leafhoppers",
+    "Certified seed",
+    "Field scouting",
+    "Resistant varieties",
+    "Early planting"
+  ],
+  "agronomic_principles": [
+    "Vector-borne viral management relies heavily on pathogeometric exclusion and managing alternative wild hosts.",
+    "Crop vulnerability to permanent systemic disruption is inversely proportional to plant maturity at the time of vector exposure.",
+    "Field boundaries act as active biological exchange zones that directly influence internal crop safety."
+  ],
+  "major_pests": [
+    "Leafhoppers"
+  ],
+  "major_diseases": [
+    "Maize Streak Virus",
+    "Maize Lethal Necrosis (MLN)"
+  ],
+  "knowledge_notes": {
+    "focus": "Help farmers understand principles rather than memorize procedures.",
+    "prescriptions_removed": true,
+    "numeric_thresholds_removed": true,
+    "chemical_recommendations_removed": true
+  },
+  "safety_filters": {
+    "chemical_recommendations_removed": true,
+    "product_names_removed": true,
+    "fertilizer_rates_removed": true,
+    "dosages_removed": true
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "id": "maize_lesser_grain_weevil",
+  "crop": "Maize",
+  "topic": "Storage Pests (Lesser Grain Weevil)",
+  "source": {
+    "organization": "Plantwise (CABI)",
+    "document": "Post-Harvest Decision Guide: Lesser Grain Weevil in Stored Maize",
+    "country": "Kenya",
+    "document_type": "Post-Harvest Guide",
+    "publication_year": "2020",
+    "url": "https://plantwiseplusknowledgebank.org/action/doSearch?AllField=Storage+Pests+%28Lesser+Grain+Weevil%29&SeriesKey=plantwise"
+  },
+  "verification_sources": [
+    {
+      "organization": "Plantwise (CABI)",
+      "document": "Post-Harvest Decision Guide: Lesser Grain Weevil in Stored Maize"
+    },
+    {
+      "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+      "document": "Maize TIMPs Volume 1"
+    },
+    {
+      "organization": "Ministry of Agriculture and Livestock Development (KCEP-CRAL)",
+      "document": "Maize Extension and Training Manual"
+    },
+    {
+      "organization": "Food and Agriculture Organization (FAO)",
+      "document": "Safe Grain Storage and Post-Harvest Management Guidance"
+    }
+  ],
+  "document_summary": "Post-harvest protection blueprint focused on moisture control, pre-storage cleaning, kernel integrity, and oxygen exclusion mechanisms inside hermetic storage systems.",
+  "information_scope": [
+    "Harvest execution and post-harvest drying timelines",
+    "Storage structure sanitation and residue exclusion",
+    "Internal vs. external grain insect lifecycle monitoring",
+    "Hermetic storage and environmental sealing technologies"
+  ],
+  "common_farmer_observations": [
+    "Small dark brown weevils actively moving inside storage containers, cribs, or grain bags.",
+    "Small, neat round exit holes bored directly through stored maize kernels.",
+    "Fine grain dust or whitish powder accumulating in noticeable piles beneath stored grain structures.",
+    "Kernels feeling completely hollow or remarkably lightweight after shelling operations.",
+    "Noticing an increasing number of active insects every time the stored grain is checked.",
+    "A clear drop in seed germination success when heavily damaged grain is selected and planted."
+  ],
+  "clarifying_questions": [
+    "Was the maize dried down thoroughly before being moved into long-term storage?",
+    "Was the entire storage structure swept, cleaned, and cleared before loading the new harvest?",
+    "Are you finding live, active insects crawling inside the center of the grain bulk?",
+    "Is the insect damage concentrated in a few poorly dried bags or distributed through the whole store?",
+    "Can you spot any signs of high moisture, damp walls, musty odors, or roof leaks inside the facility?",
+    "Have residues or leftover grain from previous harvests been mixed into the newly harvested maize?"
+  ],
+  "context_factors": [
+    "Warm storage temperatures accelerate insect lifecycles and cause rapid population explosions.",
+    "Incompletely dried grain creates an ideal environment for storage pests and rapid mold outbreaks.",
+    "Old grain residues left in corners or old sacks provide an immediate source of infestation for new grain.",
+    "Poor storage sanitation allows pest populations to survive easily between harvest seasons.",
+    "Cracked, broken, or mechanically damaged kernels are significantly easier for pests to attack than intact grain.",
+    "Good ventilation combined with active moisture exclusion maintains stable post-harvest quality."
+  ],
+  "why_information_may_differ": [
+    "The speed of infestation depends entirely on grain moisture content, ambient storage temperature, and storage duration.",
+    "Different storage technologies offer varying levels of protection against physical insect penetration.",
+    "Damage can seem minor early on but can escalate rapidly if internal reproduction goes unnoticed."
+  ],
+  "trusted_learning_points": [
+    "Prioritize thorough drying before storage to reduce the risk of insect survival and reproduction.",
+    "Clean storage facilities completely and remove all old grain debris before introducing a new harvest.",
+    "Perform regular inspections to detect hidden storage problems before severe internal grain damage develops.",
+    "Keep storage structures clean, dry, and well-maintained to protect long-term grain quality.",
+    "Sort and separate damaged or infested grain from clean stocks to slow the spread of pests.",
+    "Utilize hermetic storage technologies properly to eliminate the oxygen that storage pests need to survive."
+  ],
+  "possible_conflicting_information": [
+    "Maize that looks perfectly clean on the outside can easily hide developing insect larvae inside the kernels. Similarly, traditional storage cribs work well in dry regions if properly maintained, but hermetic systems offer superior protection by creating an oxygen-depleted environment."
+  ],
+  "when_more_information_is_needed": [
+    "When trying to differentiate Lesser Grain Weevil damage from Larger Grain Borer or Maize Weevil tunnels.",
+    "When testing if grain moisture levels are low enough for safe, multi-month storage without meters.",
+    "When assessing if hermetic bag sealing protocols match local storage humidity conditions.",
+    "When evaluating seed stocks intended for planting to ensure internal germination traits are protected."
+  ],
+  "continue_learning": [
+    "Study how proper grain drying influences both insect reproductive speed and fungal mold development.",
+    "Learn to identify early signs of internal kernel feeding during routine storage checks.",
+    "Explore how different post-harvest technologies minimize storage losses across diverse climates."
+  ],
+  "uncertainties": [
+    "Early infestations are visually invisible because eggs and young larvae develop entirely inside the kernels.",
+    "The speed of pest population growth can fluctuate based on changing ambient storage temperatures.",
+    "Multiple distinct storage pests often attack simultaneously, making identification difficult without close inspection."
+  ],
+  "related_topics": [
+    "Grain storage",
+    "Harvesting",
+    "Drying",
+    "Storage hygiene",
+    "Post-harvest handling"
+  ],
+  "agronomic_principles": [
+    "Post-harvest preservation relies on modifying the storage micro-environment to suppress insect metabolic activity.",
+    "Physical kernel integrity serves as the primary structural barrier against secondary storage pests.",
+    "Sanitation of the storage space dictates the baseline pest pressure encountered by incoming clean harvests."
+  ],
+  "major_pests": [
+    "Lesser Grain Weevil",
+    "Larger Grain Borer",
+    "Maize Weevil"
+  ],
+  "major_diseases": [],
+  "knowledge_notes": {
+    "focus": "Help farmers understand principles rather than memorize procedures.",
+    "prescriptions_removed": true,
+    "numeric_thresholds_removed": true,
+    "chemical_recommendations_removed": true
+  },
+  "safety_filters": {
+    "chemical_recommendations_removed": true,
+    "product_names_removed": true,
+    "fertilizer_rates_removed": true,
+    "dosages_removed": true
+  }
+}

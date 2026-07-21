@@ -1,0 +1,104 @@
+{
+  "id": "potato_kalro_agronomy_and_management",
+  "crop": "Potato",
+  "topic": "Agronomic Principles and Crop Management",
+  "source": {
+    "organization": "Kenya Agricultural & Livestock Research Organization (KALRO)",
+    "document": "Potato Production and Crop Management Technical Guides",
+    "country": "Kenya",
+    "document_type": "Technical Guide",
+    "publication_year": "2019",
+    "url": "https://kalro.org/navcdp/docs/tot_timps/POTATO-TIMPS.pdf"
+  },
+  "verification_sources": [
+    {
+      "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+      "document": "Potato production and crop management resources"
+    }
+  ],
+  "document_summary": "Core research data outlining land preparation protocols, localized ecological adaptations via physical markers, growth-stage water demands, and primary cultural management guidelines to optimize potato health under smallholder farming conditions in Kenya.",
+  "information_scope": [
+    "Site selection and temperature variables via altitude patterns",
+    "Land preparation, tillage timing, and dry-season clearing",
+    "Hilling volume, ridge engineering, and structural root protection",
+    "Critical moisture windows during vegetative and reproductive cycles",
+    "Identification of early and late-stage foliar blights"
+  ],
+  "common_farmer_observations": [
+    "Potato fields establishing unevenly due to poorly decomposed organic matter or rushed land preparation.",
+    "Small dry, brown leaf spots with concentric target-pattern rings that begin on older foliage and expand upward.",
+    "White, grey, or velvety fungal growth appearing on the undersides of leaves during prolonged morning fog or heavy dew.",
+    "Potato tubers turning green and developing a bitter taste when exposed directly to daylight in shallow ridges.",
+    "Tubers showing physical growth cracks or vertical splitting due to highly erratic water supply as they expand."
+  ],
+  "clarifying_questions": [
+    "Did you begin clearing your land during the preceding dry season to ensure crop residues fully decomposed before planting?",
+    "Are the leaf spots displaying distinct concentric target-like rings, or do they look like soft, water-soaked dark patches with a velvety backing?",
+    "When you build your ridges during weeding, do you ensure a high volume of soil is earthed up completely around the plant base to protect the subterranean yield?",
+    "Has the soil profile experienced alternate cycles of severe drying followed by heavy downpours during tuber expansion?"
+  ],
+  "context_factors": [
+    "Ambient day temperatures remaining within a moderate band, combined with distinctly cool nights, optimize tuber formation, whereas high ambient heat suppresses it.",
+    "Sufficient soil moisture at the early stage of tuber initiation heavily dictates the total count of tubers formed.",
+    "Heavy clay soils or un-drained topologies severely restrict root zone aeration and set up conditions for soft rot decay.",
+    "Shallow planting layouts under dry conditions increase the vulnerability of the crop to environmental sun scorching.",
+    "Continuous use of specific acidifying basal fertilizers on high-altitude plots systematically drops soil pH, causing hidden nutrient imbalances over time."
+  ],
+  "why_information_may_differ": [
+    "Agroecological zones vary naturally in moisture retention and seasonal temperature shifts, dictating localized irrigation schedules.",
+    "Soil structural compositions alter drainage dynamics, changing how roots access nutrients and withstand high rainfall spells.",
+    "Varietal variations exhibit vastly differing structural leaf traits and baseline tolerance limits to foliar pathogens."
+  ],
+  "trusted_learning_points": [
+    "Initiate land clearing well within the dry season before planting to guarantee that organic matter turns into clean, fully broken-down soil nutrients.",
+    "Orient your furrows carefully to maximize uniform light access and prevent water from pooling around the lower stems.",
+    "Incorporate fully decomposed manure well ahead of crop establishment; fresh animal wastes damage the highly sensitive root zones.",
+    "Perform hilling or earthing up diligently to build thick, high ridges that safeguard developing tubers from daylight exposure and cool the root zone.",
+    "Prioritize stable soil moisture during critical physiological phases: initial emergence, active flowering, tuber initiation, and final expansion.",
+    "Avoid applying heavy overhead sprinkler irrigation late in the evening as the prolonged leaf dampness creates ideal microclimates for foliar blights."
+  ],
+  "possible_conflicting_information": [
+    "General reference sheets describe broad ecological ranges across multiple altitudes, whereas local production models restrict target cultivation to specific mountain or cool highland zones for yield stability."
+  ],
+  "when_more_information_is_needed": [
+    "When calculating specific localized compost application volumes to correct deep macro-nutrient deficits identified by lab reports.",
+    "When highly aggressive, unrecognized foliar spots spread rapidly across the entire field canopy within days."
+  ],
+  "continue_learning": [
+    "Consult localized KALRO field stations (such as KALRO Tigoni) to access current varietal registers matching your specific regional climate markers."
+  ],
+  "uncertainties": [
+    "Predicting sudden localized microclimatic shifts that bring erratic frost or sudden mid-season temperature spikes.",
+    "The baseline survival rate of fungal spores across diverse micro-topographies under non-tillage systems."
+  ],
+  "related_topics": [
+    "Soil Health and Nutrient Balancing",
+    "Water and Irrigation Management",
+    "Field Scouting and Disease Monitoring"
+  ],
+  "agronomic_principles": [
+    "Tillage timing must match the local dry cycle to enforce thorough decomposition of preceding plant residues.",
+    "Ridge volume directly insulates expanding potato yields from atmospheric temperature stress and light degradation.",
+    "Moisture uniformity dictates structural tuber expansion and prevents cellular fracturing."
+  ],
+  "major_pests": [
+    "Cutworms",
+    "Millipedes"
+  ],
+  "major_diseases": [
+    "Late Blight (Phytophthora infestans)",
+    "Early Blight (Alternaria solani)"
+  ],
+  "knowledge_notes": {
+    "focus": "Help farmers understand principles rather than memorize procedures.",
+    "prescriptions_removed": true,
+    "numeric_thresholds_removed": true,
+    "chemical_recommendations_removed": true
+  },
+  "safety_filters": {
+    "chemical_recommendations_removed": true,
+    "product_names_removed": true,
+    "fertilizer_rates_removed": true,
+    "dosages_removed": true
+  }
+}

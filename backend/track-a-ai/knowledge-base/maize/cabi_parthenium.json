@@ -1,0 +1,116 @@
+{
+  "id": "maize_parthenium_weed",
+  "crop": "Maize",
+  "topic": "Invasive Weeds (Parthenium Weed)",
+  "source": {
+    "organization": "KALRO / Plantwise (CABI)",
+    "document": "Invasive Species Factsheets: Parthenium Weed Management",
+    "country": "Kenya",
+    "document_type": "Factsheet",
+    "publication_year": "2020",
+    "url": "https://plantwiseplusknowledgebank.org/action/doSearch?AllField=Invasive+Weeds+%28Parthenium+Weed%29&SeriesKey=plantwise"
+  },
+  "verification_sources": [
+    {
+      "organization": "Plantwise (CABI)",
+      "document": "Parthenium Weed Factsheet"
+    },
+    {
+      "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+      "document": "Maize TIMPs Volume 1"
+    },
+    {
+      "organization": "Ministry of Agriculture and Livestock Development (KCEP-CRAL)",
+      "document": "Maize Extension and Training Manual"
+    },
+    {
+      "organization": "Food and Agriculture Organization (FAO)",
+      "document": "Integrated Management of Invasive Weeds"
+    }
+  ],
+  "document_summary": "Phytosanitary profile for managing Parthenium weed, tracking growth stages (rosette to erect), wind/water seed dispersal mechanisms, tool biosecurity, and required contact safety precautions.",
+  "information_scope": [
+    "Land preparation and early weed identification",
+    "Resource competition dynamics (water, light, space)",
+    "Vector pathways for seed movement (machinery, animals)",
+    "Human and livestock health risk management during removal"
+  ],
+  "common_farmer_observations": [
+    "Young weed plants forming a distinct rosette of deeply divided, pale green leaves flat against the ground.",
+    "Older mature weed plants becoming upright, tough, and highly branched.",
+    "Clusters of small, distinct white flower heads developing abundantly at the ends of branches.",
+    "The weed spreading rapidly along nearby roadsides, grazing lands, field edges, and into cultivated plots.",
+    "Dense weed patches noticeably stunting maize growth and completely crowding out other useful plants.",
+    "Farm workers experiencing skin irritation, rashes, or respiratory discomfort after coming into contact with the plant."
+  ],
+  "clarifying_questions": [
+    "Are the weeds producing a large number of small white flowers rather than typical purple or yellow blooms?",
+    "Did you first notice the weed spreading along roadsides, grazing zones, or boundaries before it entered your crop?",
+    "Are the weed plants still growing low in the rosette stage, or have they already shot up and flowered?",
+    "Are neighboring farms, pathways, or nearby uncultivated lands also heavily infested with this weed?",
+    "Have people or livestock shown signs of skin irritation or allergies after touching or grazing near the weed?"
+  ],
+  "context_factors": [
+    "Parthenium spreads primarily via microscopic seeds carried by wind, runoff water, animals, vehicles, and muddy tools.",
+    "Cleared or highly disturbed land creates the ideal open conditions for this weed to establish itself.",
+    "Individual plants produce immense quantities of seeds, allowing them to rapidly overrun a field.",
+    "Uprooting the weed early before it flowers drastically cuts down future seed populations in the soil.",
+    "Effective control requires community-wide action because the seeds cross farm boundaries effortlessly."
+  ],
+  "why_information_may_differ": [
+    "The speed and severity of an infestation depend heavily on local rainfall patterns, soil disturbance levels, and past weed history.",
+    "A clean farm can face constant re-infestation if surrounding common lands and neighbors remain unmanaged.",
+    "Young vegetative rosettes are far easier to eradicate than mature, tough, flowering plants."
+  ],
+  "trusted_learning_points": [
+    "Learn to identify the weed early at the ground rosette stage to maximize management success.",
+    "Focus on preventing flowering and seed production to protect the field over the long term.",
+    "Maintain a thick, healthy crop canopy cover to naturally reduce the weed's opportunities to establish.",
+    "Clean machinery, boots, and farm tools thoroughly to stop carrying seeds between different fields.",
+    "Wear protective clothing when handling the weed to safeguard against allergic skin or breathing reactions.",
+    "Coordinate weed management across the community, as isolated farm-level cleanup efforts face rapid re-infestation."
+  ],
+  "possible_conflicting_information": [
+    "Slashing or cutting mature weeds can seem like a quick fix, but if flowering has begun, the physical impact can accelerate seed dispersal. Early uprooting before flowers form is a much more reliable approach."
+  ],
+  "when_more_information_is_needed": [
+    "When trying to distinguish young Parthenium rosettes from harmless broadleaf weeds during early growth.",
+    "When checking if approved biological control agents are available for release through local extension offices.",
+    "When planning joint weed eradication campaigns with neighbors, community leaders, or local authorities."
+  ],
+  "continue_learning": [
+    "Learn to recognize the weed across its complete lifecycle, from seedling and rosette to full flower.",
+    "Study how invasive species utilize transport routes and machinery pathways to enter clean production zones."
+  ],
+  "uncertainties": [
+    "Seed longevity within different local soil types and moisture levels remains difficult to predict precisely.",
+    "The exact rate of re-infestation is highly dependent on how effectively surrounding public land is managed.",
+    "The performance of cultural control methods varies based on the size of the infestation and seasonal rainfall."
+  ],
+  "related_topics": [
+    "Field scouting",
+    "Weed management",
+    "Crop competition",
+    "Soil disturbance",
+    "Field sanitation"
+  ],
+  "agronomic_principles": [
+    "Invasive plant management must prioritize reproductive exclusion by intercepting development before seed set.",
+    "Disturbed ecological niches provide the primary entry point for aggressive, non-native plant species.",
+    "Biosecurity frameworks require sanitation of transport vectors to prevent moving weed seeds across boundaries."
+  ],
+  "major_pests": [],
+  "major_diseases": [],
+  "knowledge_notes": {
+    "focus": "Help farmers understand principles rather than memorize procedures.",
+    "prescriptions_removed": true,
+    "numeric_thresholds_removed": true,
+    "chemical_recommendations_removed": true
+  },
+  "safety_filters": {
+    "chemical_recommendations_removed": true,
+    "product_names_removed": true,
+    "fertilizer_rates_removed": true,
+    "dosages_removed": true
+  }
+}

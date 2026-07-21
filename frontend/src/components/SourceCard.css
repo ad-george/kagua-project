@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+.source-card {
+  background-color: #FFFFFF;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 16px 18px;
+  text-align: left;
+}
+
+.source-card-label {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #2E86C1;
+  margin: 0 0 8px;
+}
+
+.source-card-advice {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.95rem;
+  font-style: normal;
+  color: #1F2937;
+  margin: 0;
+  line-height: 1.6;
+}

@@ -1,0 +1,98 @@
+{
+  "id": "cabbage_kalro_eco_agronomy_management",
+  "crop": "Cabbage",
+  "topic": "Ecological Requirements, Soil Health, and Cultural Practices",
+  "source": {
+    "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+    "document": "Climate-Smart Agricultural Technologies, Innovations, and Management Practices (TIMPs) Cabbage Technical Guides",
+    "country": "Kenya",
+    "document_type": "Technical Guide",
+    "publication_year": "2019",
+    "url": "http://kalrotimps.com/timps/3"
+  },
+  "verification_sources": [
+    {
+      "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+      "document": "Climate-Smart Agricultural Technologies, Innovations, and Management Practices (TIMPs) Cabbage Technical Guides"
+    }
+  ],
+  "document_summary": "Climate-smart research guidelines detailing ecological adaptation behaviors, drainage requirements for shallow root systems, soil organic matter enrichment, and structural multi-year rotation designs.",
+  "information_scope": [
+    "Site selection and temperature variables via altitude patterns",
+    "Raised bed and ridge engineering to mitigate waterlogging",
+    "Organic matter integration and shallow root protection",
+    "Multi-year non-brassica crop rotation systems",
+    "Conservation tillage and mulching parameters"
+  ],
+  "common_farmer_observations": [
+    "Cabbage plants showing severe wilting during hot afternoons, stunted growth, or purplish leaves in fields with poor drainage.",
+    "Shallow roots showing physical bruising, tears, or exposure after aggressive, deep hoeing during weeding operations.",
+    "Cabbage crops failing to form solid, tight heads when grown in lower, warmer altitudes during mid-summer heat spikes."
+  ],
+  "clarifying_questions": [
+    "Did the field host other brassica crops like kales, turnip, rape, or broccoli during the last three seasons?",
+    "Are the symptoms appearing uniformly across the field or primarily in waterlogged zones and poorly drained clay depressions?",
+    "Are you building raised beds or deep ridges to keep the root zones safely aerated during wet spells?"
+  ],
+  "context_factors": [
+    "Altitude plays a role in cabbage performance; at lower, warmer altitudes, cultivation is best restricted to cooler months to ensure heading.",
+    "Optimal growth occurs within moderate temperature bands; temperatures consistently above typical thresholds hamper proper head formation.",
+    "Cabbage has a highly shallow root system that is highly sensitive to waterlogging and prone to severe mechanical bruising from deep digging.",
+    "Pathogens persist stubbornly in the soil profile if brassica crops are grown continuously without structural breaks."
+  ],
+  "why_information_may_differ": [
+    "Soil types, initial pH levels, organic matter content, and historical crop rotations directly dictate baseline nutrient availability and drainage behavior.",
+    "Climatic zones and local seasonal temperatures influence standard irrigation frequency and soil moisture evaporation rates."
+  ],
+  "trusted_learning_points": [
+    "Rotate cabbages with completely non-brassica crops such as maize, beans, onions, pumpkins, or sweet potatoes for several seasons to break pest and disease cycles.",
+    "Plant cabbages on raised beds or ridges to ensure appropriate drainage and prevent waterlogging in heavy soils.",
+    "Incorporate thoroughly decomposed manure or compost into the soil well before transplanting; avoid fresh manure as it damages shallow roots.",
+    "Avoid deep hoeing near the crop base because cabbage has a shallow root system prone to mechanical bruising.",
+    "Utilize conservation tillage and optimal mulching depths to conserve soil moisture during dry periods without creating deep habitats for slugs."
+  ],
+  "possible_conflicting_information": [
+    "Optimal production temperature is strictly noted within narrow limits in technical production manuals, while a broader surviving growth range is cited in general ecological sheets."
+  ],
+  "when_more_information_is_needed": [
+    "When soil testing reports indicate extreme pH levels or high soil salinity levels requiring complex remediation.",
+    "When planning conservation tillage approaches across diverse, steep-sloped terrains."
+  ],
+  "continue_learning": [
+    "Consult local KALRO stations to obtain current technical resources on climate-smart soil health protocols and conservation tillage architectures."
+  ],
+  "uncertainties": [
+    "Predicting localized weather shifts that might cause unexpected frost or extreme heat spikes during critical heading stages.",
+    "The survival rate and longevity of specific soil-borne fungal spores across diverse soil profiles under conservation tillage."
+  ],
+  "related_topics": [
+    "Crop rotation",
+    "Waterlogging",
+    "Soil acidity and liming",
+    "Nursery management"
+  ],
+  "agronomic_principles": [
+    "Land preparation should prioritize proper drainage, such as raised beds, to protect the shallow root system.",
+    "Crop rotation design must exclude taxonomically related families to effectively break pathogen lifecycles.",
+    "Organic matter integration must precede planting significantly to safeguard sensitive root zones from heat and toxic gasses."
+  ],
+  "major_pests": [
+    "Cutworms",
+    "Slugs"
+  ],
+  "major_diseases": [
+    "Damping-off"
+  ],
+  "knowledge_notes": {
+    "focus": "Help farmers understand principles rather than memorize procedures.",
+    "prescriptions_removed": true,
+    "numeric_thresholds_removed": true,
+    "chemical_recommendations_removed": true
+  },
+  "safety_filters": {
+    "chemical_recommendations_removed": true,
+    "product_names_removed": true,
+    "fertilizer_rates_removed": true,
+    "dosages_removed": true
+  }
+}

@@ -1,0 +1,337 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body {
+  background-color: #F8FAFC;
+  margin: 0;
+}
+
+/* ── Container ── */
+.screen4-container {
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 20px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* ── Brand ── */
+.screen4-brand {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #2E86C1;
+  margin: 0 0 20px;
+}
+
+/* ── Title ── */
+.screen4-title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #1F2937;
+  line-height: 1.25;
+  margin: 0 0 6px;
+}
+
+/* ── Based on ── */
+.screen4-based-on {
+  font-size: 0.88rem;
+  color: #9CA3AF;
+  font-style: italic;
+  margin: 0 0 24px;
+}
+
+/* ── Observed box ── */
+.screen4-observed-box {
+  background: #FFFFFF;
+  border: 1.5px solid #E5E7EB;
+  border-left: 4px solid #27AE60;
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 20px;
+}
+
+.screen4-observed-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #27AE60;
+  margin: 0 0 10px;
+}
+
+.screen4-observed-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.screen4-observed-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.98rem;
+  color: #1F2937;
+  line-height: 1.5;
+}
+
+.screen4-observed-tick {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background-color: #27AE60;
+  color: #FFFFFF;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── What we know so far ── */
+.screen4-summary-banner {
+  background: #F8FAFC;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.screen4-summary-banner h3 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1F2937;
+}
+
+.screen4-summary-banner p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: #6B7280;
+  line-height: 1.5;
+}
+
+/* ── Low confidence banner ── */
+.screen4-low-confidence-banner {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background-color: #FFFBEB;
+  border: 1.5px solid #FDE68A;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+}
+
+.screen4-banner-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: #F59E0B;
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.screen4-low-confidence-banner p {
+  font-size: 0.93rem;
+  color: #92400E;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Section wrapper ── */
+.screen4-section {
+  margin-bottom: 32px;
+}
+
+/* ── Section subtitle ── */
+.screen4-subtitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #F3F4F6;
+}
+
+/* ── Perspectives ── */
+.screen4-perspectives {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.screen4-perspective-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.screen4-empty-note {
+  font-size: 0.93rem;
+  color: #9CA3AF;
+  font-style: italic;
+  margin: 0;
+}
+
+/* ── Trusted sources ── */
+.screen4-sources {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.screen4-source-item {
+  background: #FFFFFF;
+  border: 1.5px solid #E5E7EB;
+  border-left: 4px solid #2E86C1;
+  border-radius: 10px;
+  padding: 12px 16px;
+}
+
+.screen4-source-name {
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #1E3A5F;
+  margin: 0 0 4px;
+}
+
+.screen4-source-snippet {
+  font-size: 0.93rem;
+  color: #4B5563;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Uncertainty box ── */
+.screen4-uncertainty-box {
+  background: #FFFBEB;
+  border: 1px solid #FDE68A;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.screen4-uncertainty-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.screen4-uncertainty-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.95rem;
+  color: #4B5563;
+  line-height: 1.6;
+}
+
+.screen4-uncertainty-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #D1D5DB;
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+
+/* ── Reflection / Current understanding — the conclusion card ── */
+.screen4-reflection {
+  background: #EFF6FF;
+  border: 2px solid #BFDBFE;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.screen4-reflection-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #2E86C1;
+  margin: 0 0 8px;
+}
+
+.screen4-reflection-text {
+  font-size: 1rem;
+  color: #1E3A5F;
+  line-height: 1.7;
+  margin: 0 0 12px;
+}
+
+/* ── Closing note ── */
+.screen4-closing-note {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1F2937;
+  line-height: 1.7;
+  margin: 0 0 24px;
+  padding: 16px 18px;
+  background: #F9FAFB;
+  border: 1.5px solid #E5E7EB;
+  border-left: 4px solid #2E86C1;
+  border-radius: 12px;
+}
+
+.screen4-closing-note p {
+  margin: 0;
+}
+
+/* ── Continue button ── */
+.screen4-continue-btn {
+  background-color: #1E3A5F;
+  color: #FFFFFF;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 16px 24px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  letter-spacing: 0.01em;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.screen4-continue-btn:hover {
+  background-color: #2E86C1;
+}
+
+.screen4-continue-btn:active {
+  transform: scale(0.98);
+}
+
+/* ── Responsive ── */
+@media (min-width: 640px) {
+  .screen4-container {
+    padding: 56px 32px 48px;
+  }
+
+  .screen4-title {
+    font-size: 2.1rem;
+  }
+}
+
+@media (max-width: 359px) {
+  .screen4-title {
+    font-size: 1.65rem;
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "id": "cabbage_moalf_jica_shep_production",
+  "crop": "Cabbage",
+  "topic": "Agronomic Principles, Nursery, and Market Linkage",
+  "source": {
+    "organization": "Ministry of Agriculture, Livestock and Fisheries (MOALF) & Japan International Cooperation Agency (JICA)",
+    "document": "SHEP PLUS Cabbage Production Manual",
+    "country": "Kenya",
+    "document_type": "Production Manual",
+    "publication_year": "2019",
+    "url": "https://www.jica.go.jp/Resource/project/english/kenya/015/materials/c8h0vm0000f7o8cj-att/materials_06.pdf"
+  },
+  "verification_sources": [
+    {
+      "organization": "Ministry of Agriculture, Livestock and Fisheries (MOALF) & Japan International Cooperation Agency (JICA)",
+      "document": "SHEP PLUS Cabbage Production Manual"
+    }
+  ],
+  "document_summary": "Core operational extension guidelines focused on pre-cultivation market surveying, systematic nursery establishment, seedling hardening, and post-harvest handling strategies to maximize value recovery for smallholders in Kenya.",
+  "information_scope": [
+    "Market survey timing and back-calculating planting schedules",
+    "Nursery establishment, drill sowing, and thin-row management",
+    "Seedling hardening protocols via water and shade reduction",
+    "Transplanting timing and environmental conditions",
+    "Harvest indices via head firmness and damage-free packaging"
+  ],
+  "common_farmer_observations": [
+    "Cabbage heads cracking or splitting open vertically while sitting in the field as they reach full maturity.",
+    "Seedlings looking weak, leggy, or structurally fragile at transplanting due to dense, overcrowded nursery rows.",
+    "Cabbages harvested prematurely during cash crunch periods resulting in soft, loosely packed heads with poor market weight.",
+    "Harvested cabbage heads rapidly rotting, heating up, or wilting when stuffed into airtight, non-porous bags for transport."
+  ],
+  "clarifying_questions": [
+    "Did you complete a local market demand assessment before sowing to align your harvest with peak seasonal price windows?",
+    "Are the cabbage heads splitting open after a sudden heavy rain following a prolonged dry spell?",
+    "When you squeeze the cabbage heads before cutting, do they feel solid, compact, and completely firm?"
+  ],
+  "context_factors": [
+    "Market price fluctuations are heavily seasonal; aligning production timelines with localized supply drops dictates farming profitability.",
+    "Fluctuations in watering frequency as the crop reaches full maturity cause internal pressure imbalances that fracture head structures.",
+    "Packing freshly harvested heads into tight, unventilated spaces triggers rapid internal heat buildup and accelerated bacterial decay."
+  ],
+  "why_information_may_differ": [
+    "Market price windows and consumer size preferences vary significantly across distinct sub-counties, altering the optimal time to harvest.",
+    "Nursery seedling readiness depends heavily on regional ambient temperatures, changing how long plants must stay in the seedbed."
+  ],
+  "trusted_learning_points": [
+    "Conduct a thorough local market survey first to identify peak demand periods, then work backward to build your strategic planting calendar.",
+    "Sow seeds in clean, shallow drills spaced evenly apart in the nursery bed rather than broadcasting blindly to ensure thick, sturdy stems.",
+    "Harden seedlings before transplanting by systematically reducing watering frequency and completely removing shade structures.",
+    "Transplant seedlings once they reach healthy structural milestones, ideally during cool early mornings or late afternoons when soils are moist.",
+    "Maintain highly uniform soil moisture to ensure even head formation, but gradually taper off watering as the crop reaches full maturity.",
+    "Harvest cabbage heads precisely when they feel solid and firm when squeezed, cutting at the base while leaving outer protective wrapper leaves intact.",
+    "Store and pack harvested cabbages in cool, shaded, well-ventilated areas, avoiding airtight or non-porous bags."
+  ],
+  "possible_conflicting_information": [
+    "Recommended plant spacing configurations vary depending on target head size and variety, moving from close layouts for small heads to wide layouts for large varieties.",
+    "Nursery seedling readiness timelines vary depending on local ambient temperatures and specific seedling height milestones."
+  ],
+  "when_more_information_is_needed": [
+    "When target commercial markets dictate strict parameters regarding specific weight categories, head shapes, or grading standards.",
+    "When adjusting regional planting calendars against highly erratic or delayed seasonal rainfall onset."
+  ],
+  "continue_learning": [
+    "Study local market survey methodologies and training questionnaires to strategically align planting calendars with peak price windows."
+  ],
+  "uncertainties": [
+    "Sudden fluctuations in regional input costs relative to highly volatile farm-gate market prices."
+  ],
+  "related_topics": [
+    "Nursery management",
+    "Market calendars",
+    "Post-harvest ventilation",
+    "Waterlogging"
+  ],
+  "agronomic_principles": [
+    "Plant spacing depends on the production system, target head size, and agroecological zone.",
+    "Moisture management must remain highly uniform to minimize internal pressure differences that lead to physical defects in mature heads.",
+    "Post-harvest handling must prioritize heat dissipation to extend product shelf life."
+  ],
+  "major_pests": [
+    "Slugs"
+  ],
+  "major_diseases": [
+    "Damping-off"
+  ],
+  "knowledge_notes": {
+    "focus": "Help farmers understand principles rather than memorize procedures.",
+    "prescriptions_removed": true,
+    "numeric_thresholds_removed": true,
+    "chemical_recommendations_removed": true
+  },
+  "safety_filters": {
+    "chemical_recommendations_removed": true,
+    "product_names_removed": true,
+    "fertilizer_rates_removed": true,
+    "dosages_removed": true
+  }
+}

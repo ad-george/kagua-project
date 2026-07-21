@@ -1,0 +1,102 @@
+{
+  "id": "potato_moalf_post_harvest_and_policy",
+  "crop": "Potato",
+  "topic": "Harvest, Post-Harvest Handling, and Quality Standards",
+  "source": {
+    "organization": "Ministry of Agriculture, Livestock, Fisheries and Cooperatives (MOALFC)",
+    "document": "Potato Production Extension Resources & Post-Harvest Manuals",
+    "country": "Kenya",
+    "document_type": "Extension Manual",
+    "publication_year": "2020",
+    "url": "https://npck.org/potato-post-harvest-management-packaging/"
+  },
+  "verification_sources": [
+    {
+      "organization": "Ministry of Agriculture, Livestock, Fisheries and Cooperatives (MOALFC)",
+      "document": "Potato production extension resources"
+    },
+    {
+      "organization": "KARI / KALRO / CIP",
+      "document": "Potato Good Agricultural Practices (Revised)"
+    }
+  ],
+  "document_summary": "National extension framework guiding smallholders through maturity tracking indicators, manual dehaulming rules, skin curing steps, diffuse-light storage setups, and compliance with Kenyan crop packaging laws.",
+  "information_scope": [
+    "Maturity indicators and strategic market harvesting timelines",
+    "Manual dehaulming, skin-setting mechanics, and harvesting weather rules",
+    "Post-harvest curing steps under high relative humidity",
+    "Diffuse-light storage architecture vs. dark ware potato storage",
+    "Compliance with national statutory agricultural packaging weights"
+  ],
+  "common_farmer_observations": [
+    "Freshly dug potatoes showing shredded or easily peeling skins when handled, leading to rapid storage rot.",
+    "Bags of potatoes tightly packed and extended far beyond standard limits, causing heavy crushing and bruising at the bottom.",
+    "Potatoes harvested mid-day under intense sunshine showing skin scorching and developing soft watery patches in storage.",
+    "Potatoes harvested prematurely during desperate cash-flow crunches, resulting in low dry-matter quality and poor shelf-life."
+  ],
+  "clarifying_questions": [
+    "Did you allow the foliage to yellow and perform dehaulming ahead of harvest to give the skins time to fully set and harden inside the soil?",
+    "Are you storing your seed potatoes under cool diffused light to encourage greening, or are your eating potatoes exposed to light where they might turn green and toxic?"
+  ],
+  "context_factors": [
+    "Statutory packaging weight regulations in Kenya exist for scheduled crops to ensure standardized trading and protect handlers from carrying oversized, extended bags.",
+    "Curing harvested potatoes demands a short period under ambient room conditions with good air circulation and high humidity to heal field scratches.",
+    "Potato market dynamics are often highly seasonal, making post-harvest holding facilities vital to avoid selling at a loss during peak harvest gluts."
+  ],
+  "why_information_may_differ": [
+    "Processing companies enforce strict grading metrics against surface scab or skin defects, while local fresh markets often tolerate moderate surface blemishes at standard pricing.",
+    "Industrial systems use chemical desiccants for dehaulming, whereas smallholders rely on clean, manual foliage slashing."
+  ],
+  "trusted_learning_points": [
+    "Dehaulm the crop manually by cutting back the green canopy when leaves naturally yellow, leaving tubers underground for a short period to allow the outer skin to fully harden and set.",
+    "Harvest carefully during dry weather conditions, ideally during cool early mornings or late afternoons to avoid heat stress.",
+    "Allow dug tubers to briefly air-dry on the soil surface before collecting them into well-aerated transport crates or baskets.",
+    "Cure potatoes by keeping them in well-ventilated spaces with high humidity for a couple of weeks to allow physical field wounds to seal.",
+    "Store seed potatoes in Diffused Light Storage (DLS) structures to encourage short, tough green sprouts, but store ware potatoes in complete darkness to prevent greening.",
+    "Sort and grade tubers carefully using a seed gauge to remove all bruised, misshapen, or rotting pieces before transport.",
+    "Package crops according to official standardized weight regulations to avoid legal non-compliance and minimize internal handling damage."
+  ],
+  "possible_conflicting_information": [
+    "Traditional practices favor immediate field bagging right after digging, but extension science shows that a brief drying period and dedicated curing step dramatically drop storage decay rates."
+  ],
+  "when_more_information_is_needed": [
+    "When reviewing current statutory rules on crop trading, standardized bag weight limits, or local compliance checks.",
+    "When planning the construction of specialized diffused-light storage buildings using low-cost local timber and netting."
+  ],
+  "continue_learning": [
+    "Engage with county sub-office extension staff to access local group marketing frameworks and training modules on post-harvest handling."
+  ],
+  "uncertainties": [
+    "Unpredictable market price drops and shifting middleman dynamics that disrupt calculated storage and release timelines."
+  ],
+  "related_topics": [
+    "Dehaulming and Skin Setting",
+    "Post-Harvest Handling and Curing",
+    "Diffuse-Light Storage Structures",
+    "Regulatory Agricultural Standards"
+  ],
+  "agronomic_principles": [
+    "Skin setting is a physiological transformation triggered by canopy removal, rendering the tuber mechanically resilient.",
+    "Curing exploits the potato's natural healing ability, using humidity to form a protective layer over physical harvesting wounds.",
+    "Storage lighting serves as a biological switch: diffused light drives seed sprout development, while total darkness preserves ware quality."
+  ],
+  "major_pests": [
+    "Potato Tuber Moth (Phthorimaea operculella)"
+  ],
+  "major_diseases": [
+    "Common Scab (Streptomyces scabies)",
+    "Blackleg and Soft Rot (Pectobacterium spp.)"
+  ],
+  "knowledge_notes": {
+    "focus": "Help farmers understand principles rather than memorize procedures.",
+    "prescriptions_removed": true,
+    "numeric_thresholds_removed": true,
+    "chemical_recommendations_removed": true
+  },
+  "safety_filters": {
+    "chemical_recommendations_removed": true,
+    "product_names_removed": true,
+    "fertilizer_rates_removed": true,
+    "dosages_removed": true
+  }
+}

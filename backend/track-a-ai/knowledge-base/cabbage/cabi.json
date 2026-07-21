@@ -1,0 +1,115 @@
+{
+  "id": "cabbage_cabi_pest_disease_management",
+  "crop": "Cabbage",
+  "topic": "Integrated Pest and Disease Management",
+  "source": {
+    "organization": "Plantwise (CABI)",
+    "document": "Pest Management Decision Guides (Green and Yellow Lists) - Kenya",
+    "country": "Kenya",
+    "document_type": "Pest Management Guide",
+    "publication_year": "2020",
+    "url": "https://plantwiseplusknowledgebank.org/action/doSearch?AllField=Integrated+Pest+and+Disease+Management&SeriesKey=plantwise"
+  },
+  "verification_sources": [
+    {
+      "organization": "Plantwise (CABI)",
+      "document": "Plantwise Knowledge Bank and Pest Management Decision Guides"
+    }
+  ],
+  "document_summary": "Diagnostic and non-chemical protection sheets detailing vector behaviors, foliar symptom progressions, companion cropping mechanics, and botanical extraction protocols for smallholder cabbage farmers.",
+  "information_scope": [
+    "Diamondback moth caterpillar identification and disturbance behaviors",
+    "Cabbage looper locomotion patterns and leaf damage signs",
+    "Aphid and Whitefly colony diagnostics and foliar distortion",
+    "Black rot progression from V-shaped lesions to vascular darkening",
+    "Aqueous botanical preparation and physical dislodgement methods"
+  ],
+  "common_farmer_observations": [
+    "Pale yellowish-green to green cigar-shaped caterpillars creating chewed window-like holes and skeletonized tissue on leaves.",
+    "Larvae that rapidly wriggle their bodies back and forth or drop from a silk thread to suspend themselves when disturbed.",
+    "Green caterpillars with white longitudinal lines that arch or loop their bodies tightly as they crawl, primarily on leaf undersides.",
+    "Irregular holes in leaves accompanied by dark insect frass or larval webs filled with dirt inside developing cabbage heads.",
+    "Oily black-green or dark-striped larvae with rows of small wart-like markings that drop to the ground when touched.",
+    "Clusters of tiny, soft-bodied green or gray insects on leaf undersides, causing leaves to curl inward, cup, or become stunted.",
+    "Small white winged insects flying up in clouds from under the leaves when the plant is shaken or disturbed.",
+    "Yellow, brown, or black V-shaped lesions progressing inward from the edges of mature leaves with darkening leaf veins.",
+    "Slugs hiding under surface mulch, feeding on leaves and leaving silvery, dried slime trails.",
+    "Fluffy white, gray, or purple downy growth on the undersides of young leaves accompanied by yellowing on upper surfaces."
+  ],
+  "clarifying_questions": [
+    "Do the observed caterpillars wriggle rapidly back and forth or hang from a web, or do they arch their backs like a loop when crawling?",
+    "Are the leaves showing V-shaped yellow or brown patches progressing inward from the margins, and do the veins look black when held against the light?",
+    "Are the leaves curling inward, and can you see clusters of tiny sticky insects or powdery white flies on the leaf undersides?",
+    "Can you see silvery, dried slime trails across the leaf surfaces near chewed holes?"
+  ],
+  "context_factors": [
+    "Black rot is highly contagious and spreads rapidly during hot, wet weather conditions; handling or harvesting crops while wet accelerates its spread.",
+    "Cabbage looper, aphid, and diamondback moth populations cause severe yield losses, thriving particularly during dry and warm spells.",
+    "Nursery dampness, dense seedling sowing, and poor ventilation create microclimates that rapidly accelerate damping-off and downy mildew outbreaks.",
+    "Wild mustard, wild radish, and volunteer cruciferous weeds along field margins serve as permanent green bridges for aphids and black rot."
+  ],
+  "why_information_may_differ": [
+    "The presence and intensity of insect lifecycles shift dramatically based on local seasonal temperature patterns and altitude bands.",
+    "The availability and official registration of specific biological controls and botanical formulations vary across different sub-counties.",
+    "Homemade botanical extract performance fluctuates based on raw plant material maturity and processing method."
+  ],
+  "trusted_learning_points": [
+    "Thin nursery seedlings early to allow proper air circulation, which significantly decreases the persistence of downy mildew and damping-off.",
+    "Intercrop cabbages with companion crops like tomatoes, chilies, or onions, or use trap crops on the edges of the field to minimize pest pressure.",
+    "Use overhead sprinkler irrigation where feasible to physically dislodge diamondback moth, aphids, and sawfly larvae from plant surfaces.",
+    "Handpick and destroy larvae, egg masses, and visible slugs manually during early or low-level infestations.",
+    "Apply aqueous botanical extracts such as neem seed oil, tephrosia, ginger, or lemongrass solutions for natural pest suppression.",
+    "Utilize homemade traps dug into the soil filled with attractant solutions to catch and drown destructive slugs.",
+    "Avoid irrigating with runoff water that passes through an infected field into a healthy field to prevent spreading water-borne pathogens.",
+    "Destroy wild mustard, wild radish, and volunteer cruciferous weeds along field margins to eliminate permanent pest green bridges."
+  ],
+  "possible_conflicting_information": [
+    "Standard conventional production sheets promote automated prophylactic chemical spray routines, whereas integrated biological frameworks emphasize scouting thresholds, habitat disruption, and botanical intervention."
+  ],
+  "when_more_information_is_needed": [
+    "When identifying specific locally registered biological control agents, such as parasitic wasps or authorized entomopathogenic biofungicides.",
+    "When widespread pest infestations or severe foliar rots persist despite strict adherence to clean cultural practices."
+  ],
+  "continue_learning": [
+    "Explore the proper preparation, dilution, and timing techniques for botanical extracts such as neem seed, lemongrass, and ginger mixtures via Plantwise digital repositories."
+  ],
+  "uncertainties": [
+    "The exact efficacy levels of homemade botanical extracts against heavy, well-established pest infestations under erratic field conditions.",
+    "The exact transmission rate of Black Rot pathogens through secondary wild weed hosts along diverse field boundaries."
+  ],
+  "related_topics": [
+    "Field scouting",
+    "Weed boundary management",
+    "Nursery management",
+    "Crop rotation"
+  ],
+  "agronomic_principles": [
+    "Weed management and boundary hygiene are critical early to remove alternative hosts for destructive brassica pests and diseases.",
+    "Overhead physical disruption can be utilized as a structural mechanism to suppress small-bodied foliar pest populations.",
+    "Microclimate management within the canopy regulates the reproductive capabilities of fungal pathogens."
+  ],
+  "major_pests": [
+    "Diamondback moth (Plutella xylostella)",
+    "Cabbage looper (Trichoplusia ni)",
+    "Cabbage sawfly (Athalia spp.)",
+    "Slugs",
+    "Aphids",
+    "Whiteflies"
+  ],
+  "major_diseases": [
+    "Black rot (Xanthomonas campestris pv. campestris)",
+    "Downy mildew"
+  ],
+  "knowledge_notes": {
+    "focus": "Help farmers understand principles rather than memorize procedures.",
+    "prescriptions_removed": true,
+    "numeric_thresholds_removed": true,
+    "chemical_recommendations_removed": true
+  },
+  "safety_filters": {
+    "chemical_recommendations_removed": true,
+    "product_names_removed": true,
+    "fertilizer_rates_removed": true,
+    "dosages_removed": true
+  }
+}

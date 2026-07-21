@@ -1,0 +1,249 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ── Page background ── */
+body {
+  background-color: #F8FAFC;
+  margin: 0;
+}
+
+/* ── Container ── */
+.screen1-container {
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 20px 48px;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* ── Brand ── */
+.screen1-brand {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #2E86C1;
+  margin: 0 0 20px;
+}
+
+/* ── Title ── */
+.screen1-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1F2937;
+  line-height: 1.25;
+  margin: 0 0 12px;
+}
+
+/* ── Subtitle ── */
+.screen1-subtitle {
+  font-size: 1.05rem;
+  color: #6B7280;
+  line-height: 1.65;
+  margin: 0 0 32px;
+}
+
+/* ── Voice mode ── */
+.screen1-voice-mode {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── Divider between voice and type ── */
+.screen1-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: #9CA3AF;
+  font-size: 0.85rem;
+}
+
+.screen1-divider::before,
+.screen1-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #E5E7EB;
+}
+
+/* ── "Prefer to type" secondary button ── */
+.screen1-type-instead-btn {
+  background: #FFFFFF;
+  border: 1.5px solid #D1D5DB;
+  color: #1E3A5F;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 14px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.screen1-type-instead-btn:hover {
+  border-color: #2E86C1;
+  background-color: #F0F7FF;
+}
+
+/* ── Examples ── */
+.screen1-examples {
+  margin-top: 32px;
+  padding: 16px 18px;
+  background-color: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+}
+
+.screen1-examples-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #9CA3AF;
+  margin: 0 0 10px;
+}
+
+.screen1-example-item {
+  font-size: 0.93rem;
+  color: #6B7280;
+  font-style: italic;
+  line-height: 1.5;
+  margin: 0;
+  padding: 6px 0;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.screen1-example-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* ── Text mode ── */
+.screen1-text-mode {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Unified input card (voice switch + textarea together) ── */
+.screen1-input-card {
+  background: #FFFFFF;
+  border: 1.5px solid #D1D5DB;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.screen1-input-card:focus-within {
+  border-color: #2E86C1;
+  box-shadow: 0 0 0 3px rgba(46, 134, 193, 0.12);
+}
+
+/* ── Switch to voice — sits at top of card ── */
+.screen1-voice-switch-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  background: #F8FAFC;
+  border: none;
+  color: #2E86C1;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 10px 16px;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.screen1-voice-switch-btn:hover {
+  background-color: #EFF6FF;
+}
+
+.screen1-voice-switch-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* ── Thin divider inside the card ── */
+.screen1-input-divider {
+  height: 1px;
+  background: #E5E7EB;
+}
+
+/* ── Textarea — no border, lives inside the card ── */
+.screen1-textarea {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: #1F2937;
+  background: #FFFFFF;
+  border: none;
+  outline: none;
+  resize: none;
+  min-height: 130px;
+  line-height: 1.65;
+  box-sizing: border-box;
+  display: block;
+}
+
+.screen1-textarea::placeholder {
+  color: #9CA3AF;
+  font-size: 0.95rem;
+}
+
+/* ── Continue button ── */
+.screen1-submit-btn {
+  background-color: #1E3A5F;
+  color: #FFFFFF;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 16px 24px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  letter-spacing: 0.01em;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.screen1-submit-btn:hover:not(:disabled) {
+  background-color: #2E86C1;
+}
+
+.screen1-submit-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.screen1-submit-btn:disabled {
+  background-color: #9CA3AF;
+  cursor: not-allowed;
+}
+
+/* ── Responsive ── */
+@media (min-width: 640px) {
+  .screen1-container {
+    padding: 56px 32px 48px;
+  }
+
+  .screen1-title {
+    font-size: 2.25rem;
+  }
+}
+
+@media (max-width: 359px) {
+  .screen1-title {
+    font-size: 1.75rem;
+  }
+}

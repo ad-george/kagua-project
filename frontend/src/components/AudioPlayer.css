@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+.audio-player {
+  margin-top: 4px;
+}
+
+.audio-player-btn {
+  background-color: #FFFFFF;
+  border: 1.5px solid #2E86C1;
+  color: #1E3A5F;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.audio-player-btn:hover {
+  background-color: #EFF6FF;
+  border-color: #1E3A5F;
+}
+
+.audio-player-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.audio-player-btn:focus-visible {
+  outline: 2px solid #3498DB;
+  outline-offset: 2px;
+}
+
+audio {
+  width: 100%;
+  margin-top: 6px;
+}
+
+.audio-player-error {
+  font-size: 0.85rem;
+  color: #E74C3C;
+  margin-top: 6px;
+}

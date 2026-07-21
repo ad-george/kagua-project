@@ -1,0 +1,123 @@
+{
+  "id": "maize_kalro_variety_selection",
+  "crop": "Maize",
+  "topic": "Maize Varieties and Variety Selection",
+  "source": {
+    "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+    "document": "Maize TIMPs Volume 1",
+    "country": "Kenya",
+    "document_type": "Technical Guide",
+    "publication_year": "2019",
+    "url": "https://keep.kalro.org/appfiles/media/vc_files/MAIZE_TIMPS_Volume-1_for_Upload.pdf"
+  },
+  "verification_sources": [
+    {
+      "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+      "document": "Maize TIMPs Volume 1"
+    },
+    {
+      "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+      "document": "Maize Extension and Training Manual"
+    },
+    {
+      "organization": "Kenya Plant Health Inspectorate Service (KEPHIS)",
+      "document": "National Variety List"
+    },
+    {
+      "organization": "Ministry of Agriculture and Livestock Development (KCEP-CRAL)",
+      "document": "Maize Extension and Training Manual"
+    },
+    {
+      "organization": "CIMMYT",
+      "document": "Stress-Tolerant Maize for Africa Resources"
+    }
+  ],
+  "document_summary": "Strategic variety matching framework analyzing altitude variables, rainfall duration curves, early vs. late maturity risks, and localized adaptation priorities over raw yield potentials.",
+  "information_scope": [
+    "Agroecological zoning parameters (highland, dry lowland, coastal)",
+    "Maturity duration grouping relative to rainfall predictability",
+    "Drought escape vs. maximum growth potential trade-offs",
+    "Certified seed purity maintenance and verification indicators"
+  ],
+  "common_farmer_observations": [
+    "Distinct differences in maturity timelines between maize varieties grown under the same conditions.",
+    "Certain specialized varieties staying visibly greener and more turgid during temporary dry spells.",
+    "Pest and disease severity changing significantly between different varieties in the same field.",
+    "Clear variations in cob size, grain texture, flintiness, and overall plant height across varieties.",
+    "A variety yielding exceptionally well in one season but performing poorly when conditions shift."
+  ],
+  "clarifying_questions": [
+    "What specific agroecological zone is your farm in (highland, medium altitude, dry transitional, or coastal lowland)?",
+    "How many weeks of reliable rainfall does your local seasonal calendar typically provide?",
+    "Is unseasonal or mid-season drought a frequent challenge for your crops?",
+    "Which specific maize pests or leaf diseases occur most often on your land?",
+    "Is the harvested grain meant for home consumption, livestock feed, or commercial sale?",
+    "Are officially sealed packages of certified seed for your preferred variety available from local dealers?"
+  ],
+  "context_factors": [
+    "Altitude strongly dictates temperature patterns and determines how well a variety adapts to an area.",
+    "Total rainfall volume and seasonal distribution directly shape how well a variety performs.",
+    "Early-maturing varieties help lower risks in areas with short or unpredictable rainy seasons.",
+    "Long-season varieties need an extended, stable growing period to reach their full yield potential.",
+    "Pest and disease pressures vary widely across different production regions.",
+    "Increasing climate variability can make historical, traditional variety choices less reliable."
+  ],
+  "why_information_may_differ": [
+    "A variety that thrives in cool highlands will often fail or produce poor ears in hot, dry lowlands.",
+    "The maximum yields shown in official seed trials assume optimal field management and perfect weather.",
+    "Real-world performance shifts with localized soil fertility, exact planting dates, and erratic weather.",
+    "Seed options change over time as new hybrids are released and older lines are phased out."
+  ],
+  "trusted_learning_points": [
+    "Always use certified seed to ensure you get the genetic purity and performance you expect.",
+    "Choose a variety carefully tailored to your specific local agroecological zone to increase your chances of success.",
+    "Match the maturity length of the variety to the expected duration of your local rainy season.",
+    "Remember that no single maize variety can deliver top performance across all environmental conditions.",
+    "Look at drought tolerance, disease resistance, maturity timing, and regional fit together, rather than picking a seed based on yield alone."
+  ],
+  "possible_conflicting_information": [
+    "A variety with the highest advertised yield potential may turn out to be a poor choice during a drought or in nutrient-poor soils, where early-maturing or stress-tolerant seeds often give better results. Some varieties specialize in surviving dry spells, while others focus on disease resistance or peak yield under perfect conditions."
+  ],
+  "when_more_information_is_needed": [
+    "When trying to choose between several different varieties recommended for the same farming zone.",
+    "When checking if an older seed variety is still officially supported or has been replaced by better releases.",
+    "When looking for specific data on how well a variety resists a particular local disease.",
+    "When seasonal weather forecasts point to rainfall patterns that differ from long-term averages."
+  ],
+  "continue_learning": [
+    "Study how Kenya's altitude bands shape agroecological zones and maize adaptation.",
+    "Learn about maturity groupings and why timing matters for climate resilience.",
+    "Explore how certified seed production ensures uniform crop establishment."
+  ],
+  "uncertainties": [
+    "An official trial yield provides no guarantee of what a variety will produce on an individual farm.",
+    "Real-world variety performance can change unexpectedly with shifting weather and soil conditions.",
+    "Official seed recommendations evolve constantly as research centers release updated varieties."
+  ],
+  "related_topics": [
+    "Certified seed",
+    "Agroecological zones",
+    "Crop adaptation",
+    "Climate",
+    "Crop health"
+  ],
+  "agronomic_principles": [
+    "Genotype-by-environment interactions mean variety selection must prioritize regional adaptation over raw yield potential.",
+    "Maturity matching is a core risk-management tool used to align a crop's development with available soil moisture.",
+    "Certified seed systems provide the baseline quality assurance needed for uniform crop performance."
+  ],
+  "major_pests": [],
+  "major_diseases": [],
+  "knowledge_notes": {
+    "focus": "Help farmers understand principles rather than memorize procedures.",
+    "prescriptions_removed": true,
+    "numeric_thresholds_removed": true,
+    "chemical_recommendations_removed": true
+  },
+  "safety_filters": {
+    "chemical_recommendations_removed": true,
+    "product_names_removed": true,
+    "fertilizer_rates_removed": true,
+    "dosages_removed": true
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "id": "cabbage_kephis_seed_and_nursery_phytosanitary",
+  "crop": "Cabbage",
+  "topic": "Seed Certification, Nursery Hygiene, and Quarantine Pathogens",
+  "source": {
+    "organization": "Kenya Plant Health Inspectorate Service (KEPHIS)",
+    "document": "Official Certified Seed and Nursery Phytosanitary Guidelines",
+    "country": "Kenya",
+    "document_type": "Regulatory Guideline",
+    "publication_year": "2021",
+    "url": "https://www.kephis.go.ke/seed-certification-services"
+  },
+  "verification_sources": [
+    {
+      "organization": "Kenya Plant Health Inspectorate Service (KEPHIS)",
+      "document": "Seed and Nursery Phytosanitary Certification Protocols"
+    }
+  ],
+  "document_summary": "Phytosanitary directives detailing statutory certified seed verification, nursery bed sanitization rules, and soil pathogen exclusion protocols to prevent the establishment of regulated pests and club root systems.",
+  "information_scope": [
+    "Traceability of certified disease-free brassica seed stocks",
+    "Nursery bed sanitization via physical solarization techniques",
+    "Exclusion parameters for seed-borne Black rot and nursery damping-off",
+    "Cabbage club root root-distortion diagnostics",
+    "Soil pH modification principles via liming for club root suppression"
+  ],
+  "common_farmer_observations": [
+    "Seedlings rotting at the base of the stem, collapsing, or dying in patches within the nursery bed, signaling damping-off.",
+    "Yellowing along the margins of cotyledons in nurseries, indicating seed-borne pathogen transmission.",
+    "Cabbage plants showing severe wilting during hot afternoons, with roots displaying large, swollen, distorted knots or galls when uprooted.",
+    "A distinct dark or black ring visible inside a cross-section of the cabbage stem when cut, showing systemic vascular infection."
+  ],
+  "clarifying_questions": [
+    "Are you utilizing officially inspected cabbage seeds carrying verified regulatory stamps, or are you multiplying uncertified home-saved seeds?",
+    "When a wilting or stunted plant is uprooted, do the roots show swollen, distorted clubs and galls, or are they clean but shallow?",
+    "Did you physically solarize the nursery bed soil using transparent plastic sheets before sowing your seeds?"
+  ],
+  "context_factors": [
+    "Cabbage club root pathogens persist stubbornly in the soil profile for many years and are not destroyed during standard, low-temperature composting processes.",
+    "Using uncertified seed lines introduces systemic vascular bacteria directly into clean fields, bypassing standard foliar barriers.",
+    "Club root pathogens thrive and multiply aggressively in highly acidic soils, while raising soil pH suppresses their structural development.",
+    "Disinfecting farming tools and machinery prevents the mechanical movement of microscopic soil-borne spores between distinct plots."
+  ],
+  "why_information_may_differ": [
+    "Varietal variations exhibit vastly differing inherent tolerances or resistance profiles to systemic diseases like black rot and club root.",
+    "Phytosanitary standards for commercial seed propagation enforce an absolute zero-tolerance policy for specific seed-borne rots compared to general consumption fields."
+  ],
+  "trusted_learning_points": [
+    "Always use certified, disease-free seeds or healthy seedlings derived from officially registered nurseries.",
+    "Utilize regional soil solarization techniques using transparent plastic sheets to sanitize nursery beds thoroughly before sowing.",
+    "Incorporate lime into well-drained soils well before transplanting to adjust soil pH upward specifically to suppress cabbage club root.",
+    "Disinfect all farming tools, boots, and machinery thoroughly when moving between different fields to prevent carrying hidden spores.",
+    "Understand that home-saved seeds from brassica crops heavily conceal systemic bacterial rots within their coats; verify clean lineage first."
+  ],
+  "possible_conflicting_information": [
+    "Informal seed exchange networks advocate for manual seed saving, whereas phytosanitary science indicates that without advanced hot-water treatment protocols, home-saved brassica seeds carry extremely high systemic black rot risks."
+  ],
+  "when_more_information_is_needed": [
+    "When applying to register a commercial cabbage seedling nursery or seeking official diagnostic testing for suspected club root field patches.",
+    "When calculating specific chemical liming weights to adjust highly acidic soil profiles based on institutional soil laboratory readouts."
+  ],
+  "continue_learning": [
+    "Consult local KEPHIS inspection offices to verify certified seed supplier registries and study formal hot water seed treatment protocols for home sanitation."
+  ],
+  "uncertainties": [
+    "The exact localized performance and heading capabilities of specific hybrid varieties across varying soil acidity thresholds.",
+    "The structural survival rate of club root spores under non-tillage fields across highly diverse regional drainage models."
+  ],
+  "related_topics": [
+    "Soil acidity and liming",
+    "Nursery management",
+    "Crop rotation",
+    "Field scouting"
+  ],
+  "agronomic_principles": [
+    "Seed selection dictates genetic and phytosanitary potential; physical appearance cannot reveal internal vascular infections.",
+    "Soil chemical environments can be structurally altered to suppress the reproductive capability of specialized root pathogens.",
+    "Tool biosecurity is the primary barrier preventing the landscape-level migration of soil-borne quarantine spores."
+  ],
+  "major_pests": [
+    "Potato Cyst Nematode (PCN)"
+  ],
+  "major_diseases": [
+    "Cabbage club root (Plasmodiophora brassicae)",
+    "Black rot (Xanthomonas campestris pv. campestris)",
+    "Damping-off"
+  ],
+  "knowledge_notes": {
+    "focus": "Help farmers understand principles rather than memorize procedures.",
+    "prescriptions_removed": true,
+    "numeric_thresholds_removed": true,
+    "chemical_recommendations_removed": true
+  },
+  "safety_filters": {
+    "chemical_recommendations_removed": true,
+    "product_names_removed": true,
+    "fertilizer_rates_removed": true,
+    "dosages_removed": true
+  }
+}

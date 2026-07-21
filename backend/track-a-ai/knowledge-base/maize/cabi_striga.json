@@ -1,0 +1,123 @@
+{
+  "id": "maize_striga_parasitic_weed",
+  "crop": "Maize",
+  "topic": "Parasitic Weeds (Striga)",
+  "source": {
+    "organization": "Plantwise (CABI / KALRO)",
+    "document": "Pest Management Decision Guide: Striga Weed Management in Kenya",
+    "country": "Kenya",
+    "document_type": "Pest Management Guide",
+    "publication_year": "2020",
+    "url": "https://plantwiseplusknowledgebank.org/action/doSearch?AllField=Parasitic+Weeds+%28Striga%29&target=articles-chapters&content=articlesChapters&SeriesKey=plantwise"
+  },
+  "verification_sources": [
+    {
+      "organization": "Plantwise (CABI)",
+      "document": "Pest Management Decision Guide: Striga in Cereals"
+    },
+    {
+      "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+      "document": "Maize TIMPs Volume 1"
+    },
+    {
+      "organization": "Ministry of Agriculture and Livestock Development (KCEP-CRAL)",
+      "document": "Maize Extension and Training Manual"
+    },
+    {
+      "organization": "Food and Agriculture Organization (FAO)",
+      "document": "Integrated Striga Management Guidance"
+    },
+    {
+      "organization": "International Centre of Insect Physiology and Ecology (ICIPE)",
+      "document": "Push-Pull Technology for Management of Striga and Stemborers"
+    }
+  ],
+  "document_summary": "Comprehensive management profile covering Striga seed bank persistence, root exudate triggers, underground parasitism dynamics, and biological intercropping frameworks like push-pull.",
+  "information_scope": [
+    "Land preparation and weed seed bank depletion",
+    "Root exudate interactions and chemical germination triggers",
+    "Soil fertility linkages, specifically nitrogen dynamics",
+    "Biological suppression systems and trap cropping architectures"
+  ],
+  "common_farmer_observations": [
+    "Maize plants looking severely stunted and weak despite receiving adequate, timely rainfall.",
+    "Maize leaves turning pale green or developing distinct yellow chlorotic patterns.",
+    "Crop showing clear wilting symptoms even when surrounding soil moisture levels look completely sufficient.",
+    "Extremely poor cob formation accompanied by a failure of the grains to fill out properly.",
+    "Small purple, pink, or reddish flowering weeds emerging directly out of the soil close to the maize stem.",
+    "Severe plant damage and stunting expressing clearly before any weed structures are visible above ground."
+  ],
+  "clarifying_questions": [
+    "Have maize or other cereal crops been cultivated repeatedly in this specific field over multiple consecutive seasons?",
+    "Are the colorful flowering weeds emerging directly from the base of your maize stems?",
+    "Did your maize show stunting and leaf yellowing well before the weeds actually broke through the soil surface?",
+    "Is the weed infestation spreading evenly across the entire plot or concentrated in localized patches?",
+    "Has the overall fertility and yield performance of this soil shown a continuous decline over time?",
+    "Have legumes or non-host trap crops been included in your recent crop rotation schedules?"
+  ],
+  "context_factors": [
+    "Striga damage is significantly more severe in soils with depleted fertility, particularly where nitrogen is limited.",
+    "Continuous cultivation of susceptible cereal hosts steadily expands the dormant weed seed bank in the soil.",
+    "Striga seeds are structurally resilient and can lie dormant in the soil profile for many years.",
+    "Chemical root exudates released by host crops actively stimulate dormant Striga seeds to germinate.",
+    "Strong, healthy crop development and elevated soil organic matter directly cushion maize against Striga impacts.",
+    "Moving contaminated soil, uncleaned tools, grazing animals, or surface runoff water spreads seeds between fields."
+  ],
+  "why_information_may_differ": [
+    "Fields with similar numbers of visible weeds can experience radically different levels of crop loss because the main damage occurs underground.",
+    "The survival and success of field interventions depend on background soil fertility, rainfall distribution, and rotation histories.",
+    "Biological frameworks like push-pull technology work exceptionally well in specific humid or semi-arid setups but require adaptation for specialized farming systems."
+  ],
+  "trusted_learning_points": [
+    "Understand that Striga attaches to and damages maize root systems completely before the weed ever becomes visible above the soil.",
+    "Avoid continuous cereal monocropping, as this practices steadily increases soil-borne weed seed populations over time.",
+    "Focus heavily on improving overall soil fertility to systematically reduce both weed attachment success and crop impact.",
+    "Use long-term crop rotation with verified non-host trap crops to trigger suicidal germination and deplete the seed bank.",
+    "Implement biological intercropping systems, such as push-pull technology, to suppress weed expansion while building soil health.",
+    "Uproot and destroy weeds before they can flower to prevent millions of new seeds from entering the soil."
+  ],
+  "possible_conflicting_information": [
+    "Hand-pulling visible weeds removes future seed sources but does nothing to reverse the root damage already inflicted underground during the current season. Long-term management must combine immediate removal with soil health interventions."
+  ],
+  "when_more_information_is_needed": [
+    "When trying to separate underground Striga damage from early nutrient deficiencies or basic drought stress symptoms.",
+    "When assessing if localized rainfall profiles and forage needs support implementing a biological push-pull intercropping system.",
+    "When choosing commercial maize varieties developed with specific tolerance or seed-coat protection traits.",
+    "When identifying multi-year soil nutrient gaps that are sustaining heavy, persistent weed infestations."
+  ],
+  "continue_learning": [
+    "Explore the chemical mechanics of root exudates and how trap crops trick parasitic weeds into suicidal germination.",
+    "Study ICIPE push-pull systems to understand how specific companion legumes suppress underground weed attachment."
+  ],
+  "uncertainties": [
+    "Emerged weed counts are a poor indicator of the actual scale of underground root parasitism.",
+    "Seed decay rates in the soil vary based on local microbial activity and soil moisture fluctuations.",
+    "The speed of seed bank depletion under trap-cropping regimes differs across distinct agroecological soil types."
+  ],
+  "related_topics": [
+    "Soil fertility",
+    "Crop rotation",
+    "Organic matter",
+    "Field scouting",
+    "Certified seed"
+  ],
+  "agronomic_principles": [
+    "Parasitic weed management must target the hidden, subterranean phase of the pest lifecycle to protect crop yields.",
+    "Soil nutritional status directly regulates the host plant's hormonal signaling and susceptibility to parasitic exploitation.",
+    "Eco-chemical disruption using non-host trap crops is the primary mechanism for depleting persistent soil seed banks."
+  ],
+  "major_pests": [],
+  "major_diseases": [],
+  "knowledge_notes": {
+    "focus": "Help farmers understand principles rather than memorize procedures.",
+    "prescriptions_removed": true,
+    "numeric_thresholds_removed": true,
+    "chemical_recommendations_removed": true
+  },
+  "safety_filters": {
+    "chemical_recommendations_removed": true,
+    "product_names_removed": true,
+    "fertilizer_rates_removed": true,
+    "dosages_removed": true
+  }
+}

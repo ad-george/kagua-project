@@ -1,0 +1,115 @@
+{
+  "id": "maize_cabi_grey_leaf_spot",
+  "crop": "Maize",
+  "topic": "Fungal Diseases (Grey Leaf Spot)",
+  "source": {
+    "organization": "Plantwise (CABI)",
+    "document": "Pest Management Decision Guide: Grey Leaf Spot of Maize",
+    "country": "Kenya",
+    "document_type": "Pest Management Guide",
+    "publication_year": "2020",
+    "link": "https://plantwiseplusknowledgebank.org/action/doSearch?AllField=Fungal+Diseases+%28Grey+Leaf+Spot%29&SeriesKey=plantwise"
+  },
+  "verification_sources": [
+    {
+      "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+      "document": "Maize TIMPs Volume 1"
+    },
+    {
+      "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+      "document": "Maize Extension and Training Manual"
+    },
+    {
+      "organization": "Plantwise (CABI)",
+      "document": "Knowledge Bank"
+    },
+    {
+      "organization": "Food and Agriculture Organization (FAO)",
+      "document": "Integrated Pest Management resources"
+    }
+  ],
+  "document_summary": "Core diagnostic and non-chemical management guidelines highlighting residue carry-over mechanics, moisture thresholds within dense canopies, and variety selection criteria to suppress Grey Leaf Spot outbreaks.",
+  "information_scope": [
+    "Crop establishment and growth dynamics",
+    "Foliar fungal pathogen identification and progression",
+    "Residue conservation vs. disease sanitation management",
+    "Crop rotation parameters with non-host crops"
+  ],
+  "common_farmer_observations": [
+    "Small tan to brown spots first appearing on older, lower maize leaves.",
+    "Foliar lesions becoming distinctly rectangular and cleanly restricted by the leaf veins.",
+    "Lesions enlarging and merging into prominent grey or silvery-grey blighted areas across the leaf blade.",
+    "Severely affected leaves drying out and dying prematurely.",
+    "Disease symptoms consistently beginning on lower leaves before migrating upward through the canopy."
+  ],
+  "clarifying_questions": [
+    "Are the lesions rectangular and restricted by the leaf veins, or are they irregular patches spreading randomly across the blade?",
+    "Did the leaf drying begin on the lowest leaves before appearing on the upper foliage?",
+    "Has the crop experienced prolonged periods of high humidity, frequent rainfall, heavy dew, or dense canopy configurations?",
+    "Was maize grown in the same field during the previous season with infected crop residue left exposed on the surface?"
+  ],
+  "context_factors": [
+    "Warm temperatures and prolonged periods of leaf wetness directly trigger and accelerate fungal spore germination.",
+    "High relative humidity within dense crop canopies drastically amplifies the severity of the disease.",
+    "The causal fungus survives between seasons by sheltering on infected maize residues left untouched in the field.",
+    "Continuous monocropping of maize systematically increases the volume of surviving fungal inoculum in the local environment.",
+    "Wind currents carry and spread fungal spores easily from nearby infected fields to healthy crops."
+  ],
+  "why_information_may_differ": [
+    "Disease severity varies significantly based on shifting local weather conditions, particularly humidity and leaf wetness durations.",
+    "Commercial maize varieties differ inherently in their genetic tolerance or resistance expressions.",
+    "Surface residue management configurations alter how much fungal inoculum successfully survives from one season to the next."
+  ],
+  "trusted_learning_points": [
+    "Recognize that Grey Leaf Spot is primarily a residue-borne disease that survives between seasons on infected maize debris.",
+    "Conduct regular field scouting to identify early symptoms before severe canopy damage and blighting develop.",
+    "Implement systematic crop rotation with non-host families to reduce fungal carry-over in the soil plot.",
+    "Balance residue retention practices with sanitation needs, adjusting actions based on localized disease history.",
+    "Prioritize maize varieties with documented tolerance or resistance to minimize structural yield impacts."
+  ],
+  "possible_conflicting_information": [
+    "Conservation agriculture explicitly encourages retaining surface crop residues to build soil health, whereas intensive disease management recommends reducing infected residues to eliminate fungal inoculum sources."
+  ],
+  "when_more_information_is_needed": [
+    "When trying to distinguish Grey Leaf Spot from other lookalike maize foliar blights showing similar tan lesions.",
+    "When confirming whether locally available commercial seed lines possess verified genetic tolerance traits.",
+    "When evaluating if immediate microclimate shifts threaten to trigger rapid, explosive disease development."
+  ],
+  "continue_learning": [
+    "Study field observation methodologies to differentiate between diverse maize leaf spots and blights.",
+    "Explore how specific non-host crop rotation lengths influence the survival decay of residue-borne fungi."
+  ],
+  "uncertainties": [
+    "Visual assessment alone can sometimes confuse Grey Leaf Spot with initial stages of other fungal diseases.",
+    "Seasonal weather transitions make predicting the exact velocity of a fungal outbreak highly volatile.",
+    "Inherent resistance traits may shift in effectiveness if new localized pathogen strains emerge."
+  ],
+  "related_topics": [
+    "Humidity",
+    "Crop rotation",
+    "Crop residue",
+    "Field scouting",
+    "Resistant varieties"
+  ],
+  "agronomic_principles": [
+    "Residue management strategies must explicitly balance structural soil conservation targets with phytosanitary risk thresholds.",
+    "Canopy microclimate densities directly regulate the reproductive lifecycle of foliar fungal pathogens.",
+    "Taxonomic separation through rotation represents a primary tool for disrupting residue-dependent fungal survival."
+  ],
+  "major_pests": [],
+  "major_diseases": [
+    "Grey Leaf Spot"
+  ],
+  "knowledge_notes": {
+    "focus": "Help farmers understand principles rather than memorize procedures.",
+    "prescriptions_removed": true,
+    "numeric_thresholds_removed": true,
+    "chemical_recommendations_removed": true
+  },
+  "safety_filters": {
+    "chemical_recommendations_removed": true,
+    "product_names_removed": true,
+    "fertilizer_rates_removed": true,
+    "dosages_removed": true
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "id": "maize_fall_armyworm_invasive_pest",
+  "crop": "Maize",
+  "topic": "Invasive Pests (Fall Armyworm)",
+  "source": {
+    "organization": "CABI / Ministry of Agriculture and Livestock Development",
+    "document": "Factsheet for Farmers: Fall Armyworm Management in Maize",
+    "country": "Kenya",
+    "document_type": "Factsheet",
+    "publication_year": "2020",
+    "url": "https://www.cabi.org/Uploads/Kenya%20Final%20Fall%20Armyworm%20Technical%20Brief.pdf"
+  },
+  "verification_sources": [
+    {
+      "organization": "CABI",
+      "document": "Fall Armyworm Portal and Factsheets for Farmers"
+    },
+    {
+      "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+      "document": "Maize TIMPs Volume 1"
+    },
+    {
+      "organization": "Ministry of Agriculture and Livestock Development (KCEP-CRAL)",
+      "document": "Maize Extension and Training Manual"
+    },
+    {
+      "organization": "Food and Agriculture Organization (FAO)",
+      "document": "Integrated Management of Fall Armyworm on Maize"
+    },
+    {
+      "organization": "International Maize and Wheat Improvement Center (CIMMYT)",
+      "document": "Integrated Fall Armyworm Management in Africa"
+    }
+  ],
+  "document_summary": "Operational scouting reference detailing the morphological identification of Fall Armyworm, leaf window-paning damage, whorl protection, and ecological preservation of natural predators.",
+  "information_scope": [
+    "Crop establishment windows and vegetative vulnerability",
+    "Larval identification keys (Y-marking, tail spot configurations)",
+    "Scouting protocols for fresh vs. old feeding damage",
+    "Conservation of localized biological natural enemies"
+  ],
+  "common_farmer_observations": [
+    "Small clusters of eggs covered with a dense layer of grey or brown hair-like scales on leaves.",
+    "Young leaves showing clear, small transparent 'window-pane' feeding patches where tissue is scraped clean.",
+    "Irregular holes developing and expanding on leaves as they unfold from the central whorl.",
+    "Large, ragged, torn holes heavily tearing leaves emerging from the plant whorl.",
+    "Accumulations of large amounts of coarse, sawdust-like larval droppings (frass) deep inside the whorl.",
+    "Caterpillars displaying clear longitudinal stripes and a distinct inverted pale Y-shaped line on their head.",
+    "Four prominent dark spots arranged in a perfect square pattern on the second-to-last body segment of mature larvae.",
+    "Feeding damage and larval activity heavily concentrated around the central whorl during early growth phases."
+  ],
+  "clarifying_questions": [
+    "Is the chewing damage concentrated deep inside the central whorl or spread evenly across all mature leaves?",
+    "Can you see wet, fresh sawdust-like frass inside the whorl together with live, active caterpillars?",
+    "Are the caterpillars still small and feeding openly on the leaves, or have they moved deep into the whorl or ear structures?",
+    "Are you noticing hair-covered egg masses stuck to nearby plants?",
+    "Is the leaf damage visibly increasing day by day, or has it stabilized?",
+    "Can you identify active natural enemies like predatory bugs, parasitic wasps, or visibly diseased caterpillars in the field?"
+  ],
+  "context_factors": [
+    "Young, developing vegetative maize plants are significantly more vulnerable to catastrophic damage than older crops.",
+    "Adult moths are highly migratory and fly long distances, causing new field infestations to appear almost overnight.",
+    "Fields planted at different times within the same locality provide a continuous food supply that keeps pest populations high.",
+    "Localized natural enemies play a critical role in naturally suppressing egg and larval populations.",
+    "Structured field scouting is essential to catch young larvae before they burrow deep into the protective whorl.",
+    "Ambient weather patterns heavily dictate the speed of the pest's lifecycle and overall larval survival rates."
+  ],
+  "why_information_may_differ": [
+    "Severe leaf damage does not automatically equal final yield loss, as healthy maize can recover from early defoliation under good growing conditions.",
+    "Larval counts change dramatically based on shifting seasonal weather, regional locations, and specific crop maturity stages.",
+    "The presence and variety of natural predators differ widely depending on surrounding farming system diversity.",
+    "The severity of an infestation depends on the combination of plant stress, soil fertility, and environment."
+  ],
+  "trusted_learning_points": [
+    "Prioritize regular scouting because young larvae are easy to manage before they hide deep inside the central whorl.",
+    "Look for the distinct inverted Y-shape on the head and the four-spot square on the tail to avoid confusing this pest with other caterpillars.",
+    "Identify early 'window-pane' lesions on leaves as an indicator to act before large, ragged holes develop.",
+    "Use integrated pest management that combines careful monitoring, conservation of natural enemies, and smart cultural practices.",
+    "Keep crops healthy and well-nourished, as strong plants tolerate feeding damage far better than stressed ones.",
+    "Engage in community-wide monitoring because adult moths move effortlessly across farm boundaries."
+  ],
+  "possible_conflicting_information": [
+    "Heavy leaf damage can look highly alarming, but actual yield loss depends on the growth stage and the plant's recovery capacity. Some guides recommend immediate chemical sprays at the first sign of any hole, whereas integrated frameworks require scouting to confirm an active infestation before taking action."
+  ],
+  "when_more_information_is_needed": [
+    "When trying to separate Fall Armyworm from African Armyworm, traditional stem borers, or basic bollworm species.",
+    "When calculating the exact percentage of plants showing active, live infestations versus old, abandoned feeding damage.",
+    "When identifying local beneficial insects to avoid disrupting natural biological control processes.",
+    "When severe infestations persist even after implementing standard cultural management practices."
+  ],
+  "continue_learning": [
+    "Learn to identify all life phases of the pest, from egg masses to adult moths.",
+    "Study the difference between fresh, moist larval frass and dry, old feeding residue to track active pests.",
+    "Explore how surrounding crop diversity can naturally attract and sustain beneficial predatory insects."
+  ],
+  "uncertainties": [
+    "Visual leaf damage patterns alone cannot reliably predict the final commercial yield outcome.",
+    "Migratory moth movements and seasonal arrivals cannot be forecasted precisely at an individual farm level.",
+    "The success of cultural control measures shifts depending on background pest pressure and immediate weather transitions."
+  ],
+  "related_topics": [
+    "Field scouting",
+    "Natural enemies",
+    "Crop health",
+    "Weather",
+    "Integrated Pest Management",
+    "Plant stress"
+  ],
+  "agronomic_principles": [
+    "Early intervention timelines are governed by larval structural access relative to the host plant's protective anatomy.",
+    "Apparent physical damage parameters do not correlate linearly with ultimate economic yield reductions in resilient crops.",
+    "Landscape-level pest mobility requires moving from isolated farm actions to coordinated community monitoring frameworks."
+  ],
+  "major_pests": [
+    "Fall Armyworm (Spodoptera frugiperda)",
+    "African Armyworm",
+    "Stem Borers",
+    "Bollworms"
+  ],
+  "major_diseases": [],
+  "knowledge_notes": {
+    "focus": "Help farmers understand principles rather than memorize procedures.",
+    "prescriptions_removed": true,
+    "numeric_thresholds_removed": true,
+    "chemical_recommendations_removed": true
+  },
+  "safety_filters": {
+    "chemical_recommendations_removed": true,
+    "product_names_removed": true,
+    "fertilizer_rates_removed": true,
+    "dosages_removed": true
+  }
+}

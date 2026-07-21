@@ -1,0 +1,98 @@
+{
+  "id": "potato_kephis_seed_certification_hygiene",
+  "crop": "Potato",
+  "topic": "Seed Production, Certification, and Phytosanitary Standards",
+  "source": {
+    "organization": "Kenya Plant Health Inspectorate Service (KEPHIS)",
+    "document": "Official Seed Potato Production and Phytosanitary Certification Guidelines",
+    "country": "Kenya",
+    "document_type": "Regulatory Guideline",
+    "publication_year": "2021",
+    "url": "https://www.kephis.org/images/docs/seedpotatobooklet.pdf"
+  },
+  "verification_sources": [
+    {
+      "organization": "Kenya Plant Health Inspectorate Service (KEPHIS)",
+      "document": "Seed Potato Production and Certification Guidelines"
+    }
+  ],
+  "document_summary": "Phytosanitary directives detailing statutory isolation rules, seed health classes, multi-stage field rogueing techniques, and regulatory monitoring to stop seed degeneration and clean-seed contamination in Kenya.",
+  "information_scope": [
+    "Phytosanitary seed potato classification and traceability markers",
+    "Field isolation rules and baseline boundary security",
+    "Continuous rogueing methods for off-types and virus-infected stands",
+    "Safe disposal tracking of contaminated crop structures",
+    "Mandatory soil diagnostic screening for regulated quarantine pests"
+  ],
+  "common_farmer_observations": [
+    "Stunted, dwarfed, or rigid potato plants growing unnaturally upright compared to the rest of the uniform variety.",
+    "Subtle changes in leaf geometry or variations in flower coloring indicating hidden off-types or genetic mixtures.",
+    "Using tiny tubers pulled indiscriminately from the bottom of the general warehouse heap for the next seed crop, causing yields to drop season after season.",
+    "Viral infections showing minimal immediate damage but causing gradual, systemic stunting of subsequent generations."
+  ],
+  "clarifying_questions": [
+    "Are you utilizing officially inspected seed tubers carrying verified regulatory tags, or are you multiplying uncertified home harvests?",
+    "When you find a diseased or off-type plant, do you uproot the complete stand including its mother tuber and all newly formed small tubers?",
+    "Has your field plot undergone mandatory institutional soil analysis to verify absolute freedom from persistent quarantine wilt bacteria and cyst nematodes prior to sowing?"
+  ],
+  "context_factors": [
+    "Seed potatoes are legally governed under statutory quality frameworks in Kenya, demanding strict tolerance floors for quarantine pests.",
+    "The overwhelming majority of smallholder seed cycles remain informal, driving high national baseline seed degeneration pressures.",
+    "Higher-altitude development zones are intentionally selected for seed multiplication due to lower overall pest vector populations.",
+    "Official guidelines mandate defined physical separation buffers between seed multiplication rows and standard neighboring ware potato plots to block vector migrations."
+  ],
+  "why_information_may_differ": [
+    "Phytosanitary parameters for certified seed fields mandate zero or near-zero tolerances for specific rots, whereas regular consumption fields prioritize total volume over systemic genetic purity."
+  ],
+  "trusted_learning_points": [
+    "Always secure officially certified seed potatoes from authorized, registered merchants to protect your soil from long-term pathogen contamination.",
+    "Practice systematic, continuous rogueing from early vegetative growth right up to maturity, actively removing off-types and sick stands.",
+    "When rogueing, carefully place the entire plant, mother tuber, and young tubers into a secure bag before removing it from the plot to prevent trailing soil contamination.",
+    "Dispose of all rogued materials completely outside production zones by deep burial inside dedicated pits or burning.",
+    "Understand that viruses are insidious because they do not kill the plant immediately; instead, they degrade the cellular health of future seed generations.",
+    "Never plant continuous consumption harvests back-to-back as seed, as this guarantees rapid multiplication of seed-borne decay."
+  ],
+  "possible_conflicting_information": [
+    "Informal community sorting methods suggest keeping small tubers for seed based purely on physical appearance, while official phytosanitary science demonstrates that small tubers from infected lines conceal heavy, invisible viral loads."
+  ],
+  "when_more_information_is_needed": [
+    "When applying to become a registered seed potato merchant or looking to clarify legal isolation boundaries from neighboring solanaceous plots.",
+    "When tracking down official inspection offices to authenticate seed certification labels."
+  ],
+  "continue_learning": [
+    "Review official KEPHIS training manuals covering smallholder group nursery certification and national phytosanitary protocols."
+  ],
+  "uncertainties": [
+    "The entry and transmission rates of latent bacterial pathogens through untraceable, informal seed movements across county borders."
+  ],
+  "related_topics": [
+    "Certified Seed Systems",
+    "Rogueing and Field Sanitation",
+    "Regulatory Agricultural Standards"
+  ],
+  "agronomic_principles": [
+    "Seed selection dictates genetic and phytosanitary potential; visible size grading cannot substitute for verified clean lineage.",
+    "Rogueing must encompass the entire plant structure to prevent underground infected residues from sprouting as volunteer sources later.",
+    "Isolation boundaries act as physical filters against cross-contamination from unmanaged neighbor matrices."
+  ],
+  "major_pests": [
+    "Root-knot Nematodes",
+    "Potato Cyst Nematode (PCN)"
+  ],
+  "major_diseases": [
+    "Bacterial Wilt (Ralstonia solanacearum)",
+    "Blackleg and Soft Rot (Pectobacterium spp.)"
+  ],
+  "knowledge_notes": {
+    "focus": "Help farmers understand principles rather than memorize procedures.",
+    "prescriptions_removed": true,
+    "numeric_thresholds_removed": true,
+    "chemical_recommendations_removed": true
+  },
+  "safety_filters": {
+    "chemical_recommendations_removed": true,
+    "product_names_removed": true,
+    "fertilizer_rates_removed": true,
+    "dosages_removed": true
+  }
+}

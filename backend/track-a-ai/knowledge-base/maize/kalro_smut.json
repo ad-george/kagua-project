@@ -1,0 +1,118 @@
+{
+  "id": "maize_head_and_common_smut",
+  "crop": "Maize",
+  "topic": "Fungal Diseases (Head Smut and Common Smut)",
+  "source": {
+    "organization": "Ministry of Agriculture / Plantwise (CABI)",
+    "document": "Pest Management Decision Guides: Maize Head Smut and Common Smut",
+    "country": "Kenya",
+    "document_type": "Pest Management Guide",
+    "publication_year": "2020",
+    "url": "https://plantwiseplusknowledgebank.org/doi/full/10.1079/pwkb.20157800301"
+  },
+  "verification_sources": [
+    {
+      "organization": "Plantwise (CABI)",
+      "document": "Pest Management Decision Guide: Common Smut of Maize"
+    },
+    {
+      "organization": "Plantwise (CABI)",
+      "document": "Pest Management Decision Guide: Head Smut of Maize"
+    },
+    {
+      "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+      "document": "Maize TIMPs Volume 1"
+    },
+    {
+      "organization": "Ministry of Agriculture and Livestock Development (KCEP-CRAL)",
+      "document": "Maize Extension and Training Manual"
+    }
+  ],
+  "document_summary": "Comparative protection manual separating systemic seedborne Head Smut from wound-opportunistic Common Smut, tracking gall rupture cycles, spore longevity, and field sanitation protocols.",
+  "information_scope": [
+    "Crop establishment and seedborne pathology vectors",
+    "Organ-specific fungal symptom tracking (tassel vs. stalk vs. ear)",
+    "Mechanical wounding and insect damage links to infection",
+    "Sanitation frameworks and crop rotation intervals"
+  ],
+  "common_farmer_observations": [
+    "Large, swollen fleshy galls developing prominently on ears, tassels, leaves, or stalks.",
+    "Young developing galls appearing distinctly grey or white before turning into dark masses as spores mature.",
+    "Thick, black powdery spore masses bursting and releasing into the wind when mature galls rupture.",
+    "Abnormal, distorted tassels or entire ear structures completely replaced by black, powdery masses.",
+    "Severe disruption of ear development leading to reduced grain production on affected stalks."
+  ],
+  "clarifying_questions": [
+    "Are the black spores forming inside localized swollen galls, or are the entire tassels and ears being replaced by black masses?",
+    "Did you first spot these symptoms on vegetative parts before flowering, or did they appear at flowering?",
+    "Are the symptoms restricted to specific plant tissues, or is the entire reproductive structure affected?",
+    "Have you observed these exact spore symptoms in this specific plot during previous maize crop cycles?",
+    "Did you plant using certified seed stocks carrying official quality assurance validation?"
+  ],
+  "context_factors": [
+    "Smut fungi survive for years by sheltering within infected crop debris and directly inside the soil profile.",
+    "Seedborne transmission pathways serve as a primary vector for establishing systemic Head Smut infections.",
+    "Physical tissue wounds from hail, tools, or chewing pests create direct entry points for Common Smut spores.",
+    "Ambient weather conditions during initial vegetative and reproductive growth heavily influence infection success.",
+    "Continuous maize cultivation without functional breaks allows soil-borne spore populations to accumulate over time."
+  ],
+  "why_information_may_differ": [
+    "Head Smut and Common Smut originate from entirely different fungi, creating fundamentally unique field symptoms.",
+    "The physical expression of the disease is dependent on the specific growth stage of the maize host.",
+    "Environmental dynamics dictate how successfully airborne or soil spores infect individual plants.",
+    "Commercial seed varieties display widely different susceptibility curves and tissue structural tolerances."
+  ],
+  "trusted_learning_points": [
+    "Observe where symptoms develop on the plant to determine whether you are dealing with Head Smut or Common Smut.",
+    "Use certified seed lots to systematically prevent the introduction of seedborne fungal pathogens into clean fields.",
+    "Incorporate structured crop rotations and strict field sanitation to reduce spore survival between seasons.",
+    "Remove and safely destroy heavily infected plant tissue early to limit the release of airborne spores.",
+    "Conduct regular field scouting to identify abnormal flowering structures and early gall formations before they rupture."
+  ],
+  "possible_conflicting_information": [
+    "Deep burial or burning of highly infected crop residues is often prioritized to manage severe outbreaks, while conservation agriculture principles discourage residue destruction to protect soil health. The choice depends on localized disease levels."
+  ],
+  "when_more_information_is_needed": [
+    "When looking to differentiate Common Smut lesions from Head Smut or rare structural ear and tassel abnormalities.",
+    "When confirming which local commercial hybrids carry documented structural tolerance to soil-borne smuts.",
+    "When visual anomalies require official laboratory verification due to overlapping diagnostic symptoms."
+  ],
+  "continue_learning": [
+    "Study the lifecycle differences between systemic soil infections and opportunistic airborne wound infections.",
+    "Learn how proper field sanitation practices directly alter the baseline spore density across multi-year cycles."
+  ],
+  "uncertainties": [
+    "Initial visual deformations can occasionally mimic rare hormonal or physiological tassel abnormalities.",
+    "The long-term survival window of fungal spores varies based on localized soil biology and drainage variations.",
+    "Shifting environmental conditions can cause erratic changes in how severely a crop responds to infection from year to year."
+  ],
+  "related_topics": [
+    "Certified seed",
+    "Crop rotation",
+    "Field sanitation",
+    "Field scouting",
+    "Resistant varieties"
+  ],
+  "agronomic_principles": [
+    "Systemic plant infections establish early via seed or root contact, whereas localized infections exploit physical tissue breaches.",
+    "Spore containment timing determines the pathogeometric expansion rate of fungal populations within a single season.",
+    "Phytosanitary entry prevention through certified inputs is the primary barrier against seedborne vascular diseases."
+  ],
+  "major_pests": [],
+  "major_diseases": [
+    "Head Smut",
+    "Common Smut"
+  ],
+  "knowledge_notes": {
+    "focus": "Help farmers understand principles rather than memorize procedures.",
+    "prescriptions_removed": true,
+    "numeric_thresholds_removed": true,
+    "chemical_recommendations_removed": true
+  },
+  "safety_filters": {
+    "chemical_recommendations_removed": true,
+    "product_names_removed": true,
+    "fertilizer_rates_removed": true,
+    "dosages_removed": true
+  }
+}

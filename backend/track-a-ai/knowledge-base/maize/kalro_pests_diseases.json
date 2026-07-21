@@ -1,0 +1,236 @@
+{
+  "id": "maize_kalro_crop_health_pests_diseases",
+  "crop": "Maize",
+  "topic": "Crop Health (Major Pests and Diseases)",
+  "source": {
+    "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+    "document": "Maize TIMPs Volume 1",
+    "country": "Kenya",
+    "document_type": "Technical Manual",
+    "publication_year": "2019",
+    "url": "https://keep.kalro.org/appfiles/media/vc_files/MAIZE_TIMPS_Volume-1_for_Upload.pdf"
+  },
+  "verification_sources": [
+    {
+      "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+      "document": "Maize TIMPs Volume 1"
+    },
+    {
+      "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+      "document": "Maize Extension and Training Manual"
+    },
+    {
+      "organization": "Plantwise (CABI)",
+      "document": "Knowledge Bank and Pest Management Decision Guides for Maize"
+    },
+    {
+      "organization": "Ministry of Agriculture and Livestock Development (KCEP-CRAL)",
+      "document": "Maize Extension and Training Manual"
+    },
+    {
+      "organization": "Food and Agriculture Organization (FAO)",
+      "document": "Integrated Pest Management for Maize"
+    },
+    {
+      "organization": "CIMMYT",
+      "document": "Integrated Management of Maize Pests and Diseases"
+    }
+  ],
+  "document_summary": "Comprehensive crop protection guide outlining diagnostic field markers for endemic chewing and sucking pests, virus complexes, ear rots, and non-chemical integrated pest management systems.",
+  "information_scope": [
+    "Field scouting frameworks across multiple growth stages",
+    "Morphological and behavioral identifiers for dynamic field pests",
+    "Symptom progressions for viral and complex fungal conditions",
+    "Role of beneficial insects and biological regulation methods"
+  ],
+  "major_pests": [
+    {
+      "name": "Stem Borers",
+      "farmer_observations": [
+        "Neat, straight rows of pinholes appearing across unfolding leaves.",
+        "Small, visible entry holes bored into the sides of the maize stalks.",
+        "The central leaves of young maize plants wilting and dying, creating a dead-heart look.",
+        "Stalks snapping easily or cobs failing to fill out properly due to internal tunneling."
+      ],
+      "learning_points": [
+        "Internal feeding damage usually begins well before the larvae are visible on the outside.",
+        "Stalk tunnels create open entry points for secondary disease-causing fungi and rots.",
+        "Early vegetative scouting is essential to catch larvae before they burrow inside the stem."
+      ]
+    },
+    {
+      "name": "African Armyworm",
+      "farmer_observations": [
+        "Extremely rapid stripping and removal of green leaf tissue across the field.",
+        "Massive numbers of caterpillars moving together in a clear, marching direction.",
+        "Severe chewing damage appearing suddenly across large, sweeping sections of the crop."
+      ],
+      "learning_points": [
+        "Outbreaks are highly seasonal and can appear with zero warning based on weather shifts.",
+        "Large infestations require community-wide monitoring because adult moths travel long distances."
+      ]
+    },
+    {
+      "name": "Aphids",
+      "farmer_observations": [
+        "Clusters of small, soft-bodied green or dark insects coating leaves, stems, or tassels.",
+        "A sticky, clear liquid (honeydew) building up on leaf surfaces.",
+        "A black, sooty mold layer developing over the sticky honeydew deposits.",
+        "Maize leaves curling inward, puckering, or showing signs of stunting."
+      ],
+      "learning_points": [
+        "Local beneficial predators like ladybird beetles often naturally manage and suppress aphid colonies.",
+        "Heavy outbreaks can drain overall plant vigor and serve as vectors that transmit viruses."
+      ]
+    },
+    {
+      "name": "Thrips",
+      "farmer_observations": [
+        "Fine, silvery streaks or shiny scratch marks appearing on leaf surfaces.",
+        "Tiny, incredibly slender insects hidden deep within the leaf folds or whorls.",
+        "Leaves showing structural scarring, crinkling, or general distortion."
+      ],
+      "learning_points": [
+        "Thrips can act as vectors that transmit specific damaging plant viruses.",
+        "Early feeding marks can easily be confused with damage from other small sucking pests."
+      ]
+    },
+    {
+      "name": "Cutworms",
+      "farmer_observations": [
+        "Young, emerging maize seedlings cut cleanly off right at or just below the ground line.",
+        "Seedlings suddenly wilting or collapsing completely within days of popping up.",
+        "Patches of missing plants creating empty gaps in your rows."
+      ],
+      "learning_points": [
+        "The risk of damage is highest during the initial crop establishment phase.",
+        "The larvae stay hidden under the soil surface during the day and feed only at night."
+      ]
+    },
+    {
+      "name": "Bollworms and Ear-feeding Caterpillars",
+      "farmer_observations": [
+        "Direct chewing and feeding damage visible on developing cobs and kernels.",
+        "Messy larval droppings (frass) accumulating around the maize silks and ear tips.",
+        "Kernels rotting or discoloring right around active feeding sites."
+      ],
+      "learning_points": [
+        "Kernel chewing directly increases the risk of fungal infection and mycotoxin contamination.",
+        "Several different caterpillar species can cause identical feeding patterns on the ear."
+      ]
+    }
+  ],
+  "major_diseases": [
+    {
+      "name": "Maize Lethal Necrosis (MLN)",
+      "farmer_observations": [
+        "Leaves showing a pale, scrambled mottling or mosaic yellow pattern.",
+        "Leaves drying out and browning, starting from the outer edges and moving inward.",
+        "Cobs failing to develop or producing few, scattered, deformed kernels.",
+        "Plants dying prematurely across wide patches during severe field infections."
+      ],
+      "learning_points": [
+        "MLN is caused by a destructive combination of two viruses hitting the plant at the same time.",
+        "Early diagnosis is key because initial symptoms look like common nutrient shortages."
+      ]
+    },
+    {
+      "name": "Downy Mildew",
+      "farmer_observations": [
+        "Long, pale yellow stripes running continuously along the length of the leaves.",
+        "Severely stunted plant growth accompanied by narrow, rigid leaves.",
+        "A fuzzy, whitish fungal layer developing on leaf undersides during wet, humid mornings."
+      ],
+      "learning_points": [
+        "Symptom expression changes significantly based on regional humidity levels and plant age."
+      ]
+    },
+    {
+      "name": "Ear Rot (Fusarium and Aspergillus)",
+      "farmer_observations": [
+        "Kernels turning pink, white, grey, or greenish-yellow while still on the cob.",
+        "A thick, visible mold layer spreading across kernels and underneath the husks.",
+        "Harvested grain looking shriveled, discolored, light, and poor in quality."
+      ],
+      "learning_points": [
+        "Certain ear rot fungi produce dangerous, toxic mycotoxins during growth.",
+        "The amount of visible mold does not match up perfectly with actual toxin levels."
+      ]
+    }
+  ],
+  "clarifying_questions": [
+    "Did these leaf and stalk symptoms pop up almost overnight, or did they develop slowly over several weeks?",
+    "Are the damaged plants concentrated in small, isolated patches or spread evenly across the field?",
+    "Which part of the maize plant (lower leaves, central whorl, stem, or ear) showed damage first?",
+    "Did you spot active insects or larvae on the crop before these symptoms appeared?",
+    "Have you encountered this specific type of plant or ear damage during previous cropping seasons?",
+    "What kind of weather patterns occurred right before you noticed the symptoms?",
+    "Do neighboring fields show the exact same pest or disease patterns?"
+  ],
+  "context_factors": [
+    "Local weather changes heavily dictate how fast pests multiply and how easily diseases spread.",
+    "The plant's growth stage alters its vulnerability; seedlings and flowering plants face different risks.",
+    "Growing maize continuously on the same plot increases pressure from resident pests and pathogens.",
+    "Clearing out old stalks and maintaining field sanitation directly cuts down overwintering pest numbers.",
+    "Healthy populations of beneficial insects provide vital natural control over common pests.",
+    "Plants stressed by drought or poor soil are significantly more vulnerable to crop health issues."
+  ],
+  "why_information_may_differ": [
+    "Many unrelated pests and diseases create highly similar chewing marks or yellow leaf patterns.",
+    "Extreme environmental stress, like cold or waterlogging, can look exactly like pest or disease damage.",
+    "The same pest can trigger completely different symptoms depending on how old the maize plant is.",
+    "The severity of an outbreak shifts based on local weather, seed variety choice, and field care."
+  ],
+  "trusted_learning_points": [
+    "Set up a routine scouting schedule rather than waiting until severe crop damage is visible.",
+    "Identify the specific pest or disease accurately before choosing any field interventions.",
+    "Use integrated pest management that blends prevention, scouting, biological controls, and cultural practices.",
+    "Protect local beneficial insects, as they provide critical natural defense lines for your crops.",
+    "Keep your fields well-nourished, since healthy crops resist and recover from damage far better."
+  ],
+  "possible_conflicting_information": [
+    "Lookalike symptoms can lead to incorrect diagnoses; always combine what you see on the leaves with crop history and recent weather. Visible chewing damage does not always mean you will face an economic loss, and multiple pests can hit at once, making field diagnosis complex."
+  ],
+  "when_more_information_is_needed": [
+    "When visual leaf patterns cannot be confidently identified during field scouting.",
+    "When multiple distinct pests or diseases appear on the same plants simultaneously.",
+    "When rare or unusual symptoms show up outside of their normal seasonal patterns.",
+    "When official laboratory testing is required to confirm a viral or fungal diagnosis."
+  ],
+  "continue_learning": [
+    "Master structured field scouting methods to catch crop health issues early.",
+    "Learn to separate common insect chewing patterns from infectious fungal spots.",
+    "Explore how seasonal weather variations trigger or halt insect and mold outbreaks."
+  ],
+  "uncertainties": [
+    "Visual checks alone cannot identify every single viral strain or fungal species with absolute certainty.",
+    "How severely a pest outbreak spreads can change wildly from one season to the next based on regional climate shifts.",
+    "Confirming complex viral conditions like MLN often requires official laboratory testing."
+  ],
+  "related_topics": [
+    "Field scouting",
+    "Plant health",
+    "Pests",
+    "Diseases",
+    "Nutrient deficiencies",
+    "Weather",
+    "Soil fertility"
+  ],
+  "agronomic_principles": [
+    "Systematic, multi-point field monitoring provides the foundation for effective crop protection decisions.",
+    "Pest and disease severity are governed by interactions within the host-pathogen-environment triangle.",
+    "Preserving biological diversity in the field supports natural pest regulation systems."
+  ],
+  "knowledge_notes": {
+    "focus": "Help farmers understand principles rather than memorize procedures.",
+    "prescriptions_removed": true,
+    "numeric_thresholds_removed": true,
+    "chemical_recommendations_removed": true
+  },
+  "safety_filters": {
+    "chemical_recommendations_removed": true,
+    "product_names_removed": true,
+    "fertilizer_rates_removed": true,
+    "dosages_removed": true
+  }
+}

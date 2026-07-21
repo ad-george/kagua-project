@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ── Page ── */
+body {
+  background-color: #F8FAFC;
+  margin: 0;
+}
+
+/* ── Container ── */
+.screen2-container {
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 20px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* ── Header block ── */
+.screen2-header {
+  margin-bottom: 28px;
+}
+
+.screen2-brand {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #2E86C1;
+  margin: 0 0 16px;
+}
+
+.screen2-title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #1F2937;
+  line-height: 1.25;
+  margin: 0 0 8px;
+}
+
+.screen2-intro {
+  font-size: 1rem;
+  color: #6B7280;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Summary card ── */
+.screen2-summary-card {
+  background: #FFFFFF;
+  border: 1.5px solid #E5E7EB;
+  border-left: 4px solid #2E86C1;  
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.screen2-summary-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 6px 0;
+}
+
+.screen2-summary-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #9CA3AF;
+  min-width: 60px;
+  flex-shrink: 0;
+}
+
+.screen2-summary-value {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1F2937;
+  line-height: 1.5;
+}
+
+.screen2-summary-divider {
+  height: 1px;
+  background: #F3F4F6;
+  margin: 4px 0;
+}
+
+/* ── Section title ── */
+.screen2-section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1F2937;
+  margin: 0 0 14px;
+}
+
+/* ── Cards list ── */
+.screen2-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+/* ── Framing note ── */
+.screen2-note {
+  background: #F0F7FF;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+}
+
+.screen2-note p {
+  font-size: 0.95rem;
+  color: #1E3A5F;
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ── Continue button ── */
+.screen2-continue-btn {
+  background-color: #1E3A5F;
+  color: #FFFFFF;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 16px 24px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  letter-spacing: 0.01em;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.screen2-continue-btn:hover {
+  background-color: #2E86C1;
+}
+
+.screen2-continue-btn:active {
+  transform: scale(0.98);
+}
+
+/* ── Confirm / retry buttons ── */
+.screen2-confirm-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.screen2-no-btn {
+  background: #FFFFFF;
+  color: #6B7280;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 14px 24px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.screen2-no-btn:hover {
+  background-color: #F8FAFC;
+  border-color: #9CA3AF;
+}
+
+.screen2-retry-choice {
+  background: #F0F7FF;
+  border-radius: 10px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.screen2-retry-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #1E3A5F;
+  margin: 0 0 4px;
+}
+
+.screen2-retry-btn {
+  background: #FFFFFF;
+  color: #1E3A5F;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 14px 24px;
+  border: 1.5px solid #2E86C1;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.screen2-retry-btn:hover {
+  background-color: #F0F7FF;
+}
+
+.screen2-retry-btn:active {
+  transform: scale(0.98);
+}
+
+/* ── Responsive ── */
+@media (min-width: 640px) {
+  .screen2-container {
+    padding: 56px 32px 48px;
+  }
+
+  .screen2-title {
+    font-size: 2.1rem;
+  }
+}
+
+@media (max-width: 359px) {
+  .screen2-title {
+    font-size: 1.6rem;
+  }
+}

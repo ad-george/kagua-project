@@ -1,0 +1,127 @@
+{
+  "id": "maize_moald_aflatoxin_contamination",
+  "crop": "Maize",
+  "topic": "Mycotoxins and Food Safety (Aflatoxin Contamination)",
+  "source": {
+    "organization": "Ministry of Agriculture and Livestock Development",
+    "document": "Technical Factsheet: Aflatoxin Prevention in Maize Systems",
+    "country": "Kenya",
+    "document_type": "Technical Factsheet",
+    "publication_year": "2021",
+    "url": "https://kilimo.go.ke/about-us/"
+  },
+  "verification_sources": [
+    {
+      "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+      "document": "Maize TIMPs Volume 1"
+    },
+    {
+      "organization": "Ministry of Agriculture and Livestock Development (KCEP-CRAL)",
+      "document": "Maize Extension and Training Manual"
+    },
+    {
+      "organization": "Food and Agriculture Organization (FAO)",
+      "document": "Good Practices for the Prevention of Mycotoxins in Cereals"
+    },
+    {
+      "organization": "Plantwise (CABI)",
+      "document": "Post-harvest Management and Aflatoxin Prevention Factsheets"
+    },
+    {
+      "organization": "CGIAR (CIMMYT)",
+      "document": "Post-harvest Management and Aflatoxin Risk in Maize"
+    }
+  ],
+  "document_summary": "Phytosanitary food safety framework tracking invisible Aspergillus developments, moisture management on clean drying tarpaulins, sorting limitations, and thermal stability characteristics of mycotoxins.",
+  "information_scope": [
+    "Pre-harvest field maturity tracking and rot prevention",
+    "Drying surface protocols to eliminate soil contact",
+    "Storage microclimate management (moisture, ventilation)",
+    "Food safety thresholds and testing validation limitations"
+  ],
+  "common_farmer_observations": [
+    "Greenish-yellow or powdery olive-green mold visible on maize kernels or around the cob.",
+    "Black or dark discolorations developing on damaged kernels, which can indicate fungal activity.",
+    "Insect-chewed, cracked, or physically broken kernels showing a higher rate of mold infections.",
+    "Grain harvested and stored while still damp rapidly developing visible mold inside storage bags.",
+    "Highly contaminated grain appearing completely clean and normal because the toxin itself is invisible."
+  ],
+  "clarifying_questions": [
+    "Was the maize harvested promptly as soon as it reached full physiological maturity and field dryness?",
+    "Was the grain dried down thoroughly before being loaded into bags or storage structures?",
+    "Was the maize dried on clean surfaces like canvas tarpaulins rather than directly on bare soil?",
+    "Has the harvested grain been caught in unexpected rain or exposed to moisture during the drying phase?",
+    "Are insects, weevils, rodents, or cracked kernels visibly present inside your stored grain?",
+    "Is the grain stored in a clean, dry, well-ventilated facility away from damp floors and walls?"
+  ],
+  "context_factors": [
+    "High internal grain moisture is the primary driver of rapid, destructive storage fungal growth.",
+    "Warm, humid, unventilated storage environments provide the perfect conditions for Aspergillus to thrive.",
+    "Physical damage from insects and rodents creates entry points that let storage fungi infect kernels easily.",
+    "Leaving mature crops unharvested in the field too long increases their exposure to fungal spores during wet weather.",
+    "Poor sanitation in the storage facility allows old fungal populations to easily contaminate new grain.",
+    "Aggressive mechanical shelling or rough handling cracks kernels, increasing the risk of infection."
+  ],
+  "why_information_may_differ": [
+    "The presence of visible mold does not automatically mean dangerous levels of aflatoxins have been produced.",
+    "Maize that looks completely clean and pristine can still hold dangerous, toxic levels of invisible aflatoxins.",
+    "Fluctuating weather conditions and regional humidity alter how fungi grow and release toxins.",
+    "The volume of toxins produced can vary widely even among identical strains of the same fungus."
+  ],
+  "trusted_learning_points": [
+    "Understand that aflatoxins cannot be identified, smelled, or tasted by human senses alone.",
+    "Prioritize thorough drying immediately after harvest as the most effective defense against contamination.",
+    "Keep grain consistently dry throughout storage to prevent fungal spores from activating.",
+    "Sort and remove moldy, discolored, or insect-damaged grain to lift overall quality, though this does not ensure the rest is toxin-free.",
+    "Maintain strict storage hygiene and use pallets to elevate bags away from moisture sources.",
+    "Utilize professional laboratory testing as the only definitive method to confirm if grain is safe."
+  ],
+  "possible_conflicting_information": [
+    "Some grain with visible mold may carry little to no aflatoxin, while healthy-looking grain can hold dangerous contamination levels. Sorting out bad kernels reduces risk but cannot eliminate toxins in apparently clean grain. Normal cooking, boiling, roasting, or milling will not destroy aflatoxins because the toxins are highly heat-stable."
+  ],
+  "when_more_information_is_needed": [
+    "When formal laboratory analysis is required to verify if a grain lot is safe for human consumption or animal feed.",
+    "When deciding if a mildly moldy grain batch can be safely used for non-food agricultural purposes.",
+    "When tracking down the root cause of recurring seasonal contamination issues across a farm.",
+    "When assessing if structural changes are needed in a storage facility to fix persistent dampness and mold."
+  ],
+  "continue_learning": [
+    "Study how relative humidity levels interact with grain moisture to drive or halt fungal growth.",
+    "Learn how managing field insects helps prevent post-harvest mold infections.",
+    "Explore how proper drying tarpaulins and clean processing tools protect food safety."
+  ],
+  "uncertainties": [
+    "Visual appearance provides no reliable indication of actual invisible mycotoxin levels.",
+    "Environmental swings make it hard to predict exactly when a fungus will start producing toxins.",
+    "Relying purely on visual grading cannot guarantee that a grain batch is safe to consume."
+  ],
+  "related_topics": [
+    "Harvesting",
+    "Drying",
+    "Grain storage",
+    "Grain quality",
+    "Moisture management",
+    "Food safety"
+  ],
+  "agronomic_principles": [
+    "Mycotoxin contamination is an invisible chemical risk that cannot be managed through standard processing or heating.",
+    "Moisture exclusion throughout the post-harvest chain is the primary way to stop toxin-producing fungi from growing.",
+    "Physical damage to kernels during handling directly increases vulnerability to storage fungi."
+  ],
+  "major_pests": [],
+  "major_diseases": [
+    "Ear Rot (Fusarium and Aspergillus)"
+  ],
+  "knowledge_notes": {
+    "focus": "Help farmers understand principles rather than memorize procedures.",
+    "prescriptions_removed": true,
+    "numeric_thresholds_removed": true,
+    "chemical_recommendations_removed": true
+  },
+  "safety_filters": {
+    "chemical_recommendations_removed": true,
+    "product_names_removed": true,
+    "fertilizer_rates_removed": true,
+    "dosages_removed": true
+  }
+}

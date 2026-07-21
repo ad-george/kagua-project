@@ -1,0 +1,121 @@
+{
+  "id": "maize_kalro_nutrient_deficiencies",
+  "crop": "Maize",
+  "topic": "Nutrient Deficiencies (Sulphur, Zinc, Nitrogen, Potassium, Phosphorus)",
+  "source": {
+    "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+    "document": "Maize TIMPs Volume 1",
+    "country": "Kenya",
+    "document_type": "Technical Manual",
+    "publication_year": "2019",
+    "url": "https://keep.kalro.org/appfiles/media/vc_files/MAIZE_TIMPS_Volume-1_for_Upload.pdf"
+  },
+  "verification_sources": [
+    {
+      "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+      "document": "Maize TIMPs Volume 1"
+    },
+    {
+      "organization": "Kenya Agricultural and Livestock Research Organization (KALRO)",
+      "document": "Maize Extension and Training Manual"
+    },
+    {
+      "organization": "Food and Agriculture Organization (FAO)",
+      "document": "Plant Nutrition Resources"
+    }
+  ],
+  "document_summary": "Systematic diagnostic reference detailing leaf symptom mapping (old vs. young foliage), soil chemistry influences on nutrient uptake, environmental stress lookalikes, and long-term soil organic matter restoration.",
+  "information_scope": [
+    "Land preparation and baseline soil health status",
+    "Nutrient uptake dynamics across diverse soil profiles",
+    "Leaf symptom zoning based on element mobility inside the plant",
+    "Environmental stressors mimicking nutrient starvation symptoms"
+  ],
+  "common_farmer_observations": [
+    "General, uniform yellowing or pale green coloration across the maize leaves.",
+    "Yellowing specifically restricted to either the oldest lower leaves or the youngest upper leaves.",
+    "Severe loss of crop vigor accompanied by slow, delayed plant development.",
+    "Stunted maize plants displaying short, compressed distances between leaf nodes.",
+    "Distinct purple or dark reddish coloration spreading along leaf margins, tips, or stems.",
+    "Yellowing, browning, or scorched, dry appearances explicitly concentrated along leaf edges.",
+    "Poor cob development resulting in incomplete, severely reduced grain filling.",
+    "Nutrient symptoms appearing uniformly across the entire field or confined to specific patches."
+  ],
+  "clarifying_questions": [
+    "Did the yellowing or discoloration show up first on the older, lower leaves or the youngest upper growth?",
+    "Are these symptoms spread smoothly across the entire field or concentrated in specific low spots or patches?",
+    "Has the field recently suffered through extreme drought, severe waterlogging, or unusually cold weather?",
+    "Has maize been cultivated continuously on this plot over multiple seasons without adding organic inputs?",
+    "Have you conducted a professional laboratory soil test on this field recently?",
+    "Are the root systems clean and extensive, or do they show signs of insect chewing, rot, or soil compaction?"
+  ],
+  "context_factors": [
+    "Low absolute soil fertility reserves directly restrict structural nutrient availability to the roots.",
+    "Soil pH status strongly controls how easily maize roots can chemically release and absorb key nutrients.",
+    "Heavy, intense rainfall events rapidly leach highly mobile nutrients completely out of the active root zone.",
+    "Prolonged dry spells dry out the soil solution, preventing root uptake even when nutrients are abundant.",
+    "Compacted layers or poorly drained, waterlogged soils suffocate roots and halt metabolic nutrient absorption.",
+    "Low soil organic matter levels compromise both the nutrient-holding capacity and structural moisture retention.",
+    "Root systems physically damaged by underground pests or soil rots express symptoms that mimic nutrient starvation."
+  ],
+  "why_information_may_differ": [
+    "Multiple distinct nutrient deficiencies produce overlapping, highly similar visual symptoms on maize leaves.",
+    "Climatic and environmental stresses frequently trigger physical lookalike symptoms that disguise or mimic actual deficiencies.",
+    "Inherent soil structures and soil classifications naturally vary in baseline mineral release behaviors.",
+    "The specific physiological growth stage of the maize plant changes how clearly nutrient stress is expressed.",
+    "Different hybrid varieties process and visually display internal nutrient imbalances in unique ways."
+  ],
+  "trusted_learning_points": [
+    "Treat visual leaf symptoms as helpful diagnostic clues rather than absolute confirmations of a single deficiency.",
+    "Map out whether symptoms hit old or young leaves first to identify if the missing element is mobile or immobile within the plant.",
+    "Build and maintain soil organic matter continuously to enhance nutrient availability and maximize structural soil health.",
+    "Integrate systematic crop rotations, particularly with legumes, to naturally support long-term nitrogen balances.",
+    "Manage soil pH actively to unlock essential minerals that are chemically bound in acidic or alkaline profiles.",
+    "Utilize regular, structured soil laboratory testing as the definitive method to map out soil needs before making management investments."
+  ],
+  "possible_conflicting_information": [
+    "Leaf yellowing can indicate a direct nutrient deficiency, but it can also stem from drought, waterlogging, or root damage. Similarly, purple leaves are classic signs of phosphorus deficiency, but they can also occur during cold weather or due to restricted root growth caused by compaction."
+  ],
+  "when_more_information_is_needed": [
+    "When complex, multiple nutrient deficiencies occur simultaneously, creating confusing, blended leaf patterns.",
+    "When leaf discoloration closely resembles advanced pest feeding marks or subterranean disease symptoms.",
+    "When structural soil test readouts are required to build precise, targeted land reclamation strategies.",
+    "When underlying physical barriers, such as an unknown hardpan layer or severe pH extremes, are suspected."
+  ],
+  "continue_learning": [
+    "Study element mobility principles to understand why specific nutrients target older vs. younger foliage.",
+    "Learn how fluctuating soil pH levels dictate the chemical locking and unlocking of specific minerals."
+  ],
+  "uncertainties": [
+    "Visual assessment alone cannot definitively differentiate between complex or combined micro-nutritional deficiencies.",
+    "Environmental extremes can mimic and mask basic soil fertility problems.",
+    "The intensity of symptom expression can shift based on localized soil biology differences and hybrid variations."
+  ],
+  "related_topics": [
+    "Soil fertility",
+    "Soil testing",
+    "Organic matter",
+    "Waterlogging",
+    "Rainfall",
+    "Root health"
+  ],
+  "agronomic_principles": [
+    "Nutrient diagnostic logic requires mapping element transport behaviors relative to tissue age within the plant organism.",
+    "Soil physical architecture and moisture status regulate the chemical availability and root absorption of minerals.",
+    "Biological organic integration provides the baseline buffer system that maintains long-term nutrient storage capacity."
+  ],
+  "major_pests": [],
+  "major_diseases": [],
+  "knowledge_notes": {
+    "focus": "Help farmers understand principles rather than memorize procedures.",
+    "prescriptions_removed": true,
+    "numeric_thresholds_removed": true,
+    "chemical_recommendations_removed": true
+  },
+  "safety_filters": {
+    "chemical_recommendations_removed": true,
+    "product_names_removed": true,
+    "fertilizer_rates_removed": true,
+    "dosages_removed": true
+  }
+}
