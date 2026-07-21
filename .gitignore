@@ -1,5 +1,14 @@
-venv/
-node_modules/
-.env
+# Python cache and compiled files
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+
+# Environment variables
+.env
+
+# Virtual environment
+venv/
+
+# Node
+node_modules/
