@@ -1,60 +1,85 @@
 .voice-recorder {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  font-family: 'Inter', system-ui, sans-serif;
+  gap: var(--spacing-md);
+  font-family: inherit;
 }
 
-/* ── Start recording button ── */
+/* ── Start recording button ──
+   Deliberately not a rectangular .btn — this is the one focal action on
+   the screen, styled as a large circular mic button with the label
+   underneath, closer to how voice-memo apps present a recorder than a
+   generic form-submit button. */
 .voice-recorder-btn {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
+  gap: 14px;
   width: 100%;
-  background-color: #1E3A5F;
-  color: #FFFFFF;
-  font-family: inherit;
-  font-size: 1rem;
-  font-weight: 600;
-  padding: 16px 24px;
+  padding: 28px 16px;
+  background: none;
   border: none;
-  border-radius: 10px;
   cursor: pointer;
-  letter-spacing: 0.01em;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+  font-family: inherit;
   -webkit-tap-highlight-color: transparent;
 }
 
-.voice-recorder-btn:hover {
-  background-color: #2E86C1;
+.voice-recorder-btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 10px 28px -10px rgba(30, 58, 95, 0.45);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.voice-recorder-btn:active {
-  transform: scale(0.98);
+@media (hover: hover) {
+  .voice-recorder-btn:hover .voice-recorder-btn-icon {
+    transform: scale(1.04);
+    box-shadow: 0 12px 32px -8px rgba(30, 58, 95, 0.5);
+  }
 }
 
-.voice-recorder-mic-icon {
-  font-size: 1.1rem;
-  line-height: 1;
+.voice-recorder-btn:active .voice-recorder-btn-icon {
+  transform: scale(0.96);
 }
 
-/* ── Active recording state ── */
+.voice-recorder-btn:focus-visible .voice-recorder-btn-icon {
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
+}
+
+.voice-recorder-btn-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* ── Active recording state ──
+   Flat and square rather than a rounded floating card — this is a live
+   status, not a container of content, so it shouldn't look like a
+   component sitting on the page. Solid red border with no radius reads
+   as an alert/status strip, closer to a recording indicator than a
+   card. Background kept light so the red border still stands out. */
 .voice-recorder-active {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 14px 18px;
+  gap: var(--spacing-md);
+  padding: 16px 18px;
   background: #FFF8F8;
-  border: 1.5px solid #FECACA;
-  border-radius: 10px;
+  border: 2px solid var(--danger);
+  border-radius: 0;
 }
 
 .voice-recorder-indicator {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--spacing-sm);
 }
 
 /* Pulsing red dot — shows recording is live */
@@ -62,35 +87,47 @@
   display: inline-block;
   width: 10px;
   height: 10px;
-  border-radius: 50%;
-  background-color: #E74C3C;
+  border-radius: var(--radius-full);
+  background-color: var(--danger);
   animation: pulse 1.2s ease-in-out infinite;
   flex-shrink: 0;
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.4; transform: scale(0.8); }
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
 }
 
 .voice-recorder-recording-label {
   font-size: 0.95rem;
-  font-weight: 500;
-  color: #E74C3C;
+  font-weight: 600;
+  color: var(--danger);
 }
 
-/* ── Stop button ── */
+/* ── Stop button ──
+   Kept square too, to match the flat status-bar treatment rather than
+   looking like a rounded button dropped onto a card. */
 .voice-recorder-stop-btn {
-  background: #FFFFFF;
-  border: 1.5px solid #E74C3C;
-  color: #E74C3C;
+  background: var(--card-bg);
+  border: 1.5px solid var(--danger);
+  color: var(--danger);
   font-family: inherit;
   font-size: 0.9rem;
   font-weight: 600;
-  padding: 8px 20px;
-  border-radius: 8px;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   flex-shrink: 0;
+  min-height: 44px;
   transition: background-color 0.15s ease;
   -webkit-tap-highlight-color: transparent;
 }
@@ -103,12 +140,12 @@
 .voice-recorder-transcribing {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--spacing-sm);
   padding: 14px 18px;
-  background: #F0F7FF;
-  border: 1.5px solid #BFDBFE;
-  border-radius: 10px;
-  color: #1E3A5F;
+  background: var(--bg-color);
+  border: 1.5px solid var(--secondary);
+  border-radius: var(--radius-md);
+  color: var(--primary);
   font-size: 0.95rem;
   font-weight: 500;
 }
@@ -118,99 +155,80 @@
   width: 16px;
   height: 16px;
   border: 2px solid #BFDBFE;
-  border-top-color: #2E86C1;
-  border-radius: 50%;
+  border-top-color: var(--secondary);
+  border-radius: var(--radius-full);
   animation: spin 0.8s linear infinite;
   flex-shrink: 0;
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ── Error ── */
 .voice-recorder-error {
   font-size: 0.88rem;
-  color: #E74C3C;
+  color: var(--danger);
   line-height: 1.5;
   margin: 0;
   padding: 10px 14px;
   background: #FEF2F2;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
 }
 
-/* ── Playback card ── */
+/* ── Playback card ──
+   Restructured into three clear sections: label, player, actions —
+   each with its own spacing so the card reads as an organized flow
+   rather than three elements stacked with equal gaps. */
 .voice-recorder-playback-card {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 16px;
-  background: #FFFFFF;
-  border: 1.5px solid #E5E7EB;
-  border-radius: 12px;
+  background: var(--card-bg);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
 }
 
+/* Label sits as its own header strip, slightly set apart from the
+   player below it — gives the card a clear "top" the way the input
+   card's voice-switch button does. */
 .voice-recorder-playback-label {
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: #6B7280;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
   margin: 0;
+  padding: 14px var(--spacing-md) 0;
 }
 
+/* Player section gets consistent padding on all sides so it doesn't
+   feel glued to the label above or the divider below. */
 .voice-recorder-playback {
   width: 100%;
   height: 40px;
   display: block;
+  margin: 12px var(--spacing-md) 0;
+  width: calc(100% - 2 * var(--spacing-md));
+}
+
+/* Thin divider separates "review" from "decide" — same pattern used
+   in the text-input card between the voice-switch button and the
+   textarea, for visual consistency across the screen. */
+.voice-recorder-playback-divider {
+  height: 1px;
+  background: var(--border-color);
+  margin-top: var(--spacing-md);
 }
 
 .voice-recorder-playback-actions {
   display: flex;
-  gap: 10px;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
 }
 
-/* ── Record again (secondary) ── */
-.voice-recorder-rerecord-btn {
-  flex: 1;
-  background: #FFFFFF;
-  border: 1.5px solid #D1D5DB;
-  color: #6B7280;
-  font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 500;
-  padding: 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: border-color 0.15s ease, color 0.15s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.voice-recorder-rerecord-btn:hover {
-  border-color: #9CA3AF;
-  color: #1F2937;
-}
-
-/* ── Use this recording (primary) ── */
+.voice-recorder-rerecord-btn,
 .voice-recorder-send-btn {
-  flex: 2;
-  background: #1E3A5F;
-  border: none;
-  color: #FFFFFF;
-  font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 600;
-  padding: 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  -webkit-tap-highlight-color: transparent;
+  flex: 1;
+  min-height: 44px;
 }
-
-.voice-recorder-send-btn:hover {
-  background-color: #2E86C1;
-}
-
-
-
-
-
-

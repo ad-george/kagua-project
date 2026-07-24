@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import LandingPage from "./screens/LandingPage";
 import Login from "./screens/Login";
 import Signup from "./screens/Signup";
 import Home from "./screens/Home";
@@ -7,19 +8,19 @@ import Screen2Context from "./screens/Screen2Context";
 import Screen3Observe from "./screens/Screen3Observe";
 import Screen4Evidence from "./screens/Screen4Evidence";
 import Screen5Summary from "./screens/Screen5Summary";
-import AppShell from "./components/AppShell";
-import { getCurrentUser, logout, saveConversation } from "./services/authStorage";
-import { analyzeInput, getComparison, getSourceDetails } from "./services/trackA";
+import Navbar from "./components/Navbar";
+import { getCurrentUser, logout } from "./services/authStorage";
+import { analyzeInput, getComparison, getSourceDetails, completeJourney } from "./services/trackA";
 import "./App.css";
 
 function App() {
   const [user, setUser] = useState(null);
-  const [authView, setAuthView] = useState("login");
-  const [view, setView] = useState("home");
+  const [view, setView] = useState("landing");
   const [currentScreen, setCurrentScreen] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
   const [screen1StartMode, setScreen1StartMode] = useState("voice");
+  const [scrollToAbout, setScrollToAbout] = useState(false);
 
   const [extractedContext, setExtractedContext] = useState(null);
   const [comparison, setComparison] = useState(null);
@@ -27,8 +28,38 @@ function App() {
 
   useEffect(() => {
     const existingUser = getCurrentUser();
-    if (existingUser) setUser(existingUser);
+    if (existingUser) {
+      setUser(existingUser);
+      setView("home");
+    }
   }, []);
+
+  const handleNavigate = (nextView) => {
+    if (nextView === "about") {
+      setScrollToAbout(true);
+      setView("landing");
+      return;
+    }
+    // Leaving the flow via the Navbar would silently drop whatever the
+    // person has entered so far in this observation — confirm first.
+    if (view === "flow" && nextView !== "flow") {
+      const confirmLeave = window.confirm(
+        "Leave this conversation? Your progress on this observation will be lost."
+      );
+      if (!confirmLeave) return;
+    }
+    setScrollToAbout(false);
+    setView(nextView);
+  };
+
+  const handleAboutFromNav = () => {
+    if (view === "landing") {
+      document.getElementById("about")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      setScrollToAbout(true);
+      setView("landing");
+    }
+  };
 
   const handleAuthSuccess = (loggedInUser) => {
     setUser(loggedInUser);
@@ -38,8 +69,7 @@ function App() {
   const handleLogout = () => {
     logout();
     setUser(null);
-    setView("home");
-    setAuthView("login");
+    setView("landing");
   };
 
   const handleStartNew = () => {
@@ -55,7 +85,7 @@ function App() {
     setIsLoading(true);
     setErrorMsg(null);
     try {
-      const context = await analyzeInput(text, user.county);
+      const context = await analyzeInput(text, user.county, user.phone, user.name);
 
       if (context.could_not_understand) {
         setErrorMsg(
@@ -64,7 +94,6 @@ function App() {
         setIsLoading(false);
         return;
       }
-
       setExtractedContext(context);
       setCurrentScreen(2);
     } catch (err) {
@@ -108,91 +137,128 @@ function App() {
 
   const handleScreen4Continue = () => setCurrentScreen(5);
 
-  const handleFinishConversation = () => {
-    saveConversation(user.id, {
-      crop: extractedContext.crop,
-      reported_problem: extractedContext.reported_problem,
-    });
-    setUser(getCurrentUser());
+  const handleFinishConversation = async () => {
+    if (extractedContext?.journey_id) {
+      try {
+        await completeJourney(extractedContext.journey_id);
+      } catch (err) {
+        console.error("Could not mark journey complete:", err);
+      }
+    }
     setView("home");
   };
 
-  /* ── Auth screens — no shell ── */
-  if (!user) {
-    return authView === "login" ? (
-      <Login
-        onLoginSuccess={handleAuthSuccess}
-        onSwitchToSignup={() => setAuthView("signup")}
-      />
-    ) : (
-      <Signup
-        onSignupSuccess={handleAuthSuccess}
-        onSwitchToLogin={() => setAuthView("login")}
+  // ── Landing ──
+  if (view === "landing") {
+    return (
+      <LandingPage
+        user={user}
+        onNavigate={handleNavigate}
+        onLogout={handleLogout}
+        scrollToAbout={scrollToAbout}
+        onScrollToAboutDone={() => setScrollToAbout(false)}
       />
     );
   }
 
-  /* ── Home — with shell ── */
+  // ── Auth ──
+  if (!user) {
+    if (view === "signup") {
+      return (
+        <Signup
+          user={user}
+          currentView="signup"
+          onNavigate={handleNavigate}
+          onLogout={handleLogout}
+          onAboutClick={handleAboutFromNav}
+          onSignupSuccess={handleAuthSuccess}
+          onSwitchToLogin={() => setView("login")}
+          onBack={() => setView("landing")}
+        />
+      );
+    }
+    return (
+      <Login
+        user={user}
+        currentView="login"
+        onNavigate={handleNavigate}
+        onLogout={handleLogout}
+        onAboutClick={handleAboutFromNav}
+        onLoginSuccess={handleAuthSuccess}
+        onSwitchToSignup={() => setView("signup")}
+        onBack={() => setView("landing")}
+      />
+    );
+  }
+
+  // ── Home ──
   if (view === "home") {
     return (
-      <AppShell>
-        <Home user={user} onStartNew={handleStartNew} onLogout={handleLogout} />
-      </AppShell>
+      <div className="app-dashboard">
+        <Navbar
+          user={user}
+          currentView="dashboard"
+          onNavigate={handleNavigate}
+          onLogout={handleLogout}
+          onAboutClick={handleAboutFromNav}
+        />
+        <Home user={user} onStartNew={handleStartNew} />
+      </div>
     );
   }
 
-  /* ── Loading — with shell ── */
+  // ── Loading ──
   if (isLoading) {
     return (
-      <AppShell>
-        <div className="app-loading">
-          <div className="app-loading-spinner" />
-          <p className="app-loading-text">Thinking…</p>
-        </div>
-      </AppShell>
+      <div className="app-loading">
+        <div className="app-loading-spinner" />
+        <p className="app-loading-text">Organizing your information…</p>
+      </div>
     );
   }
 
-  /* ── Conversation flow — with shell ── */
+  // ── Flow screens 1–5 ──
   return (
-    <AppShell>
-      <div className="app-flow">
-        {errorMsg && (
-          <div className="app-error-banner">
-            <p className="app-error-text">{errorMsg}</p>
-          </div>
-        )}
-
-        {currentScreen === 1 && (
-          <Screen1Input onSubmit={handleScreen1Submit} startMode={screen1StartMode} />
-        )}
-        {currentScreen === 2 && extractedContext && (
-          <Screen2Context
-            extractedContext={extractedContext}
-            onConfirm={handleScreen2Confirm}
-            onRecordAgain={handleRecordAgain}
-            onTypeInstead={handleTypeInstead}
-          />
-        )}
-        {currentScreen === 3 && (
-          <Screen3Observe onContinue={handleScreen3Continue} />
-        )}
-        {currentScreen === 4 && comparison && (
-          <Screen4Evidence
-            comparison={comparison}
-            onContinue={handleScreen4Continue}
-          />
-        )}
-        {currentScreen === 5 && extractedContext && comparison && (
-          <Screen5Summary
-            extractedContext={extractedContext}
-            comparison={comparison}
-            sourceDetails={sourceDetails}
-            onFinish={handleFinishConversation}
-          />
-        )}
-      </div>
-    </AppShell>
+    <div className="app-flow">
+      <Navbar
+        user={user}
+        currentView="flow"
+        onNavigate={handleNavigate}
+        onLogout={handleLogout}
+        onAboutClick={handleAboutFromNav}
+        stepLabel={`Step ${currentScreen} of 5`}
+      />
+      {errorMsg && (
+        <div className="app-error-banner">
+          <p className="app-error-text">{errorMsg}</p>
+        </div>
+      )}
+      {currentScreen === 1 && (
+        <Screen1Input onSubmit={handleScreen1Submit} startMode={screen1StartMode} />
+      )}
+      {currentScreen === 2 && extractedContext && (
+        <Screen2Context
+          extractedContext={extractedContext}
+          onConfirm={handleScreen2Confirm}
+          onRecordAgain={handleRecordAgain}
+          onTypeInstead={handleTypeInstead}
+        />
+      )}
+      {currentScreen === 3 && (
+        <Screen3Observe onContinue={handleScreen3Continue} />
+      )}
+      {currentScreen === 4 && comparison && (
+        <Screen4Evidence comparison={comparison} onContinue={handleScreen4Continue} />
+      )}
+      {currentScreen === 5 && extractedContext && comparison && (
+        <Screen5Summary
+          extractedContext={extractedContext}
+          comparison={comparison}
+          sourceDetails={sourceDetails}
+          onFinish={handleFinishConversation}
+        />
+      )}
+    </div>
   );
 }
 

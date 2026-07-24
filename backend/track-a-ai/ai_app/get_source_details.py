@@ -1,4 +1,4 @@
-from app.rag.retriever import load_knowledge_base
+from ai_app.rag.retriever import load_knowledge_base
 
 # Function to get the full details of sources used in a comparison. 
 # It takes a list of sources (from get_comparison) and returns a list of dictionaries containing the name, topic, summary, learning points, link, and audio URL for each source. If a matching entry is found in the knowledge base, it uses that information; otherwise, it falls back to the snippet provided in the source.

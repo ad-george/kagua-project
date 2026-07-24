@@ -1,21 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
 /* ── Card shell ── */
 .summary-card {
-  background: #FFFFFF;
-  border: 1.5px solid #E5E7EB;
-  border-radius: 16px;
-  padding: 28px 24px;
-  font-family: 'Inter', system-ui, sans-serif;
-  margin-bottom: 24px;
+  background: var(--card-bg);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 28px var(--spacing-lg);
+  font-family: inherit;
+  margin-bottom: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
 }
 
-/* ── Card title ── */
+/* ── Card title ──
+   Margin tightened so the Crop/Reported problem row sits closer to
+   the top of the card instead of floating further down. */
 .summary-card-title {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #1E3A5F;
-  margin: 0 0 20px;
+  color: var(--primary);
+  margin: 0 0 14px;
   letter-spacing: -0.01em;
 }
 
@@ -23,8 +24,18 @@
 .summary-card-fields {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--spacing-md);
   margin-bottom: 20px;
+}
+
+/* ── Top row: Crop, Reported problem, and Listen ──
+   Mobile-first: stacked vertically, since three items (two text
+   fields + a button) crammed into one row is too tight on narrow
+   screens. Becomes a single row at 640px and up. */
+.summary-card-top-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
 }
 
 .summary-card-row {
@@ -38,115 +49,53 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #6B7280;
+  color: var(--text-secondary);
 }
 
 .summary-card-value {
   font-size: 1rem;
   font-weight: 500;
-  color: #1F2937;
+  color: var(--text-primary);
   line-height: 1.4;
 }
 
-/* ── Audio player row ── */
+/* ── Listen button ── */
 .summary-card-audio {
-  margin-bottom: 20px;
+  flex-shrink: 0;
 }
 
 /* ── Divider ── */
 .summary-card-divider {
   height: 1px;
-  background-color: #F3F4F6;
+  background-color: var(--border-color);
   margin: 0 0 20px;
 }
 
-/* ── Checklist section ── */
-.summary-card-checklist-heading {
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: #6B7280;
-  margin: 0 0 12px;
+/* ── Low-confidence warning ── */
+.summary-card-warning {
+  padding: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: #faf8f2;
+  color: var(--primary);
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
-.summary-card-checklist {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+/* ══════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════ */
 
-/* ── Each checklist item ── */
-.summary-card-check-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: 0.93rem;
-  color: #374151;
-  line-height: 1.5;
-}
+/* Desktop/tablet: Crop, Reported problem, and Listen sit in one row */
+@media (min-width: 640px) {
+  .summary-card-top-row {
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+  }
 
-/* The circular tick icon — CSS only, no emoji */
-.summary-card-check-icon {
-  flex-shrink: 0;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background-color: #27AE60;
-  position: relative;
-  margin-top: 2px;
-}
-
-.summary-card-check-icon::after {
-  content: '';
-  position: absolute;
-  left: 5px;
-  top: 3px;
-  width: 5px;
-  height: 8px;
-  border: 2px solid #FFFFFF;
-  border-top: none;
-  border-left: none;
-  transform: rotate(45deg);
-}
-
-/* ── Warning item variant ── */
-.summary-card-check-item--warning {
-  color: #92400E;
-}
-
-.summary-card-warn-icon {
-  flex-shrink: 0;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background-color: #F59E0B;
-  position: relative;
-  margin-top: 2px;
-}
-
-/* Exclamation mark */
-.summary-card-warn-icon::before {
-  content: '';
-  position: absolute;
-  left: 7px;
-  top: 3px;
-  width: 2px;
-  height: 6px;
-  background: #FFFFFF;
-  border-radius: 1px;
-}
-
-.summary-card-warn-icon::after {
-  content: '';
-  position: absolute;
-  left: 7px;
-  bottom: 3px;
-  width: 2px;
-  height: 2px;
-  background: #FFFFFF;
-  border-radius: 50%;
+  .summary-card-top-row .summary-card-row {
+    flex: 1;
+    min-width: 0;
+  }
 }

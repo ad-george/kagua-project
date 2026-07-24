@@ -12,9 +12,9 @@ function ShareOptions({ onShareWhatsApp, onSharePDF, onShareSMS, onCallAgrovet }
       <button className="share-btn" onClick={onShareSMS}>
         Send via SMS
       </button>
-      <button className="share-btn" onClick={onCallAgrovet}>
-        Call Agrovet
-      </button>
+      {/* <button className="share-btn" onClick={onCallAgrovet}>
+        Call Agrovet */}
+      {/* </button> */}
     </div>
   );
 }

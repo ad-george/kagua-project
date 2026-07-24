@@ -1,7 +1,7 @@
 import json
 from groq import Groq
 import os
-from app.prompts.system_prompt import KAGUA_SYSTEM_PROMPT
+from ai_app.prompts.system_prompt import KAGUA_SYSTEM_PROMPT
 
 groq_client = Groq(api_key=os.environ["GROQ_API_KEY"])
 

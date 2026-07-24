@@ -3,6 +3,8 @@ import { Mic, Keyboard } from "lucide-react";
 import VoiceRecorder from "../components/VoiceRecorder";
 import "./Screen1Input.css";
 
+// Example phrasings shown under the voice recorder, to give first-time
+// users a sense of what "describing what you see" can sound like.
 const EXAMPLE_PROMPTS = [
   "My maize leaves are turning yellow",
   "My neighbour says wait, the agrovet says spray",
@@ -10,6 +12,9 @@ const EXAMPLE_PROMPTS = [
 ];
 
 function Screen1Input({ onSubmit, startMode = "voice" }) {
+  // Text mode is only entered explicitly (via "Prefer to type instead" or
+  // being routed in with startMode="text"), or automatically once a voice
+  // transcription comes back, so the person can review/edit it as text.
   const [showTextInput, setShowTextInput] = useState(startMode === "text");
   const [inputText, setInputText] = useState("");
 
@@ -30,69 +35,80 @@ function Screen1Input({ onSubmit, startMode = "voice" }) {
 
   return (
     <div className="screen1-container">
-      {/* <p className="screen1-brand">Kagua</p> */}
-      <h1 className="screen1-title">What are you seeing in your field?</h1>
-      <p className="screen1-subtitle">
-        I'm here to help you compare advice and understand what is still uncertain.
-      </p>
+      {/* ── Left column: title, explanation, guidance ── */}
+      <div className="screen1-header">
+        {/* <p className="screen1-brand">Kagua</p> */}
+        <h1 className="screen1-title">What are you seeing in your field?</h1>
+        {/* Third-person, descriptive copy rather than first-person "I'm here to
+            help you" — Kagua is positioned as a tool, not an assistant/chatbot. */}
+        <p className="screen1-subtitle">
+          Kagua helps you compare advice and understand what is still uncertain.
+        </p>
 
-      {!showTextInput ? (
-        /* ── Voice mode ── */
-        <div className="screen1-voice-mode">
-          <VoiceRecorder onTranscription={handleTranscription} />
-
-          <div className="screen1-divider">
-            <span>or</span>
-          </div>
-
-          <button
-            className="screen1-type-instead-btn"
-            onClick={() => setShowTextInput(true)}
-          >
-            <Keyboard size={16} strokeWidth={2} />
-            Prefer to type instead
-          </button>
-
+        {!showTextInput && (
           <div className="screen1-examples">
             <p className="screen1-examples-label">Others have asked about</p>
             {EXAMPLE_PROMPTS.map((example, index) => (
               <p key={index} className="screen1-example-item">"{example}"</p>
             ))}
           </div>
-        </div>
-      ) : (
-        /* ── Text mode ── */
-        <div className="screen1-text-mode">
-          <div className="screen1-input-card">
+        )}
+      </div>
+
+      {/* ── Right column: the actual interaction ── */}
+      <div className="screen1-main">
+        {!showTextInput ? (
+          /* ── Voice mode: recording is the primary action on this screen ── */
+          <div className="screen1-voice-mode">
+            <VoiceRecorder onTranscription={handleTranscription} />
+
+            <div className="screen1-divider">
+              <span>or</span>
+            </div>
+
             <button
-              className="screen1-voice-switch-btn"
-              onClick={handleSwitchToVoice}
+              className="screen1-type-instead-link"
+              onClick={() => setShowTextInput(true)}
             >
-              <Mic size={15} strokeWidth={2} />
-              Use voice instead
+              <Keyboard size={15} strokeWidth={2} />
+              Prefer to type instead
             </button>
-
-            <div className="screen1-input-divider" />
-
-            <textarea
-              className="screen1-textarea"
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
-              placeholder="Describe what you're seeing. If you've received advice from neighbours, agrovets, or others, include that too."
-              rows={5}
-              autoFocus
-            />
           </div>
+        ) : (
+          /* ── Text mode: same input card pattern used across the app's
+               forms (border, focus ring), with a toggle back to voice ── */
+          <div className="screen1-text-mode">
+            <div className="screen1-input-card">
+              <button
+                className="screen1-voice-switch-btn"
+                onClick={handleSwitchToVoice}
+              >
+                <Mic size={15} strokeWidth={2} />
+                Use voice instead
+              </button>
 
-          <button
-            className="screen1-submit-btn"
-            onClick={handleSubmit}
-            disabled={!inputText.trim()}
-          >
-            Continue
-          </button>
-        </div>
-      )}
+              <div className="screen1-input-divider" />
+
+              <textarea
+                className="screen1-textarea"
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                placeholder="Describe what you're seeing. If you've received advice from neighbours, agrovets, or others, include that too."
+                rows={5}
+                autoFocus
+              />
+            </div>
+
+            <button
+              className="btn btn-primary screen1-submit-btn"
+              onClick={handleSubmit}
+              disabled={!inputText.trim()}
+            >
+              Continue
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

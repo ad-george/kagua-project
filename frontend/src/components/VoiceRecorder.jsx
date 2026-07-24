@@ -1,3 +1,4 @@
+import { Mic } from "lucide-react";
 import { useState, useRef } from "react";
 import "./VoiceRecorder.css";
 
@@ -102,10 +103,10 @@ function VoiceRecorder({ onTranscription }) {
           <p className="voice-recorder-playback-label">Listen to check your recording</p>
           <audio className="voice-recorder-playback" controls src={audioURL} />
           <div className="voice-recorder-playback-actions">
-            <button className="voice-recorder-rerecord-btn" onClick={handleReRecord}>
+            <button className="btn btn-secondary voice-recorder-rerecord-btn" onClick={handleReRecord}>
               Record again
             </button>
-            <button className="voice-recorder-send-btn" onClick={handleSend}>
+            <button className="btn btn-primary voice-recorder-send-btn" onClick={handleSend}>
               Use this recording
             </button>
           </div>
@@ -116,12 +117,18 @@ function VoiceRecorder({ onTranscription }) {
   }
 
   // ── Default: ready to record ──
+  // Idle state uses its own circular icon + label treatment (below) rather
+  // than the flat rectangular .btn.btn-primary shape used for form submits
+  // elsewhere — this is the screen's one focal action, so it's built to
+  // look and feel distinct, closer to a real voice-recorder button.
   return (
     <div className="voice-recorder">
       {!isRecording ? (
         <button className="voice-recorder-btn" onClick={startRecording}>
-          <span className="voice-recorder-mic-icon">🎙</span>
-          Start Recording
+          <span className="voice-recorder-btn-icon">
+            <Mic size={28} strokeWidth={2} />
+          </span>
+          <span className="voice-recorder-btn-label">Start recording</span>
         </button>
       ) : (
         <div className="voice-recorder-active">

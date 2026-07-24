@@ -1,20 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
-body {
-  background-color: #F8FAFC;
-  margin: 0;
+/* ── Container ── */
+body,
+.screen5-container {
+  background-color: var(--bg-color);
 }
 
-/* ── Container ── */
 .screen5-container {
-  max-width: 480px;
   width: 100%;
   margin: 0 auto;
-  padding: 40px 20px 48px;
+  padding: 8px var(--spacing-md) 20px;
+  font-family: inherit;
+}
+
+/* ── Grid ── */
+.screen5-grid {
   display: flex;
   flex-direction: column;
-  gap: 0;
-  font-family: 'Inter', system-ui, sans-serif;
+  gap: 20px;
+}
+
+.screen5-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.screen5-main {
+  display: flex;
+  flex-direction: column;
 }
 
 /* ── Brand ── */
@@ -23,38 +34,56 @@ body {
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #2E86C1;
-  margin: 0 0 20px;
+  color: var(--secondary);
+  margin: 0 0 var(--spacing-sm);
 }
 
 /* ── Title ── */
 .screen5-title {
-  font-size: 1.9rem;
+  font-size: 1.6rem;
   font-weight: 700;
-  color: #1F2937;
+  color: var(--primary);
   line-height: 1.25;
-  margin: 0 0 12px;
+  margin: 0 0 10px;
 }
 
 /* ── Transition note ── */
 .screen5-transition-note {
-  font-size: 0.98rem;
-  color: #6B7280;
-  line-height: 1.65;
-  margin: 0 0 24px;
-}
-
-/* ── Audio row ── */
-.screen5-audio-row {
-  margin-bottom: 28px;
-}
-
-/* ── Section subtitle ── */
-.screen5-subtitle {
   font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0 0 18px;
+}
+
+/* ── Audio row ──
+   Narrates this column's own content (the continue options below), so
+   it sits directly under the subtitle rather than attached to the
+   summary card in the other column — light card treatment matches the
+   app's other secondary panels (e.g. the Find-nearby placeholder). */
+.screen5-audio-row {
+  margin-bottom: 16px;
+  padding: 14px 16px;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+.screen5-audio-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0 0 10px;
+}
+
+/* ── Section subtitle ──
+   Sized to match .screen5-title — both are headings (one per column),
+   so they should read as equivalent weight, not primary/secondary. */
+.screen5-subtitle {
+  font-size: 1.6rem;
   font-weight: 700;
-  color: #1F2937;
-  margin: 0 0 14px;
+  color: var(--primary);
+  line-height: 1.25;
+  margin: 0 0 16px;
 }
 
 /* ── Options list ── */
@@ -62,117 +91,208 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 24px;
+  margin-bottom: 8px;
 }
 
-/* ── Each option as a full card ── */
+/* ── Combined option card (label + description + action buttons) ── */
+.screen5-option-card {
+  background: var(--card-bg);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+  box-sizing: border-box;
+}
+
+.screen5-option-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 14px;
+}
+
+.screen5-option-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--primary);
+  line-height: 1.4;
+}
+
+.screen5-option-description {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* ── Action buttons row inside each option card ──
+   Plain text-style actions, not bordered card-like buttons — avoids
+   the "card inside a card" look from the screenshot. */
+.screen5-option-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.screen5-action-btn {
+  width: auto;
+  background: none;
+  border: none;
+  padding: 8px 0;
+  min-height: 40px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--secondary);
+  cursor: pointer;
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.screen5-action-btn:hover {
+  color: var(--primary);
+  /* text-decoration: underline; */
+}
+
+.screen5-action-btn:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ── Find nearby placeholder panel ── */
+.screen5-findnearby-placeholder {
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: var(--bg-color);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+.screen5-findnearby-placeholder p {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── Share section ── */
+.screen5-share-section {
+  margin-top: 14px;
+  padding: 16px 18px;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+/* ── Standalone option button (Explore Trusted Sources) ── */
 .screen5-option-btn {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 4px;
   width: 100%;
-  background: #FFFFFF;
-  border: 1.5px solid #E5E7EB;
-  border-radius: 12px;
+  background: var(--card-bg);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
   padding: 16px 18px;
   cursor: pointer;
   text-align: left;
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+  transition: transform 0.15s ease;
   -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
 }
 
 .screen5-option-btn:hover {
-  border-color: #2E86C1;
-  background-color: #F0F7FF;
-}
-
-/* Selected state */
-.screen5-option-btn--active {
-  border-color: #2E86C1;
-  background-color: #EFF6FF;
-}
-
-/* Trusted sources option — slightly different visual weight */
-.screen5-option-btn--sources {
-  border-style: dashed;
-}
-
-.screen5-option-btn--sources:hover {
-  border-style: solid;
-}
-
-/* Option label */
-.screen5-option-label {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #1E3A5F;
-  line-height: 1.4;
-}
-
-/* Option description */
-.screen5-option-description {
-  font-size: 0.88rem;
-  color: #6B7280;
-  line-height: 1.5;
-  font-weight: 400;
-}
-
-/* ── Share section — appears after selecting an option ── */
-.screen5-share-section {
-  background: #F0F7FF;
-  border: 1.5px solid #BFDBFE;
-  border-radius: 12px;
-  padding: 16px 18px;
-  margin-bottom: 24px;
-}
-
-.screen5-share-note {
-  font-size: 0.93rem;
-  color: #1E3A5F;
-  line-height: 1.65;
-  margin: 0 0 14px;
-}
-
-/* ── Finish button ── */
-.screen5-finish-btn {
-  background-color: #1E3A5F;
-  color: #FFFFFF;
-  font-family: inherit;
-  font-size: 1rem;
-  font-weight: 600;
-  padding: 16px 24px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  width: 100%;
-  letter-spacing: 0.01em;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-  -webkit-tap-highlight-color: transparent;
-  margin-top: 8px;
-}
-
-.screen5-finish-btn:hover {
-  background-color: #2E86C1;
-}
-
-.screen5-finish-btn:active {
   transform: scale(0.98);
 }
 
-/* ── Responsive ── */
+/* ── Finish button ──
+   align-self added: .screen5-main is a column flex container with no
+   align-items set, so its default "stretch" was overriding width:auto
+   and forcing this button to fill the whole column's width. */
+.screen5-finish-btn {
+  align-self: flex-start;
+  width: auto;
+  padding: 12px 32px;
+  min-height: 48px;
+  margin-top: 4px;
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════ */
+
+@media (min-width: 480px) {
+  .screen5-container {
+    padding: 12px var(--spacing-lg, 24px) 24px;
+  }
+}
+
 @media (min-width: 640px) {
   .screen5-container {
-    padding: 56px 32px 48px;
+    padding: 14px var(--spacing-xl) 24px;
+  }
+
+  .screen5-title {
+    font-size: 1.9rem;
+  }
+
+  .screen5-subtitle {
+    font-size: 1.9rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .screen5-container {
+    max-width: 1180px;
+    padding: 18px clamp(24px, 4vw, 64px) 32px;
+    margin: 0 auto;
   }
 
   .screen5-title {
     font-size: 2.1rem;
   }
+
+  .screen5-subtitle {
+    font-size: 2.1rem;
+  }
+
+  .screen5-transition-note {
+    font-size: 1.05rem;
+  }
+
+  .screen5-grid {
+    display: grid;
+    grid-template-columns: minmax(360px, 460px) 1fr;
+    grid-template-rows: min-content;
+    align-items: start;
+    align-content: start;
+    column-gap: 64px;
+    row-gap: 24px;
+  }
+
+  .screen5-header {
+    padding-top: 8px;
+  }
+
+  .screen5-main {
+    padding-top: 4px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .screen5-container {
+    max-width: 1320px;
+  }
+
+  .screen5-grid {
+    grid-template-columns: minmax(400px, 500px) 1fr;
+    column-gap: 72px;
+  }
 }
 
 @media (max-width: 359px) {
   .screen5-title {
-    font-size: 1.65rem;
+    font-size: 1.6rem;
   }
 }

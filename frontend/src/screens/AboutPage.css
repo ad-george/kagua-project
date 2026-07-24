@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+.about-page {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: #FFFFFF;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 56px 24px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  flex: 1;
+}
+
+/* Header */
+.about-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #2E86C1;
+  margin: 0 0 16px;
+}
+
+.about-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1E3A5F;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin: 0 0 20px;
+}
+
+@media (min-width: 600px) {
+  .about-title { font-size: 2.4rem; }
+}
+
+.about-intro {
+  font-size: 1.05rem;
+  color: #6B7280;
+  line-height: 1.75;
+  margin: 0;
+}
+
+/* Sections */
+.about-section-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1E3A5F;
+  margin: 0 0 16px;
+  letter-spacing: -0.02em;
+}
+
+.about-section-text {
+  font-size: 1rem;
+  color: #374151;
+  line-height: 1.75;
+  margin: 0 0 14px;
+}
+
+.about-section-text:last-child {
+  margin-bottom: 0;
+}
+
+/* List */
+.about-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.about-list li {
+  font-size: 1rem;
+  color: #374151;
+  line-height: 1.6;
+  padding-left: 20px;
+  position: relative;
+}
+
+.about-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  background: #2E86C1;
+  border-radius: 50%;
+}
+
+/* CTA */
+.about-cta {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 36px 28px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.about-cta-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1E3A5F;
+  margin: 0;
+}
+
+.about-cta-btn {
+  background: #1E3A5F;
+  color: #FFFFFF;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 14px 32px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: 'Inter', system-ui, sans-serif;
+  transition: background 0.15s;
+}
+
+.about-cta-btn:hover {
+  background: #162D4A;
+}
+
+/* Footer */
+.about-footer {
+  background: #1E3A5F;
+  padding: 20px 24px;
+  text-align: center;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.45);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.about-footer p {
+  margin: 0;
+}

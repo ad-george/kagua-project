@@ -1,26 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
 /* ── Page ── */
-body {
-  background-color: #F8FAFC;
-  margin: 0;
+body,
+.screen2-container {
+  background-color: var(--bg-color);
 }
 
 /* ── Container ── */
 .screen2-container {
-  max-width: 480px;
   width: 100%;
   margin: 0 auto;
-  padding: 40px 20px 48px;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  font-family: 'Inter', system-ui, sans-serif;
+  padding: 8px var(--spacing-md) 20px;
+  font-family: inherit;
 }
 
-/* ── Header block ── */
-.screen2-header {
-  margin-bottom: 28px;
+/* ── Grid ── */
+.screen2-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.screen2-area-title,
+.screen2-area-section,
+.screen2-area-summary,
+.screen2-area-cards,
+.screen2-area-retry,
+.screen2-area-note,
+.screen2-area-actions {
+  display: flex;
+  flex-direction: column;
 }
 
 .screen2-brand {
@@ -28,198 +35,273 @@ body {
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #2E86C1;
-  margin: 0 0 16px;
+  color: var(--secondary);
+  margin: 0 0 var(--spacing-sm);
 }
 
 .screen2-title {
-  font-size: 1.9rem;
+  font-size: 1.6rem;
   font-weight: 700;
-  color: #1F2937;
+  color: var(--primary);
   line-height: 1.25;
-  margin: 0 0 8px;
+  margin: 0 0 10px;
 }
 
 .screen2-intro {
   font-size: 1rem;
-  color: #6B7280;
+  color: var(--text-secondary);
   line-height: 1.6;
-  margin: 0;
+  margin: 0 0 8px;
+}
+
+.screen2-section-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1.25;
+  margin: 0 0 10px;
+}
+
+.screen2-section-subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0 0 8px;
 }
 
 /* ── Summary card ── */
 .screen2-summary-card {
-  background: #FFFFFF;
-  border: 1.5px solid #E5E7EB;
-  border-left: 4px solid #2E86C1;  
-  border-radius: 12px;
-  padding: 18px 20px;
-  margin-bottom: 28px;
+  background: var(--card-bg);
+  border: 1.5px solid var(--border-color);
+  border-left: 4px solid var(--secondary);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
   display: flex;
   flex-direction: column;
   gap: 0;
+  box-shadow: var(--shadow-sm);
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .screen2-summary-row {
   display: flex;
   align-items: baseline;
-  gap: 12px;
-  padding: 6px 0;
+  gap: var(--spacing-md);
+  padding: 10px 0;
 }
 
 .screen2-summary-label {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #9CA3AF;
-  min-width: 60px;
+  color: var(--text-secondary);
+  min-width: 70px;
   flex-shrink: 0;
 }
 
 .screen2-summary-value {
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 500;
-  color: #1F2937;
+  color: var(--text-primary);
   line-height: 1.5;
 }
 
 .screen2-summary-divider {
   height: 1px;
-  background: #F3F4F6;
+  background: var(--border-color);
   margin: 4px 0;
 }
 
-/* ── Section title ── */
-.screen2-section-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #1F2937;
-  margin: 0 0 14px;
-}
-
-/* ── Cards list ── */
+/* ── Source cards row ── */
 .screen2-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 1fr;
+  gap: 14px;
+  height: 100%;
 }
 
 /* ── Framing note ── */
 .screen2-note {
-  background: #F0F7FF;
-  border-radius: 10px;
-  padding: 14px 18px;
-  margin-bottom: 24px;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  border-radius: var(--radius-md);
+  padding: 22px 24px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
 .screen2-note p {
   font-size: 0.95rem;
-  color: #1E3A5F;
+  color: var(--text-primary);
   line-height: 1.65;
   margin: 0;
 }
 
-/* ── Continue button ── */
-.screen2-continue-btn {
-  background-color: #1E3A5F;
-  color: #FFFFFF;
-  font-family: inherit;
-  font-size: 1rem;
-  font-weight: 600;
-  padding: 16px 24px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  width: 100%;
-  letter-spacing: 0.01em;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.screen2-continue-btn:hover {
-  background-color: #2E86C1;
-}
-
-.screen2-continue-btn:active {
-  transform: scale(0.98);
-}
-
-/* ── Confirm / retry buttons ── */
+/* ── Confirm buttons ── */
 .screen2-confirm-buttons {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
 }
 
+.screen2-continue-btn,
 .screen2-no-btn {
-  background: #FFFFFF;
-  color: #6B7280;
-  font-family: inherit;
-  font-size: 0.95rem;
-  font-weight: 500;
-  padding: 14px 24px;
-  border: 1.5px solid #E5E7EB;
-  border-radius: 10px;
-  cursor: pointer;
-  width: 100%;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-  -webkit-tap-highlight-color: transparent;
+  width: auto;
+  padding: 12px 24px;
+  min-height: 44px;
 }
 
-.screen2-no-btn:hover {
-  background-color: #F8FAFC;
-  border-color: #9CA3AF;
+.screen2-retry-hint {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin: 0;
 }
 
+/* ── Retry choice card ── */
 .screen2-retry-choice {
-  background: #F0F7FF;
-  border-radius: 10px;
-  padding: 18px;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  border-radius: var(--radius-md);
+  padding: 22px 24px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--spacing-sm);
+  height: 100%;
+  box-sizing: border-box;
+  animation: retry-appear 0.35s ease;
+}
+
+@keyframes retry-appear {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .screen2-retry-label {
   font-size: 0.95rem;
   font-weight: 500;
-  color: #1E3A5F;
+  color: var(--primary);
   margin: 0 0 4px;
 }
 
+.screen2-retry-buttons-row {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
 .screen2-retry-btn {
-  background: #FFFFFF;
-  color: #1E3A5F;
-  font-family: inherit;
-  font-size: 0.95rem;
-  font-weight: 600;
-  padding: 14px 24px;
-  border: 1.5px solid #2E86C1;
-  border-radius: 10px;
-  cursor: pointer;
-  width: 100%;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-  -webkit-tap-highlight-color: transparent;
+  width: auto;
+  padding: 12px 24px;
+  min-height: 44px;
 }
 
-.screen2-retry-btn:hover {
-  background-color: #F0F7FF;
+/* ══════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════ */
+
+@media (min-width: 480px) {
+  .screen2-container {
+    padding: 12px var(--spacing-lg, 24px) 24px;
+  }
 }
 
-.screen2-retry-btn:active {
-  transform: scale(0.98);
-}
-
-/* ── Responsive ── */
 @media (min-width: 640px) {
   .screen2-container {
-    padding: 56px 32px 48px;
+    padding: 14px var(--spacing-xl) 24px;
   }
 
   .screen2-title {
+    font-size: 1.9rem;
+  }
+}
+
+/* Desktop: real 2-column grid with named row areas. */
+@media (min-width: 1024px) {
+  .screen2-container {
+    max-width: 1180px;
+    padding: 18px clamp(24px, 4vw, 64px) 32px;
+    margin: 0 auto;
+  }
+
+  .screen2-title,
+  .screen2-section-title {
     font-size: 2.1rem;
+  }
+
+  .screen2-intro,
+  .screen2-section-subtitle {
+    font-size: 1.05rem;
+    margin: 0 0 20px;
+  }
+
+  .screen2-grid {
+    display: grid;
+    grid-template-columns: minmax(320px, 420px) 1fr;
+    grid-template-areas:
+      "title   section"
+      "summary cards"
+      "retry   note"
+      ".       actions";
+    column-gap: 72px;
+    row-gap: 10px;
+    align-items: stretch;
+  }
+
+  .screen2-area-title   { grid-area: title; }
+  .screen2-area-section { grid-area: section; }
+  .screen2-area-summary { grid-area: summary; }
+  .screen2-area-cards   { grid-area: cards; }
+  .screen2-area-retry   { grid-area: retry; }
+  .screen2-area-note    { grid-area: note; }
+  .screen2-area-actions { grid-area: actions; }
+
+  .screen2-area-summary,
+  .screen2-area-cards {
+    margin-top: -20px;
+  }
+
+  /* ── No-info state ──
+     Collapses to a single column and redefines the row areas, since
+     "section" and "cards" no longer exist in the DOM when there's no
+     advice. The summary card's wrapper is capped at 800px so it
+     stays visually compact rather than stretching full-width for
+     just three short rows of content. */
+  .screen2-grid.no-info {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "title"
+      "summary"
+      "retry"
+      "note"
+      "actions";
+  }
+
+  .screen2-grid.no-info .screen2-area-summary {
+    max-width: 800px;
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 1440px) {
+  .screen2-container {
+    max-width: 1320px;
+  }
+
+  .screen2-grid {
+    grid-template-columns: minmax(360px, 460px) 1fr;
+    column-gap: 80px;
   }
 }
 

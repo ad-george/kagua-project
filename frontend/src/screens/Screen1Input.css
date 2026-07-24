@@ -1,20 +1,34 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
 /* ── Page background ── */
-body {
-  background-color: #F8FAFC;
-  margin: 0;
+body,
+.screen1-container {
+  background-color: var(--bg-color);
 }
 
-/* ── Container ── */
+/* ── Container ──
+   Mobile-first: single column, tight vertical padding. On desktop
+   this becomes a two-column grid that hugs its content height
+   (align-content: start) instead of stretching to fill leftover
+   vertical space. */
 .screen1-container {
-  max-width: 480px;
   width: 100%;
   margin: 0 auto;
-  padding: 40px 20px 48px;
+  padding: 20px var(--spacing-md) 20px;
+  min-height: auto;
   display: flex;
   flex-direction: column;
-  font-family: 'Inter', system-ui, sans-serif;
+  gap: var(--spacing-lg, 24px);
+}
+
+/* ── Left column: header/explanation/guidance ── */
+.screen1-header {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Right column: the actual interaction (recorder / text input) ── */
+.screen1-main {
+  display: flex;
+  flex-direction: column;
 }
 
 /* ── Brand ── */
@@ -23,25 +37,25 @@ body {
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #2E86C1;
-  margin: 0 0 20px;
+  color: var(--secondary);
+  margin: 0 0 var(--spacing-sm);
 }
 
 /* ── Title ── */
 .screen1-title {
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: 700;
-  color: #1F2937;
+  color: var(--primary);
   line-height: 1.25;
-  margin: 0 0 12px;
+  margin: 0 0 10px;
 }
 
 /* ── Subtitle ── */
 .screen1-subtitle {
-  font-size: 1.05rem;
-  color: #6B7280;
-  line-height: 1.65;
-  margin: 0 0 32px;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0 0 20px;
 }
 
 /* ── Voice mode ── */
@@ -51,14 +65,18 @@ body {
   gap: 0;
 }
 
+.screen1-voice-mode > *:first-child {
+  margin-bottom: 0;
+}
+
 /* ── Divider between voice and type ── */
 .screen1-divider {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin: 20px 0;
-  color: #9CA3AF;
-  font-size: 0.85rem;
+  gap: var(--spacing-md);
+  margin: 14px 0 2px;
+  color: var(--text-muted, var(--text-secondary));
+  font-size: 0.8rem;
 }
 
 .screen1-divider::before,
@@ -66,57 +84,65 @@ body {
   content: "";
   flex: 1;
   height: 1px;
-  background: #E5E7EB;
+  background: var(--border-color);
+  opacity: 0.7;
 }
 
-/* ── "Prefer to type" secondary button ── */
-.screen1-type-instead-btn {
-  background: #FFFFFF;
-  border: 1.5px solid #D1D5DB;
-  color: #1E3A5F;
-  font-family: inherit;
-  font-size: 1rem;
-  font-weight: 500;
-  padding: 14px 20px;
-  border-radius: 10px;
-  cursor: pointer;
+/* ── "Prefer to type instead" ── */
+.screen1-type-instead-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   width: 100%;
-  text-align: center;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
-  -webkit-tap-highlight-color: transparent;
+  background: none;
+  border: none;
+  color: var(--secondary);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 10px 8px;
+  cursor: pointer;
+  min-height: 44px;
 }
 
-.screen1-type-instead-btn:hover {
-  border-color: #2E86C1;
-  background-color: #F0F7FF;
+.screen1-type-instead-link:hover {
+  color: var(--primary);
+  text-decoration: underline;
 }
 
-/* ── Examples ── */
+.screen1-type-instead-link:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Examples card ── */
 .screen1-examples {
-  margin-top: 32px;
+  margin-top: 24px;
   padding: 16px 18px;
-  background-color: #FFFFFF;
-  border: 1px solid #E5E7EB;
-  border-radius: 12px;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
 }
 
 .screen1-examples-label {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #9CA3AF;
+  color: var(--text-secondary);
   margin: 0 0 10px;
 }
 
 .screen1-example-item {
-  font-size: 0.93rem;
-  color: #6B7280;
-  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
   line-height: 1.5;
   margin: 0;
-  padding: 6px 0;
-  border-bottom: 1px solid #F3F4F6;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border-color);
+  opacity: 0.85;
 }
 
 .screen1-example-item:last-child {
@@ -124,40 +150,44 @@ body {
   padding-bottom: 0;
 }
 
+.screen1-example-item:first-child {
+  padding-top: 0;
+}
+
 /* ── Text mode ── */
 .screen1-text-mode {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--spacing-md);
 }
 
-/* ── Unified input card (voice switch + textarea together) ── */
+/* ── Unified input card ── */
 .screen1-input-card {
-  background: #FFFFFF;
-  border: 1.5px solid #D1D5DB;
-  border-radius: 12px;
+  background: var(--card-bg);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
   overflow: hidden;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--shadow-sm);
 }
 
 .screen1-input-card:focus-within {
-  border-color: #2E86C1;
+  border-color: var(--secondary);
   box-shadow: 0 0 0 3px rgba(46, 134, 193, 0.12);
 }
 
-/* ── Switch to voice — sits at top of card ── */
 .screen1-voice-switch-btn {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--spacing-sm);
   width: 100%;
-  background: #F8FAFC;
+  background: var(--bg-color);
   border: none;
-  color: #2E86C1;
+  color: var(--secondary);
   font-family: inherit;
   font-size: 0.88rem;
   font-weight: 600;
-  padding: 10px 16px;
+  padding: 12px var(--spacing-md);
   cursor: pointer;
   text-align: left;
   transition: background-color 0.15s ease;
@@ -173,20 +203,18 @@ body {
   line-height: 1;
 }
 
-/* ── Thin divider inside the card ── */
 .screen1-input-divider {
   height: 1px;
-  background: #E5E7EB;
+  background: var(--border-color);
 }
 
-/* ── Textarea — no border, lives inside the card ── */
 .screen1-textarea {
   width: 100%;
-  padding: 14px 16px;
+  padding: 16px var(--spacing-md);
   font-size: 1rem;
   font-family: inherit;
-  color: #1F2937;
-  background: #FFFFFF;
+  color: var(--text-primary);
+  background: transparent;
   border: none;
   outline: none;
   resize: none;
@@ -201,49 +229,71 @@ body {
   font-size: 0.95rem;
 }
 
-/* ── Continue button ── */
+/* ── Submit button ── */
 .screen1-submit-btn {
-  background-color: #1E3A5F;
-  color: #FFFFFF;
-  font-family: inherit;
-  font-size: 1rem;
-  font-weight: 600;
-  padding: 16px 24px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  width: 100%;
-  letter-spacing: 0.01em;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-  -webkit-tap-highlight-color: transparent;
+  margin-top: 4px;
 }
 
-.screen1-submit-btn:hover:not(:disabled) {
-  background-color: #2E86C1;
+/* ══════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════ */
+
+@media (min-width: 480px) {
+  .screen1-container {
+    padding: 24px var(--spacing-lg, 24px) 24px;
+  }
 }
 
-.screen1-submit-btn:active:not(:disabled) {
-  transform: scale(0.98);
-}
-
-.screen1-submit-btn:disabled {
-  background-color: #9CA3AF;
-  cursor: not-allowed;
-}
-
-/* ── Responsive ── */
 @media (min-width: 640px) {
   .screen1-container {
-    padding: 56px 32px 48px;
+    padding: 28px var(--spacing-xl) 24px;
   }
 
   .screen1-title {
-    font-size: 2.25rem;
+    font-size: 1.9rem;
+  }
+}
+
+/* Desktop: two-column grid, sized to content rather than viewport. */
+@media (min-width: 1024px) {
+  .screen1-container {
+    max-width: 1180px;
+    padding: 40px clamp(24px, 4vw, 64px) 32px;
+    display: grid;
+    grid-template-columns: minmax(320px, 420px) 1fr;
+    grid-template-rows: min-content;
+    align-items: start;
+    align-content: start;
+    gap: 48px;
+    min-height: auto;
+  }
+
+  .screen1-header {
+    padding-top: 8px;
+  }
+
+  .screen1-title {
+    font-size: 2.1rem;
+  }
+
+  .screen1-subtitle {
+    font-size: 1.05rem;
+  }
+
+  .screen1-main {
+    padding-top: 4px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .screen1-container {
+    max-width: 1320px;
+    grid-template-columns: minmax(360px, 460px) 1fr;
   }
 }
 
 @media (max-width: 359px) {
   .screen1-title {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
   }
 }

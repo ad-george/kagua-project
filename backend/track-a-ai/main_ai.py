@@ -12,13 +12,13 @@ import uvicorn
 from groq import Groq
 from google import genai
 
-from app.extract_context import extract_context
-from app.rag.retriever import retrieve_knowledge
-from app.get_comparison import get_comparison
-from app.safety_guardrails import apply_guardrails
-from app.get_source_details import get_source_details
-from app.tts_stt.text_to_speech import text_to_speech
-from app.tts_stt.speech_to_text import speech_to_text
+from ai_app.extract_context import extract_context
+from ai_app.rag.retriever import retrieve_knowledge
+from ai_app.get_comparison import get_comparison
+from ai_app.safety_guardrails import apply_guardrails
+from ai_app.get_source_details import get_source_details
+from ai_app.tts_stt.text_to_speech import text_to_speech
+from ai_app.tts_stt.speech_to_text import speech_to_text
 
 app = FastAPI()
 

@@ -1,8 +1,37 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
 /* ── Flow wrapper ── */
 .app-flow {
   width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+}
+
+.flow-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px var(--spacing-md);
+  background-color: var(--card-bg);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.flow-header-brand {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.flow-header-step {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.app-dashboard {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
 }
 
@@ -14,14 +43,15 @@
   justify-content: center;
   min-height: 100vh;
   gap: 16px;
-  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--bg-color);
+  font-family: var(--font-family);
 }
 
 .app-loading-spinner {
   width: 36px;
   height: 36px;
-  border: 3px solid #E5E7EB;
-  border-top-color: #2E86C1;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--secondary);
   border-radius: 50%;
   animation: app-spin 0.75s linear infinite;
 }
@@ -32,7 +62,7 @@
 
 .app-loading-text {
   font-size: 0.95rem;
-  color: #6B7280;
+  color: var(--text-secondary);
   font-weight: 500;
   margin: 0;
 }
@@ -40,7 +70,7 @@
 /* ── Error banner ── */
 .app-error-banner {
   background-color: rgba(231, 76, 60, 0.06);
-  border-left: 3px solid #E74C3C;
+  border-left: 3px solid var(--danger);
   padding: 12px 24px;
   margin: 0;
 }
@@ -48,8 +78,8 @@
 .app-error-text {
   font-size: 0.9rem;
   font-weight: 500;
-  color: #E74C3C;
+  color: var(--danger);
   margin: 0;
   line-height: 1.5;
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: var(--font-family);
 }

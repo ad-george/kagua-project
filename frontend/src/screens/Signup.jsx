@@ -1,21 +1,35 @@
 import { useState } from "react";
 import { signup } from "../services/authStorage";
+import Navbar from "../components/Navbar";
 import "./Auth.css";
 
-function Signup({ onSignupSuccess, onSwitchToLogin }) {
+function Signup({
+  user,
+  currentView,
+  onNavigate,
+  onLogout,
+  onAboutClick,
+  onSignupSuccess,
+  onSwitchToLogin,
+}) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [county, setCounty] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!name || !phone || !county || !password) {
       setError("Please fill in all fields.");
       return;
     }
 
-    const result = signup({ name, phone, county, password });
+    setLoading(true);
+    setError("");
+    const result = await signup({ name, phone, county });
+    setLoading(false);
+
     if (!result.success) {
       setError(result.error);
       return;
@@ -24,65 +38,79 @@ function Signup({ onSignupSuccess, onSwitchToLogin }) {
     onSignupSuccess(result.user);
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") handleSubmit();
-  };
-
   return (
-    <div className="auth-container">
-      <p className="auth-brand">Kagua</p>
-      <h1 className="auth-title">Create Account</h1>
-      <p className="auth-subtitle">Create an account to save your Kagua conversations and summaries.</p>
+    <div className="auth-shell">
+      <Navbar
+        user={user}
+        currentView={currentView}
+        onNavigate={onNavigate}
+        onLogout={onLogout}
+        onAboutClick={onAboutClick}
+      />
 
-      <div className="auth-fields">
-        <input
-          className="auth-input"
-          placeholder="Full Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          onKeyDown={handleKeyDown}
-          autoComplete="name"
-        />
-        <input
-          className="auth-input"
-          type="tel"
-          placeholder="Phone Number"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          onKeyDown={handleKeyDown}
-          autoComplete="tel"
-        />
-        <input
-          className="auth-input"
-          placeholder="County"
-          value={county}
-          onChange={(e) => setCounty(e.target.value)}
-          onKeyDown={handleKeyDown}
-          autoComplete="address-level2"
-        />
-        <input
-          className="auth-input"
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          onKeyDown={handleKeyDown}
-          autoComplete="new-password"
-        />
+      <div className="auth-page">
+        <div className="auth-container">
+          <h1 className="auth-title">Create account</h1>
+          <p className="auth-subtitle">A few details to get you started.</p>
+
+          <div className="auth-field">
+            <label htmlFor="signup-name">Full name</label>
+            <input
+              id="signup-name"
+              className="auth-input"
+              placeholder="Your full name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+
+          <div className="auth-field">
+            <label htmlFor="signup-phone">Phone number</label>
+            <input
+              id="signup-phone"
+              className="auth-input"
+              type="tel"
+              placeholder="e.g. 0712 345 678"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+          </div>
+
+          <div className="auth-field">
+            <label htmlFor="signup-county">County</label>
+            <input
+              id="signup-county"
+              className="auth-input"
+              placeholder="e.g. Nakuru"
+              value={county}
+              onChange={(e) => setCounty(e.target.value)}
+            />
+          </div>
+
+          <div className="auth-field">
+            <label htmlFor="signup-pin">PIN</label>
+            <input
+              id="signup-pin"
+              className="auth-input"
+              type="password"
+              placeholder="Choose a PIN"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+
+          {error && <p className="auth-error">{error}</p>}
+
+          <button className="auth-submit-btn" onClick={handleSubmit} disabled={loading}>
+            {loading ? "Creating account…" : "Create account"}
+          </button>
+
+          <p className="auth-switch-text">
+            Already have an account?{" "}
+            <span className="auth-switch-link" onClick={onSwitchToLogin}>Log in</span>
+          </p>
+        </div>
       </div>
-
-      {error && <p className="auth-error">{error}</p>}
-
-      <button className="auth-submit-btn" onClick={handleSubmit}>
-        Create Account
-      </button>
-
-      <p className="auth-switch-text">
-        Already have an account?{" "}
-        <span className="auth-switch-link" onClick={onSwitchToLogin}>
-          Log in
-        </span>
-      </p>
     </div>
   );
 }
