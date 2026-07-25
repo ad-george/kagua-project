@@ -1,12 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { fetchJourneys } from "../services/authStorage";
-import { Plus, ArrowRight, Clock, Info, Sprout } from "lucide-react";
+import { ArrowRight, Search } from "lucide-react";
 import "./Home.css";
-import { FileText } from "lucide-react";
 
-function Home({ user, onStartNew }) {
+const PREVIEW_LIMIT = 6;
+const PAGE_SIZE = 9; // 3×3 grid per page (20 didn't divide evenly into rows of 3)
+
+function Home({ user, onStartNew, onSelectSummary }) {
   const [conversations, setConversations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [expanded, setExpanded] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     async function loadJourneys() {
@@ -22,89 +28,266 @@ function Home({ user, onStartNew }) {
   );
   const pastSummaries = conversations.filter((c) => c !== activeJourney);
 
+  const filtered = useMemo(() => {
+    return pastSummaries.filter((c) => {
+      const matchesSearch =
+        searchTerm.trim() === "" ||
+        `${c.crop} ${c.problem}`.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesStatus =
+        statusFilter === "all" ||
+        (c.status || "").toLowerCase() === statusFilter;
+      return matchesSearch && matchesStatus;
+    });
+  }, [pastSummaries, searchTerm, statusFilter]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const paginated = expanded
+    ? filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
+    : pastSummaries.slice(0, PREVIEW_LIMIT);
+
+  useEffect(() => {
+    setPage(1);
+  }, [searchTerm, statusFilter]);
+
+  const formatStatus = (status) => {
+    const s = (status || "").toLowerCase();
+    if (s === "completed") return "Completed";
+    if (s === "in_progress") return "In progress";
+    return status;
+  };
+
   return (
     <div className="home-container">
-      <div className="home-header">
+      <div className="home-page-header">
         <h1 className="home-title">Welcome back, {user.name}</h1>
         <p className="home-county">{user.county} County</p>
       </div>
 
-      <div className="home-top-grid">
-        <button className="home-tile home-cta-card" onClick={onStartNew}>
-          <span className="home-cta-icon">
-            <Plus size={22} strokeWidth={2.5} />
-          </span>
-          <span className="home-cta-title">Start new conversation</span>
-          <span className="home-cta-sub">Tell Kagua what you're seeing</span>
-        </button>
+      <div className="home-grid">
 
-        {!loading && activeJourney && (
-          <div className="home-tile home-continue-card">
-            <p className="home-section-label home-tile-label">Current conversation</p>
-            <p className="home-continue-crop">
-              {activeJourney.crop} — {activeJourney.problem}
-            </p>
-            <p className="home-continue-meta">
-              <Clock size={14} strokeWidth={2} />
-              {activeJourney.created_at
-                ? new Date(activeJourney.created_at).toLocaleDateString()
-                : "In progress"}
-            </p>
-            <button className="home-continue-btn" onClick={onStartNew}>
-              Continue
-              <ArrowRight size={16} strokeWidth={2.5} />
-            </button>
-          </div>
-        )}
-      </div>
+        {/* ── Left column: identity + actions ── */}
+        <div className="home-left">
 
-      <section className="home-section">
-        <div className="home-section-header">
-          <p className="home-section-label">Previous summaries</p>
-          {/* {!loading && pastSummaries.length > 0 && (
-            <span className="home-conversations-count">{pastSummaries.length}</span>
-          )} */}
-        </div>
+          {/* ── Panel: Your conversation (start new + continuing, merged) ── */}
+          <div className="home-panel">
+            <div className="home-panel-header">
+              <p className="home-panel-title">
+                {activeJourney ? "Your conversation" : "Start a new conversation"}
+              </p>
+            </div>
+            <div className="home-panel-body">
+              <div className="home-panel-sections">
+                {!loading && activeJourney && (
+                  <div className="home-panel-section">
+                    <p className="home-panel-eyebrow">Continuing</p>
+                    <p className="home-current-crop">
+                      {activeJourney.crop}: {activeJourney.problem}
+                    </p>
+                    <p className="home-current-meta">
+                      Started{" "}
+                      {activeJourney.created_at
+                        ? new Date(activeJourney.created_at).toLocaleDateString()
+                        : "recently"}
+                    </p>
+                    <button className="home-panel-link" onClick={onStartNew}>
+                      Continue
+                      {/* <ArrowRight size={16} strokeWidth={2.5} /> */}
+                    </button>
+                  </div>
+                )}
 
-        {loading ? (
-          <p className="home-empty-note">Loading…</p>
-        ) : pastSummaries.length === 0 ? (
-          <div className="home-empty-state">
-            <p className="home-empty-note">You haven't started a conversation yet.</p>
-            <p className="home-empty-hint">
-              Tap the button above to describe what you're seeing in your field.
-            </p>
-          </div>
-        ) : (
-          <div className="home-conversations">
-            {pastSummaries.map((c, index) => (
-              <div key={index} className="home-tile home-conversation-item">
-                <span className="home-conversation-icon">
-                  <FileText size={18} strokeWidth={2} />
-                </span>
-                <p className="home-conversation-crop">
-                  {c.crop} — {c.problem}
-                </p>
-                <p className="home-conversation-date">
-                  {c.created_at ? new Date(c.created_at).toLocaleDateString() : ""}
-                  {" · "}
-                  {c.status}
-                </p>
+                <div className="home-panel-section">
+                  {!loading && activeJourney && (
+                    <p className="home-panel-eyebrow">Start a new conversation</p>
+                  )}
+                  <p className="home-panel-text">Tell Kagua what you're seeing.</p>
+                  <button className="home-panel-link" onClick={onStartNew}>
+                    Get started
+                    {/* <ArrowRight size={16} strokeWidth={2.5} /> */}
+                  </button>
+                </div>
               </div>
-            ))}
+            </div>
           </div>
-        )}
-      </section>
 
-      <div className="home-remember-card">
-        <Info size={18} strokeWidth={2} className="home-remember-icon" />
-        <div>
-          <p className="home-remember-title">Remember</p>
-          <p className="home-remember-text">
-            Kagua helps you organise observations and compare advice. It does not
-            diagnose problems or recommend treatments.
-          </p>
+          {/* ── Panel: Remember ── */}
+          <div className="home-panel home-panel--muted">
+            <div className="home-panel-header">
+              <p className="home-panel-title">Remember</p>
+            </div>
+            <div className="home-panel-body">
+              <p className="home-panel-text">
+                Kagua helps you organise observations and compare advice. It
+                does not diagnose problems or recommend treatments.
+              </p>
+            </div>
+          </div>
         </div>
+
+        {/* ── Right column: history panel ── */}
+        <div className="home-right">
+          <div className="home-panel home-panel--tall">
+            <div className="home-panel-header home-panel-header--with-count">
+              <p className="home-panel-title">Previous summaries</p>
+              {!loading && pastSummaries.length > 0 && (
+                <span className="home-panel-count">{pastSummaries.length}</span>
+              )}
+            </div>
+
+            <div className="home-panel-body">
+              {loading ? (
+                <p className="home-empty-note">Loading…</p>
+              ) : pastSummaries.length === 0 ? (
+                <div>
+                  <p className="home-empty-note">You haven't started a conversation yet.</p>
+                  <p className="home-empty-hint">
+                    Start a new conversation to describe what you're seeing in your field.
+                  </p>
+                </div>
+              ) : !expanded ? (
+                <>
+                  {/* ── Collapsed: "View all" link at the top ── */}
+                  {pastSummaries.length > PREVIEW_LIMIT && (
+                    <button className="home-toggle-link home-toggle-link--top" onClick={() => setExpanded(true)}>
+                      View all {pastSummaries.length} summaries
+                    </button>
+                  )}
+
+                  {/* ── Collapsed: grid of 6, 3 columns ── */}
+                  <div className="home-preview-grid">
+                    {paginated.map((c, index) => (
+                      <button
+                        key={index}
+                        className="home-preview-tile"
+                        onClick={() => onSelectSummary && onSelectSummary(c)}
+                      >
+                        <span className="home-row-crop">
+                          {c.crop}: {c.problem}
+                        </span>
+                        <span className="home-row-meta">
+                          {c.created_at ? new Date(c.created_at).toLocaleDateString() : ""}
+                          {" · "}
+                          <span
+                            className={
+                              (c.status || "").toLowerCase() === "completed"
+                                ? "home-row-status home-row-status--completed"
+                                : "home-row-status home-row-status--progress"
+                            }
+                          >
+                            {formatStatus(c.status)}
+                          </span>
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <>
+                  {/* ── Expanded: search + filters, sticky at panel top ── */}
+                  <div className="home-filters">
+                    <div className="home-search">
+                      <Search size={15} strokeWidth={2} className="home-search-icon" />
+                      <input
+                        type="text"
+                        placeholder="Search by crop or problem"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="home-search-input"
+                      />
+                    </div>
+
+                    <div className="home-filter-links">
+                      {["all", "completed", "in_progress"].map((status, i) => (
+                        <span key={status}>
+                          {i > 0 && <span className="home-filter-sep">·</span>}
+                          <button
+                            className={`home-filter-link ${statusFilter === status ? "home-filter-link--active" : ""}`}
+                            onClick={() => setStatusFilter(status)}
+                          >
+                            {status === "all" ? "All" : formatStatus(status)}
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* ── Expanded: scrollable grid, panel height stays capped ──
+                      Same .home-preview-grid / .home-preview-tile pattern as
+                      the collapsed 6-item view above, just paginated through
+                      more items (PAGE_SIZE per page) instead of a single
+                      one-column list. */}
+                  <div className="home-list-scroll">
+                    {filtered.length === 0 ? (
+                      <p className="home-empty-note">No summaries match your search.</p>
+                    ) : (
+                      <div className="home-preview-grid">
+                        {paginated.map((c, index) => (
+                          <button
+                            key={index}
+                            className="home-preview-tile"
+                            onClick={() => onSelectSummary && onSelectSummary(c)}
+                          >
+                            <span className="home-row-crop">
+                              {c.crop}: {c.problem}
+                            </span>
+                            <span className="home-row-meta">
+                              {c.created_at ? new Date(c.created_at).toLocaleDateString() : ""}
+                              {" · "}
+                              <span
+                                className={
+                                  (c.status || "").toLowerCase() === "completed"
+                                    ? "home-row-status home-row-status--completed"
+                                    : "home-row-status home-row-status--progress"
+                                }
+                              >
+                                {formatStatus(c.status)}
+                              </span>
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {totalPages > 1 && (
+                    <div className="home-pagination">
+                      <button
+                        className="home-page-link"
+                        onClick={() => setPage((p) => Math.max(1, p - 1))}
+                        disabled={page === 1}
+                      >
+                        Previous
+                      </button>
+                      <span className="home-page-info">
+                        Page {page} of {totalPages}
+                      </span>
+                      <button
+                        className="home-page-link"
+                        onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                        disabled={page === totalPages}
+                      >
+                        Next
+                      </button>
+                    </div>
+                  )}
+
+                  <button
+                    className="home-toggle-link"
+                    onClick={() => {
+                      setExpanded(false);
+                      setSearchTerm("");
+                      setStatusFilter("all");
+                      setPage(1);
+                    }}
+                  >
+                    Show less
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );

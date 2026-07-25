@@ -1,72 +1,196 @@
-/* ── Dashboard Page ── */
+/* ── Page ── */
+body,
+.home-container {
+  background-color: var(--bg-color);
+}
 
 .home-container {
-  max-width: 100%;
   width: 100%;
   margin: 0 auto;
-  padding: 8px 24px 20px;
-  display: flex;
-  flex-direction: column;
-  min-height: calc(100vh - 56px);
+  padding: 16px var(--spacing-md) 40px;
+  font-family: inherit;
   box-sizing: border-box;
 }
 
-.home-header {
-  margin-bottom: 8px;
+/* ── Page header — spans full width above both columns, centered ── */
+.home-page-header {
+  text-align: center;
+  margin-bottom: 12px;
 }
 
 .home-title {
-  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-size: clamp(1.5rem, 4vw, 1.9rem);
   font-weight: 700;
   color: var(--primary);
-  margin: 0 0 4px;
+  margin: 0 0 6px;
   letter-spacing: -0.02em;
   line-height: 1.2;
 }
 
 .home-county {
-  display: inline-block;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
   margin: 0;
-  padding: 6px 12px;
-  background: #eff6ff;
-  border-radius: 999px;
-  color: var(--secondary);
-  font-size: 0.85rem;
-  font-weight: 600;
 }
 
-.home-section-label {
+/* ── Grid ── */
+.home-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.home-left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.home-right {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Flat panel system ── */
+.home-panel {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--card-bg);
+}
+
+.home-panel-header {
+  padding: 10px 16px;
+  background: var(--bg-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.home-panel-header--with-count {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.home-panel-title {
   font-size: 0.85rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
   color: var(--primary);
-  margin: 0 0 8px;
+  margin: 0;
+  letter-spacing: 0.01em;
 }
 
-.home-section {
-  margin-bottom: 10px;
-}
-
-.home-section-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: 6px;
-}
-
-.home-conversations-count {
-  font-size: 0.85rem;
-  color: var(--text-muted);
+.home-panel-count {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
-.home-empty-state {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
+.home-panel-body {
   padding: 16px;
 }
 
+.home-panel-text {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin: 0 0 12px;
+}
+
+/* ── Eyebrow label — used when two sections share one card
+   (e.g. "Continuing" and "Start a new conversation" in the merged
+   panel), instead of giving each its own separate bordered box. ── */
+.home-panel-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin: 0 0 6px;
+}
+
+/* ── Merged-panel sections ──
+   Stacked with a horizontal divider on narrow screens; side-by-side
+   with a vertical divider once there's room, so "Continuing" and
+   "Start a new conversation" read as two peer options rather than
+   one strictly following the other. */
+.home-panel-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.home-panel-section {
+  min-width: 0;
+}
+
+.home-panel-section:not(:first-child) {
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color);
+}
+
+@media (min-width: 480px) {
+  .home-panel-sections {
+    flex-direction: row;
+    gap: 24px;
+  }
+
+  .home-panel-section {
+    flex: 1;
+  }
+
+  .home-panel-section:not(:first-child) {
+    padding-top: 0;
+    border-top: none;
+    padding-left: 24px;
+    border-left: 1px solid var(--border-color);
+  }
+}
+
+.home-panel--muted .home-panel-body {
+  padding-top: 14px;
+}
+
+.home-panel--muted .home-panel-text {
+  margin: 0;
+}
+
+/* ── Panel action link ── */
+.home-panel-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: var(--secondary);
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.home-panel-link:hover {
+  color: var(--primary);
+}
+
+/* ── Current conversation content ── */
+.home-current-crop {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: capitalize;
+  margin: 0 0 3px;
+  line-height: 1.35;
+}
+
+.home-current-meta {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0 0 12px;
+}
+
+/* ── Empty states ── */
 .home-empty-note {
   color: var(--text-primary);
   font-size: 0.95rem;
@@ -82,193 +206,286 @@
   line-height: 1.5;
 }
 
-/* ── Shared square tile system ──
-   Used by the Start-CTA card, the Current-conversation card,
-   and every Previous-summary card, so they all read as one family. */
-.home-tile {
-  aspect-ratio: 1 / 1;
-  width: 100%;
-  max-width: 180px;
+/* ── "View all" link at top of collapsed preview ── */
+.home-toggle-link--top {
+  margin-bottom: 12px;
+  padding-top: 0;
+}
+
+/* ── Preview grid: 6 items, 3 columns × 2 rows on desktop ── */
+.home-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.home-preview-tile {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   gap: 4px;
-  padding: 12px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-}
-
-@media (hover: hover) {
-  .home-tile:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
-    border-color: rgba(46, 134, 193, 0.25);
-  }
-}
-
-/* Top grid: Start-CTA + Current-conversation, side by side on wider screens */
-.home-top-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 180px));
-  justify-content: center;
-  gap: 100px;
-  margin-bottom: 24px;
-}
-
-.home-cta-card {
-  cursor: pointer;
-  font-family: inherit;
-}
-
-.home-cta-icon {
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 14px;
-  background: #EFF6FF;
-  color: var(--secondary);
-  margin-bottom: 3px;
-}
-
-.home-cta-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--primary);
-  line-height: 1.3;
-}
-
-.home-cta-sub {
-  font-size: 0.85rem;
-  line-height: 1.4;
-  color: var(--text-secondary);
-}
-
-.home-tile-label {
-  margin: 0 0 2px;
-}
-
-.home-continue-crop {
-  margin: 0;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--primary);
-  text-transform: capitalize;
-  line-height: 1.35;
-}
-
-.home-continue-meta {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  color: var(--text-secondary);
-  font-size: 0.8rem;
-  margin: 0;
-}
-
-.home-continue-btn {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  background: none;
   border: none;
-  background: #EFF6FF;
-  color: var(--secondary);
-  padding: 7px 12px;
-  border-radius: 12px;
-  font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 600;
+  border-radius: 6px;
+  padding: 12px;
   cursor: pointer;
-  margin-top: 3px;
-  transition: background-color 0.15s, transform 0.1s;
+  text-align: left;
+  font-family: inherit;
+  transition: background-color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-@media (hover: hover) {
-  .home-continue-btn:hover {
-    background: #DBEAFE;
-    transform: translateY(-1px);
-  }
+.home-preview-tile:hover {
+  background-color: var(--bg-color);
 }
 
-/* Previous summaries: same square tile, arranged with the others */
-.home-conversations {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 180px));
-  justify-content: center;
-  gap: 100px;
+/* ── Filters: search + plain text links ── */
+.home-filters {
+  padding-bottom: 14px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.home-conversation-icon {
-  width: 40px;
-  height: 40px;
+.home-search {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-  background: #EFF6FF;
-  color: var(--secondary);
-  margin-bottom: 3px;
+  max-width: 340px;
 }
 
-.home-conversation-crop {
+.home-search-icon {
+  position: absolute;
+  left: 0;
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+
+.home-search-input {
+  width: 100%;
+  padding: 8px 0 8px 22px;
+  font-size: 0.92rem;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid var(--border-color);
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease;
+}
+
+.home-search-input:focus {
+  border-color: var(--secondary);
+}
+
+.home-filter-links {
+  font-size: 0.88rem;
+}
+
+.home-filter-sep {
+  color: var(--border-color);
+  margin: 0 8px;
+}
+
+.home-filter-link {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.home-filter-link:hover {
+  color: var(--primary);
+}
+
+.home-filter-link--active {
+  color: var(--secondary);
+}
+
+/* ── Scrollable list container ──
+   Caps the expanded list's height so the panel doesn't grow taller
+   than the left column — the list scrolls internally instead of
+   pushing the whole page down and leaving empty space beside a
+   short left column. */
+.home-list-scroll {
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.home-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  width: 100%;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+  padding: 12px 0;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: padding-left 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.home-row:hover {
+  padding-left: 6px;
+}
+
+.home-row:first-child {
+  padding-top: 0;
+}
+
+.home-row:last-child {
+  border-bottom: none;
+}
+
+.home-row-crop {
+  font-size: 0.96rem;
   font-weight: 600;
   color: var(--text-primary);
   text-transform: capitalize;
-  margin: 0;
-  font-size: 0.9rem;
-  line-height: 1.35;
+  line-height: 1.4;
 }
 
-.home-conversation-date {
-  font-size: 0.8rem;
+.home-row-meta {
+  font-size: 0.83rem;
   color: var(--text-secondary);
-  margin: 0;
 }
 
-.home-remember-card {
-  display: flex;
-  gap: 10px;
-  padding: 12px;
-  background: #f8fafc;
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  margin-top: auto;
+.home-row-status {
+  font-weight: 600;
 }
 
-.home-remember-icon {
-  flex-shrink: 0;
+.home-row-status--completed {
+  color: #047857;
+}
+
+.home-row-status--progress {
+  color: #92400E;
+}
+
+/* ── Toggle link (View all / Show less) ── */
+.home-toggle-link {
+  display: inline-block;
+  background: none;
+  border: none;
   color: var(--secondary);
-  margin-top: 2px;
-}
-
-.home-remember-title {
-  margin: 0 0 3px;
+  font-family: inherit;
   font-size: 0.9rem;
   font-weight: 700;
+  padding: 14px 0 0;
+  cursor: pointer;
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.home-toggle-link:hover {
   color: var(--primary);
 }
 
-.home-remember-text {
-  margin: 0;
-  font-size: 0.9rem;
-  line-height: 1.5;
+/* ── Pagination ── */
+.home-pagination {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-top: 14px;
+}
+
+.home-page-link {
+  background: none;
+  border: none;
+  color: var(--secondary);
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 600;
+  padding: 0;
+  cursor: pointer;
+}
+
+.home-page-link:disabled {
+  color: var(--text-secondary);
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.home-page-link:hover:not(:disabled) {
+  color: var(--primary);
+}
+
+.home-page-info {
+  font-size: 0.84rem;
   color: var(--text-secondary);
 }
 
-/* @media (min-width: 640px) {
-  .home-container {
-    padding: 16px 24px 20px;
-  }
-} */
+/* ══════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════ */
 
-@media (min-width: 640px) {
+@media (min-width: 480px) {
   .home-container {
-    max-width: 860px;
-    padding: 20px clamp(16px, 3vw, 32px) 40px;
+    padding: 20px var(--spacing-lg, 24px) 40px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .home-container {
+    max-width: 1180px;
+    padding: 8px clamp(24px, 4vw, 64px) 48px;
+    margin: 0 auto;
+  }
+
+  .home-title {
+    font-size: 2.1rem;
+  }
+
+  .home-grid {
+    display: grid;
+    grid-template-columns: minmax(320px, 480px) 1fr;
+    align-items: start;
+    column-gap: 64px;
+  }
+
+  .home-left {
+    padding-top: 4px;
+  }
+
+  .home-panel--tall {
+    height: 100%;
+  }
+
+  /* 3 columns × 2 rows for the 6-item preview on wider screens */
+  .home-preview-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .home-filters {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: 1440px) {
+  .home-container {
+    max-width: 1320px;
+  }
+
+  .home-grid {
+    grid-template-columns: minmax(360px, 520px) 1fr;
+    column-gap: 72px;
   }
 }
