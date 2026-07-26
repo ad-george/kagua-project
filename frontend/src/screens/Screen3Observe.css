@@ -24,6 +24,10 @@ body,
   gap: 12px;
 }
 
+.screen3-page-header {
+  margin-bottom: 20px;
+}
+
 .screen3-main {
   display: flex;
   flex-direction: column;
@@ -69,7 +73,7 @@ body,
 
 .screen3-summary-card {
   padding: 0;
-  margin-top: 16px;
+  margin-top: 4px;
   animation: summary-appear 0.25s ease;
 }
 
@@ -84,11 +88,12 @@ body,
 }
 .screen3-summary-list {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 4px 16px;
   list-style: none;
   margin: 0;
   padding: 0;
+  min-width: 0;
 }
 .screen3-summary-item {
   display: flex;
@@ -99,6 +104,31 @@ body,
   color: var(--text-primary);
   padding: 3px 0;
   line-height: 1.4;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.screen3-summary-item-text {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.screen3-summary-item-remove {
+  flex-shrink: 0;
+  border: none;
+  background: none;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 2px;
+}
+
+.screen3-summary-item-remove:hover {
+  color: var(--primary);
 }
 .screen3-summary-item::before {
   content: "";
@@ -132,20 +162,31 @@ body,
   font-size: 0.97rem;
   color: var(--text-primary);
   font-weight: 500;
-  transition: all 0.2s ease;
+  transition: background-color 0.18s ease, border-color 0.18s ease,
+    box-shadow 0.18s ease, color 0.18s ease;
   line-height: 1.35;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
 }
 
+/* Hover reads as "about to select," not "selected" — a quiet neutral
+   lift, not the same blue used for the actual selected state. */
 .screen3-option:hover {
-  border-color: var(--secondary);
-  background-color: #EFF6FF;
+  border-color: #B7BFC9;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
 }
 
+/* Selected: a defined border + very subtle neutral tint, not a full
+   saturated fill — reads as a clean, professional selection state
+   rather than a bold colored block. */
 .screen3-option--selected {
-  border-color: var(--secondary);
-  background-color: #EFF6FF;
-  color: var(--primary);
+  background: #FAFBFC;
+  border-color: var(--border-color);
+  color: var(--text-primary);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+}
+
+.screen3-option--selected:hover {
+  border-color: var(--border-color);
 }
 
 /* Hide native checkbox */
@@ -172,14 +213,13 @@ body,
 }
 
 .screen3-option--selected .screen3-checkbox {
-  border-color: var(--secondary);
-  background-color: var(--secondary);
+  border-color: var(--border-color);
+  background-color: var(--card-bg);
 }
 
 .screen3-checkbox-tick {
-  color: #FFFFFF;
-  font-size: 0.75rem;
-  font-weight: 700;
+  display: flex;
+  color: var(--primary);
   line-height: 1;
 }
 
@@ -209,7 +249,7 @@ body,
 }
 
 .screen3-other-expand {
-  margin-top: var(--spacing-md);
+  margin-top: 10px;
 }
 
 .screen3-other-voice {
@@ -267,58 +307,73 @@ body,
   justify-content: center;
 }
 
-/* Text mode input card */
+/* ── Text mode input card ──
+   Neutral border only, no color shift, no glowing box-shadow — flat
+   and professional, matching the treatment used on Screen 1's text
+   input. Hover/focus darken the border to a neutral gray, never blue. */
 .screen3-other-input-card {
   background: var(--card-bg);
-  border: 1.5px solid var(--border-color);
-  border-radius: var(--radius-md);
+  border: none;
+  border-radius: 10px;
   overflow: hidden;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: none;
+  transition: border-color 0.15s ease;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.screen3-other-input-card:hover {
+  border-color: #B0B8C1;
 }
 
 .screen3-other-input-card:focus-within {
-  border-color: var(--secondary);
-  box-shadow: 0 0 0 3px rgba(46, 134, 193, 0.12);
+  border-color: #9AA3AE;
 }
 
+/* ── "Use voice instead" strip ──
+   Background matches the card body exactly, so the single
+   border-bottom divider doesn't read as a doubled/mismatched line.
+   Hover is a plain text-color shift, no background wash. */
 .screen3-voice-switch-btn {
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
   width: 100%;
-  background: var(--bg-color);
+  background: var(--card-bg);
   border: none;
   color: var(--secondary);
   font-family: inherit;
   font-size: 0.88rem;
   font-weight: 600;
-  padding: 12px var(--spacing-md);
+  padding: 8px var(--spacing-md) 6px;
   cursor: pointer;
   text-align: left;
-  min-height: 44px;
-  transition: background-color 0.15s ease;
+  min-height: 36px;
+  transition: color 0.15s ease;
   -webkit-tap-highlight-color: transparent;
 }
-
 .screen3-voice-switch-btn:hover {
-  background-color: #EFF6FF;
-}
-
-.screen3-other-input-divider {
-  height: 1px;
-  background: var(--border-color);
+  color: var(--primary);
 }
 
 .screen3-other-input {
   width: 100%;
-  padding: 14px var(--spacing-md);
+  padding: 4px var(--spacing-md) 10px;
   font-size: 1rem;
   font-family: inherit;
   color: var(--text-primary);
   background: transparent;
   border: none;
   outline: none;
+  box-shadow: none;
   box-sizing: border-box;
+  min-height: 40px;
+}
+
+.screen3-other-input:focus {
+  outline: none;
+  box-shadow: none;
+  border: none;
 }
 
 .screen3-other-input::placeholder {
@@ -331,12 +386,6 @@ body,
   align-self: flex-start;
   padding: 14px 40px;
   min-height: 52px;
-}
-
-.screen3-something-else-input {
-  margin-bottom: 16px;
-  border: 1.5px solid var(--secondary);
-  box-shadow: 0 0 0 3px rgba(46, 134, 193, 0.1);
 }
 
 .screen3-also-selected-hint {
@@ -368,15 +417,11 @@ body,
 
 /* Desktop: columns swapped via `order` — .screen3-main (the
    checklist/interaction) now renders on the left, .screen3-header
-   (title/subtitle/summary) now renders on the right. Column widths
-   are also flipped (0.9fr 1.1fr instead of 1.1fr 0.9fr) so the wider
-   column stays with the checklist content, matching proportions to
-   whichever column now holds the denser content — same visual
-   balance as before, just mirrored. No JSX changes needed. */
+   (title/subtitle/summary) now renders on the right. */
 @media (min-width: 1024px) {
   .screen3-container {
     max-width: 1180px;
-    padding: 18px clamp(24px, 4vw, 64px) 32px;
+    padding: 4px clamp(20px, 3.5vw, 56px) 24px;
     margin: 0 auto;
   }
 
@@ -388,9 +433,15 @@ body,
     font-size: 1.05rem;
   }
 
+  .screen3-page-header {
+    max-width: 700px;
+    margin: 0 auto 28px;
+    text-align: center;
+  }
+
   .screen3-grid {
     display: grid;
-    grid-template-columns: 0.9fr 1.1fr;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
     grid-template-rows: min-content;
     align-items: start;
     align-content: start;
@@ -399,14 +450,15 @@ body,
   }
 
   .screen3-header {
-    padding-top: 8px;
     gap: 14px;
     order: 2;
+    min-width: 0;
   }
 
   .screen3-main {
-    padding-top: 4px;
     order: 1;
+    min-width: 0;
+    margin-top: -24px;
   }
 }
 
@@ -416,7 +468,7 @@ body,
   }
 
   .screen3-grid {
-    grid-template-columns: 1fr minmax(360px, 460px);
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 460px);
     column-gap: 64px;
   }
 }

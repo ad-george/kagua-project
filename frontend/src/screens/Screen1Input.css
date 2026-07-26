@@ -4,19 +4,25 @@ body,
   background-color: var(--bg-color);
 }
 
-/* ── Container ──
-   Mobile-first: single column, tight vertical padding. On desktop
-   this becomes a two-column grid that hugs its content height
-   (align-content: start) instead of stretching to fill leftover
-   vertical space. */
+/* ── Container ── */
 .screen1-container {
   width: 100%;
   margin: 0 auto;
-  padding: 20px var(--spacing-md) 20px;
+  padding: 8px var(--spacing-md) 20px;
   min-height: auto;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg, 24px);
+}
+
+.screen1-page-header {
+  margin-bottom: 12px;
+}
+
+.screen1-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 /* ── Left column: header/explanation/guidance ── */
@@ -55,7 +61,7 @@ body,
   font-size: 1rem;
   color: var(--text-secondary);
   line-height: 1.6;
-  margin: 0 0 20px;
+  margin: 0 0 12px;
 }
 
 /* ── Voice mode ── */
@@ -63,10 +69,12 @@ body,
   display: flex;
   flex-direction: column;
   gap: 0;
+  margin-top: 0;
 }
 
 .screen1-voice-mode > *:first-child {
   margin-bottom: 0;
+  margin-top: 0;
 }
 
 /* ── Divider between voice and type ── */
@@ -108,7 +116,7 @@ body,
 
 .screen1-type-instead-link:hover {
   color: var(--primary);
-  text-decoration: underline;
+  /* text-decoration: underline; */
 }
 
 .screen1-type-instead-link:focus-visible {
@@ -119,7 +127,7 @@ body,
 
 /* ── Examples card ── */
 .screen1-examples {
-  margin-top: 24px;
+  margin-top: 0;
   padding: 16px 18px;
   background-color: var(--bg-color);
   border: 1px solid var(--border-color);
@@ -159,30 +167,40 @@ body,
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
 }
 
 /* ── Unified input card ── */
 .screen1-input-card {
   background: var(--card-bg);
-  border: 1.5px solid var(--border-color);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
   overflow: hidden;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: var(--shadow-sm);
+  box-shadow: none;
+  transition: border-color 0.15s ease;
+}
+
+.screen1-input-card:hover {
+  border-color: #B0B8C1;
 }
 
 .screen1-input-card:focus-within {
-  border-color: var(--secondary);
-  box-shadow: 0 0 0 3px rgba(46, 134, 193, 0.12);
+  border-color: #9AA3AE;
 }
 
+/* ── "Use voice instead" strip ── */
 .screen1-voice-switch-btn {
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
   width: 100%;
-  background: var(--bg-color);
+  background: var(--card-bg);
   border: none;
+  border-bottom: 1px solid var(--border-color);
+  outline: none;
+  box-shadow: none;
   color: var(--secondary);
   font-family: inherit;
   font-size: 0.88rem;
@@ -190,22 +208,17 @@ body,
   padding: 12px var(--spacing-md);
   cursor: pointer;
   text-align: left;
-  transition: background-color 0.15s ease;
+  transition: color 0.15s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
 .screen1-voice-switch-btn:hover {
-  background-color: #EFF6FF;
+  color: var(--primary);
 }
 
 .screen1-voice-switch-icon {
   font-size: 1rem;
   line-height: 1;
-}
-
-.screen1-input-divider {
-  height: 1px;
-  background: var(--border-color);
 }
 
 .screen1-textarea {
@@ -217,11 +230,18 @@ body,
   background: transparent;
   border: none;
   outline: none;
+  box-shadow: none;
   resize: none;
   min-height: 130px;
   line-height: 1.65;
   box-sizing: border-box;
   display: block;
+}
+
+.screen1-textarea:focus {
+  outline: none;
+  box-shadow: none;
+  border: none;
 }
 
 .screen1-textarea::placeholder {
@@ -231,7 +251,11 @@ body,
 
 /* ── Submit button ── */
 .screen1-submit-btn {
+  width: auto;
+  padding: 10px 28px;
+  min-height: 44px;
   margin-top: 4px;
+  align-self: flex-start;
 }
 
 /* ══════════════════════════════════════════
@@ -240,13 +264,13 @@ body,
 
 @media (min-width: 480px) {
   .screen1-container {
-    padding: 24px var(--spacing-lg, 24px) 24px;
+    padding: 12px var(--spacing-lg, 24px) 24px;
   }
 }
 
 @media (min-width: 640px) {
   .screen1-container {
-    padding: 28px var(--spacing-xl) 24px;
+    padding: 14px var(--spacing-xl) 24px;
   }
 
   .screen1-title {
@@ -258,18 +282,38 @@ body,
 @media (min-width: 1024px) {
   .screen1-container {
     max-width: 1180px;
-    padding: 40px clamp(24px, 4vw, 64px) 32px;
-    display: grid;
-    grid-template-columns: minmax(320px, 420px) 1fr;
-    grid-template-rows: min-content;
-    align-items: start;
-    align-content: start;
-    gap: 48px;
-    min-height: auto;
+    padding: 18px clamp(24px, 4vw, 64px) 32px;
+    margin: 0 auto;
   }
 
-  .screen1-header {
-    padding-top: 8px;
+  .screen1-page-header {
+    max-width: 980px;
+    margin: 0 auto 8px;
+    text-align: center;
+  }
+
+  /* Voice mode: examples + recorder side by side. */
+  .screen1-content {
+    display: grid;
+    grid-template-columns: 420px 520px;
+    justify-content: center;
+    gap: 40px;
+    align-items: start;
+    margin-top: -12px;
+  }
+
+  /* Force both columns to start at the exact same top line,
+     regardless of each child's own internal spacing/padding. */
+  .screen1-examples,
+  .screen1-main {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  /* Text mode: single column — centering handled by .screen1-text-mode
+     itself via max-width + margin: 0 auto. */
+  .screen1-content--text {
+    display: block;
   }
 
   .screen1-title {
@@ -279,15 +323,14 @@ body,
   .screen1-subtitle {
     font-size: 1.05rem;
   }
-
-  .screen1-main {
-    padding-top: 4px;
-  }
 }
 
 @media (min-width: 1440px) {
   .screen1-container {
     max-width: 1320px;
+  }
+
+  .screen1-content {
     grid-template-columns: minmax(360px, 460px) 1fr;
   }
 }

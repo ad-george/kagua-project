@@ -69,36 +69,37 @@ body,
   margin: 0 0 8px;
 }
 
-/* ── Summary card ── */
+/* ── Summary card ──
+   Plain neutral border on all sides, flat (no shadow). Rows use a
+   fixed two-column grid (label | value) so "Crop:" and "Problem:"
+   labels line up their colons at the exact same point regardless of
+   text length, rather than relying on independently centered rows. */
 .screen2-summary-card {
   background: var(--card-bg);
-  border: 1.5px solid var(--border-color);
-  border-left: 4px solid var(--secondary);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  padding: 16px 20px;
+  padding: 22px 28px;
   display: flex;
   flex-direction: column;
-  gap: 0;
-  box-shadow: var(--shadow-sm);
+  align-items: flex-start;
+  gap: 14px;
+  box-shadow: none;
   height: 100%;
   box-sizing: border-box;
 }
 
 .screen2-summary-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 90px 1fr;
   align-items: baseline;
-  gap: var(--spacing-md);
-  padding: 10px 0;
+  gap: 12px;
 }
 
 .screen2-summary-label {
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  font-size: 0.92rem;
+  font-weight: 600;
   color: var(--text-secondary);
-  min-width: 70px;
-  flex-shrink: 0;
+  text-align: left;
 }
 
 .screen2-summary-value {
@@ -106,12 +107,12 @@ body,
   font-weight: 500;
   color: var(--text-primary);
   line-height: 1.5;
+  text-transform: capitalize;
+  text-align: left;
 }
 
 .screen2-summary-divider {
-  height: 1px;
-  background: var(--border-color);
-  margin: 4px 0;
+  display: none;
 }
 
 /* ── Source cards row ── */
@@ -125,21 +126,21 @@ body,
 
 /* ── Framing note ── */
 .screen2-note {
-  background: #EFF6FF;
-  border: 1px solid #BFDBFE;
-  border-radius: var(--radius-md);
-  padding: 22px 24px;
+  background: transparent;
+  border: none;
+  padding: 0;
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  height: 100%;
+  height: auto;
 }
 
 .screen2-note p {
-  font-size: 0.95rem;
-  color: var(--text-primary);
-  line-height: 1.65;
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
   margin: 0;
+  font-style: italic;
 }
 
 /* ── Confirm buttons ── */
@@ -149,11 +150,28 @@ body,
   gap: var(--spacing-sm);
 }
 
-.screen2-continue-btn,
+.screen2-continue-btn {
+  width: auto;
+  padding: 12px 24px;
+  min-height: 44px;
+}
+
+/* ── "No, I'll explain it again" ──
+   Neutral, professional hover: border darkens slightly and a subtle
+   flat gray background appears — no blue tint, no glow. */
 .screen2-no-btn {
   width: auto;
   padding: 12px 24px;
   min-height: 44px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.screen2-no-btn:hover {
+  background-color: #F4F5F7;
+  border-color: #B8BFC7;
 }
 
 .screen2-retry-hint {
@@ -273,11 +291,11 @@ body,
   }
 
   /* ── No-info state ──
-     Collapses to a single column and redefines the row areas, since
-     "section" and "cards" no longer exist in the DOM when there's no
-     advice. The summary card's wrapper is capped at 800px so it
-     stays visually compact rather than stretching full-width for
-     just three short rows of content. */
+     Collapses to a single centered column. The card itself is
+     capped at a fixed width and centered as one block — the label
+     grid inside fills that width left-to-right, so it reads as a
+     properly wide, aligned card rather than narrow centered text
+     floating in empty space. */
   .screen2-grid.no-info {
     grid-template-columns: 1fr;
     grid-template-areas:
@@ -286,11 +304,51 @@ body,
       "retry"
       "note"
       "actions";
+    justify-items: center;
+    text-align: center;
+  }
+
+  .screen2-grid.no-info .screen2-area-title {
+    align-items: center;
   }
 
   .screen2-grid.no-info .screen2-area-summary {
-    max-width: 800px;
+    max-width: 560px;
+    width: 100%;
     margin-top: 0;
+  }
+
+  .screen2-grid.no-info .screen2-summary-row {
+    justify-content: start;
+  }
+
+  .screen2-grid.no-info .screen2-area-note {
+    max-width: 560px;
+    width: 100%;
+    align-items: center;
+  }
+
+  .screen2-grid.no-info .screen2-note {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .screen2-grid.no-info .screen2-area-actions {
+    align-items: center;
+  }
+
+  .screen2-grid.no-info .screen2-confirm-buttons {
+    justify-content: center;
+  }
+
+  .screen2-grid.no-info .screen2-area-retry {
+    align-items: center;
+    width: 100%;
+  }
+
+  .screen2-grid.no-info .screen2-retry-choice {
+    max-width: 560px;
+    width: 100%;
   }
 }
 

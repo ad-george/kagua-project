@@ -16,12 +16,12 @@ const CONTINUE_OPTIONS = [
     description: "Share your Kagua summary during your conversation with them.",
     hasFindNearby: true,
   },
-  {
-    id: "other",
-    label: "Share with someone else",
-    description: "Send your summary to a neighbour, friend, or anyone else.",
-    hasFindNearby: false,
-  },
+  // {
+  //   id: "other",
+  //   label: "Share with someone else",
+  //   description: "Send your summary to a neighbour, friend, or anyone else.",
+  //   hasFindNearby: false,
+  // },
 ];
 
 function Screen5Summary({
@@ -84,10 +84,6 @@ ${comparison?.confidence || "Not available"}
     }
   };
 
-  const toggleShare = (id) => {
-    setOpenShareId((prev) => (prev === id ? null : id));
-  };
-
   const toggleFindNearby = (id) => {
     setOpenFindNearbyId((prev) => (prev === id ? null : id));
   };
@@ -147,26 +143,15 @@ ${comparison?.confidence || "Not available"}
                   )}
                   <button
                     className="screen5-action-btn"
-                    onClick={() => toggleShare(option.id)}
+                    onClick={() => setOpenShareId(option.id)}
                   >
-                    {openShareId === option.id ? "Hide share options" : "Share summary"}
+                    Share summary
                   </button>
                 </div>
 
                 {option.hasFindNearby && openFindNearbyId === option.id && (
                   <div className="screen5-findnearby-placeholder">
                     <p>Nearby agrovets and extension officers will appear here.</p>
-                  </div>
-                )}
-
-                {openShareId === option.id && (
-                  <div className="screen5-share-section">
-                    <ShareOptions
-                      onShareWhatsApp={handleShareWhatsApp}
-                      onSharePDF={handleSharePDF}
-                      onShareSMS={handleShareSMS}
-                      onCopyText={handleCopyText}
-                    />
                   </div>
                 )}
               </div>
@@ -194,6 +179,37 @@ ${comparison?.confidence || "Not available"}
         </div>
 
       </div>
+
+      {/* Share popup — overlays the screen instead of expanding inline
+          under whichever option card triggered it. */}
+      {openShareId && (
+        <div
+          className="screen5-modal-overlay"
+          onClick={() => setOpenShareId(null)}
+        >
+          <div
+            className="screen5-share-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="screen5-share-modal-header">
+              <h3 className="screen5-share-modal-title">Share summary</h3>
+              <button
+                className="screen5-modal-close"
+                onClick={() => setOpenShareId(null)}
+                aria-label="Close"
+              >
+                ×
+              </button>
+            </div>
+            <ShareOptions
+              onShareWhatsApp={handleShareWhatsApp}
+              onSharePDF={handleSharePDF}
+              onShareSMS={handleShareSMS}
+              onCopyText={handleCopyText}
+            />
+          </div>
+        </div>
+      )}
 
       {showModal && (
         <UnderstandMoreModal

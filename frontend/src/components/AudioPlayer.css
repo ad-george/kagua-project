@@ -4,7 +4,7 @@
 
 .audio-player-btn {
   background-color: var(--card-bg);
-  border: 1.5px solid var(--secondary);
+  border: 1.5px solid var(--border-color);
   color: var(--primary);
   font-family: inherit;
   font-size: 0.875rem;
@@ -12,13 +12,13 @@
   padding: 8px 18px;
   border-radius: var(--radius-full);
   cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  transition: border-color 0.15s ease, color 0.15s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
 .audio-player-btn:hover {
-  background-color: #EFF6FF;
-  border-color: var(--primary);
+  border-color: #9AA3AE;
+  color: var(--primary);
 }
 
 .audio-player-btn:disabled {
@@ -27,7 +27,7 @@
 }
 
 .audio-player-btn:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--secondary);
   outline-offset: 2px;
 }
 

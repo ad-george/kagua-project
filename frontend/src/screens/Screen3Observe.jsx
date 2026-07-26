@@ -1,10 +1,9 @@
-import { Mic } from "lucide-react";
+import { Mic, Check } from "lucide-react";
 import { useState } from "react";
 import VoiceRecorder from "../components/VoiceRecorder";
 import "./Screen3Observe.css";
 
 const OBSERVATION_OPTIONS = [
-  "Yellow leaves",
   "Holes in the leaves",
   "Grey spots",
   "Brown spots",
@@ -17,6 +16,10 @@ const OBSERVATION_OPTIONS = [
 function Screen3Observe({ onContinue }) {
   const [selected, setSelected] = useState([]);
   const [otherText, setOtherText] = useState("");
+  // Committed custom notes — separate from otherText (the live draft in the
+  // box) so clearing the box to type a new observation doesn't erase notes
+  // already added to the summary.
+  const [customNotes, setCustomNotes] = useState([]);
   const [showOtherText, setShowOtherText] = useState(false);
   const [hasMore, setHasMore] = useState(null);
   const [somethingElseOpen, setSomethingElseOpen] = useState(false);
@@ -27,7 +30,7 @@ function Screen3Observe({ onContinue }) {
         ? prev.filter((item) => item !== option)
         : [...prev, option];
 
-      if (next.length === 0 && !otherText.trim()) {
+      if (next.length === 0 && customNotes.length === 0 && !otherText.trim()) {
         setHasMore(null);
         setShowOtherText(false);
       }
@@ -36,13 +39,40 @@ function Screen3Observe({ onContinue }) {
     });
   };
 
+  // Commits the current draft into customNotes and clears the box so the
+  // person can immediately start typing/recording the next observation.
+  const commitOtherText = () => {
+    const trimmed = otherText.trim();
+    if (trimmed) {
+      setCustomNotes((prev) => [...prev, trimmed]);
+    }
+    setOtherText("");
+  };
+
+  const removeCustomNote = (index) => {
+    setCustomNotes((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handleOtherKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      commitOtherText();
+    }
+  };
+
   const handleOtherTranscription = (transcribedText) => {
-    setOtherText(transcribedText);
+    // Voice has no natural "Enter" moment, so a finished recording commits
+    // straight away — the box then reopens empty for another entry.
+    const trimmed = transcribedText.trim();
+    if (trimmed) {
+      setCustomNotes((prev) => [...prev, trimmed]);
+    }
+    setOtherText("");
     setShowOtherText(true);
   };
 
   const handleSubmit = () => {
-    const finalObservations = [...selected];
+    const finalObservations = [...selected, ...customNotes];
     if (otherText.trim()) {
       finalObservations.push(otherText.trim());
     }
@@ -50,7 +80,7 @@ function Screen3Observe({ onContinue }) {
   };
 
   const hasSomethingSelected =
-    selected.length > 0 || otherText.trim().length > 3;
+    selected.length > 0 || customNotes.length > 0 || otherText.trim().length > 3;
 
   // Left column shows:
   // 1. "Something else" input when that card is open
@@ -63,15 +93,20 @@ function Screen3Observe({ onContinue }) {
 
   return (
     <div className="screen3-container">
+      {/* Title + subtitle live above the grid so they can span and center
+          across both columns, instead of being stuck inside whichever
+          column .screen3-header ends up in after the desktop order-swap. */}
+      <div className="screen3-page-header">
+        <h1 className="screen3-title">What do you see on the plant?</h1>
+        <p className="screen3-subtitle">
+          Check one affected plant and select everything that applies.
+        </p>
+      </div>
+
       <div className="screen3-grid">
 
         {/* LEFT COLUMN */}
         <div className="screen3-header">
-          <h1 className="screen3-title">What do you see on the plant?</h1>
-
-          <p className="screen3-subtitle">
-            Check one affected plant and select everything that applies.
-          </p>
 
           {hasSomethingSelected && (
             <div className="screen3-summary-card">
@@ -82,9 +117,19 @@ function Screen3Observe({ onContinue }) {
                     {item}
                   </li>
                 ))}
-                {otherText.trim() && (
-                  <li className="screen3-summary-item">{otherText.trim()}</li>
-                )}
+                {customNotes.map((note, index) => (
+                  <li key={`note-${index}`} className="screen3-summary-item">
+                    <span className="screen3-summary-item-text">{note}</span>
+                    <button
+                      type="button"
+                      className="screen3-summary-item-remove"
+                      onClick={() => removeCustomNote(index)}
+                      aria-label={`Remove "${note}"`}
+                    >
+                      ×
+                    </button>
+                  </li>
+                ))}
               </ul>
             </div>
           )}
@@ -117,13 +162,14 @@ function Screen3Observe({ onContinue }) {
                       <Mic size={15} strokeWidth={2} />
                       Use voice instead
                     </button>
-                    <div className="screen3-other-input-divider" />
                     <input
                       type="text"
                       className="screen3-other-input"
-                      placeholder="Describe what you see..."
+                      placeholder="Describe what you see, then press Enter..."
                       value={otherText}
                       onChange={(e) => setOtherText(e.target.value)}
+                      onKeyDown={handleOtherKeyDown}
+                      onBlur={commitOtherText}
                       autoFocus
                     />
                   </div>
@@ -189,13 +235,14 @@ function Screen3Observe({ onContinue }) {
                         <Mic size={15} strokeWidth={2} />
                         Use voice instead
                       </button>
-                      <div className="screen3-other-input-divider" />
                       <input
                         type="text"
                         className="screen3-other-input"
-                        placeholder="e.g. wilting stems, yellow rings around leaves..."
+                        placeholder="e.g. wilting stems, then press Enter..."
                         value={otherText}
                         onChange={(e) => setOtherText(e.target.value)}
+                        onKeyDown={handleOtherKeyDown}
+                        onBlur={commitOtherText}
                         autoFocus
                       />
                     </div>
@@ -218,7 +265,9 @@ function Screen3Observe({ onContinue }) {
               >
                 <span className="screen3-checkbox">
                   {selected.includes(option) && (
-                    <span className="screen3-checkbox-tick">✓</span>
+                    <span className="screen3-checkbox-tick">
+                      <Check size={12} strokeWidth={3} />
+                    </span>
                   )}
                 </span>
                 <input
@@ -252,7 +301,9 @@ function Screen3Observe({ onContinue }) {
             >
               <span className="screen3-checkbox">
                 {somethingElseOpen && (
-                  <span className="screen3-checkbox-tick">✓</span>
+                  <span className="screen3-checkbox-tick">
+                    <Check size={12} strokeWidth={3} />
+                  </span>
                 )}
               </span>
               Something else

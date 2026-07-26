@@ -35,16 +35,23 @@ function Screen1Input({ onSubmit, startMode = "voice" }) {
 
   return (
     <div className="screen1-container">
-      {/* ── Left column: title, explanation, guidance ── */}
-      <div className="screen1-header">
-        {/* <p className="screen1-brand">Kagua</p> */}
+      {/* ── Page header: title + explanation, always visible ── */}
+      <div className="screen1-page-header">
         <h1 className="screen1-title">What are you seeing in your field?</h1>
         {/* Third-person, descriptive copy rather than first-person "I'm here to
             help you" — Kagua is positioned as a tool, not an assistant/chatbot. */}
         <p className="screen1-subtitle">
           Kagua helps you compare advice and understand what is still uncertain.
         </p>
+      </div>
 
+      {/* screen1-content--text drives centering in CSS when the examples
+          box isn't rendered (text mode) — see Screen1Input.css */}
+      <div
+        className={`screen1-content ${
+          showTextInput ? "screen1-content--text" : ""
+        }`}
+      >
         {!showTextInput && (
           <div className="screen1-examples">
             <p className="screen1-examples-label">Others have asked about</p>
@@ -53,61 +60,59 @@ function Screen1Input({ onSubmit, startMode = "voice" }) {
             ))}
           </div>
         )}
-      </div>
 
-      {/* ── Right column: the actual interaction ── */}
-      <div className="screen1-main">
-        {!showTextInput ? (
-          /* ── Voice mode: recording is the primary action on this screen ── */
-          <div className="screen1-voice-mode">
-            <VoiceRecorder onTranscription={handleTranscription} />
+        {/* ── The actual interaction ── */}
+        <div className="screen1-main">
+          {!showTextInput ? (
+            /* ── Voice mode: recording is the primary action on this screen ── */
+            <div className="screen1-voice-mode">
+              <VoiceRecorder onTranscription={handleTranscription} />
 
-            <div className="screen1-divider">
-              <span>or</span>
-            </div>
+              <div className="screen1-divider">
+                <span>or</span>
+              </div>
 
-            <button
-              className="screen1-type-instead-link"
-              onClick={() => setShowTextInput(true)}
-            >
-              <Keyboard size={15} strokeWidth={2} />
-              Prefer to type instead
-            </button>
-          </div>
-        ) : (
-          /* ── Text mode: same input card pattern used across the app's
-               forms (border, focus ring), with a toggle back to voice ── */
-          <div className="screen1-text-mode">
-            <div className="screen1-input-card">
               <button
-                className="screen1-voice-switch-btn"
-                onClick={handleSwitchToVoice}
+                className="screen1-type-instead-link"
+                onClick={() => setShowTextInput(true)}
               >
-                <Mic size={15} strokeWidth={2} />
-                Use voice instead
+                <Keyboard size={15} strokeWidth={2} />
+                Prefer to type instead
               </button>
-
-              <div className="screen1-input-divider" />
-
-              <textarea
-                className="screen1-textarea"
-                value={inputText}
-                onChange={(e) => setInputText(e.target.value)}
-                placeholder="Describe what you're seeing. If you've received advice from neighbours, agrovets, or others, include that too."
-                rows={5}
-                autoFocus
-              />
             </div>
+          ) : (
+            /* ── Text mode: same input card pattern used across the app's
+                 forms (border, focus ring), with a toggle back to voice ── */
+            <div className="screen1-text-mode">
+              <div className="screen1-input-card">
+                <button
+                  className="screen1-voice-switch-btn"
+                  onClick={handleSwitchToVoice}
+                >
+                  <Mic size={15} strokeWidth={2} />
+                  Use voice instead
+                </button>
 
-            <button
-              className="btn btn-primary screen1-submit-btn"
-              onClick={handleSubmit}
-              disabled={!inputText.trim()}
-            >
-              Continue
-            </button>
-          </div>
-        )}
+                <textarea
+                  className="screen1-textarea"
+                  value={inputText}
+                  onChange={(e) => setInputText(e.target.value)}
+                  placeholder="Describe what you're seeing. If you've received advice from neighbours, agrovets, or others, include that too."
+                  rows={5}
+                  autoFocus
+                />
+              </div>
+
+              <button
+                className="btn btn-primary screen1-submit-btn"
+                onClick={handleSubmit}
+                disabled={!inputText.trim()}
+              >
+                Continue
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

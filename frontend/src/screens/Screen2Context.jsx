@@ -68,12 +68,12 @@ function Screen2Context({ extractedContext, onConfirm, onRecordAgain, onTypeInst
         <div className="screen2-area-summary">
           <div className="screen2-summary-card">
             <div className="screen2-summary-row">
-              <span className="screen2-summary-label">Crop</span>
+              <span className="screen2-summary-label">Crop:</span>
               <span className="screen2-summary-value">{crop}</span>
             </div>
             <div className="screen2-summary-divider" />
             <div className="screen2-summary-row">
-              <span className="screen2-summary-label">Problem</span>
+              <span className="screen2-summary-label">Problem:</span>
               <span className="screen2-summary-value">{reported_problem}</span>
             </div>
             <div className="screen2-summary-divider" />

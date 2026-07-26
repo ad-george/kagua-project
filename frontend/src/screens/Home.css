@@ -271,13 +271,19 @@ body,
   background: transparent;
   border: none;
   border-bottom: 1.5px solid var(--border-color);
+  border-radius: 0;
   outline: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+  appearance: none;
   box-sizing: border-box;
   transition: border-color 0.15s ease;
 }
 
 .home-search-input:focus {
   border-color: var(--secondary);
+  outline: none;
+  box-shadow: none;
 }
 
 .home-filter-links {

@@ -9,14 +9,17 @@
    Deliberately not a rectangular .btn — this is the one focal action on
    the screen, styled as a large circular mic button with the label
    underneath, closer to how voice-memo apps present a recorder than a
-   generic form-submit button. */
+   generic form-submit button. Top padding reduced so the recorder
+   doesn't sit lower than its sibling column (e.g. the examples card
+   on Screen 1) — the mic circle still has presence without needing
+   this much surrounding whitespace above it. */
 .voice-recorder-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   width: 100%;
-  padding: 28px 16px;
+  padding: 8px 16px 16px;
   background: none;
   border: none;
   cursor: pointer;
