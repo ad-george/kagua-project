@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Audio Test</title>
+</head>
+<body>
+    <h1>Audio Playback Test</h1>
+    <button id="testBtn">Test Audio</button>
+    <div id="result"></div>
+    
+    <script>
+        document.getElementById('testBtn').addEventListener('click', async () => {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Loading...';
+            
+            try {
+                const response = await fetch('/api/test-tts?text=Hello this is a test');
+                console.log('Response status:', response.status);
+                console.log('Content type:', response.headers.get('content-type'));
+                
+                if (!response.ok) throw new Error('Request failed');
+                
+                const blob = await response.blob();
+                console.log('Blob size:', blob.size, 'type:', blob.type);
+                
+                const url = URL.createObjectURL(blob);
+                console.log('Audio URL:', url);
+                
+                const audio = new Audio(url);
+                audio.play();
+                
+                resultDiv.innerHTML = `
+                    <p>Audio loaded successfully!</p>
+                    <audio controls src="${url}"></audio>
+                `;
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.innerHTML = `<p>Error: ${error.message}</p>`;
+            }
+        });
+    </script>
+</body>
+</html>

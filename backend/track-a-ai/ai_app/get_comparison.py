@@ -2,6 +2,7 @@ import json
 from groq import Groq
 import os
 from ai_app.prompts.system_prompt import KAGUA_SYSTEM_PROMPT
+from ai_app.language_utils import build_language_instruction
 
 groq_client = Groq(api_key=os.environ["GROQ_API_KEY"])
 
@@ -110,10 +111,14 @@ def get_comparison(context: dict, retrieved_knowledge: list, field_observation: 
         },
         "candidate_knowledge_entries": retrieved_knowledge,
     })
+    language_instruction = build_language_instruction(
+        context.get("raw_input") or context.get("reported_problem"),
+        context.get("language"),
+    )
     response = groq_client.chat.completions.create(
         model="llama-3.3-70b-versatile",
         messages=[
-            {"role": "system", "content": KAGUA_SYSTEM_PROMPT + GET_COMPARISON_TASK_PROMPT},
+            {"role": "system", "content": KAGUA_SYSTEM_PROMPT + GET_COMPARISON_TASK_PROMPT + "\n\nLANGUAGE INSTRUCTION: " + language_instruction},
             {"role": "user", "content": user_message},
         ],
         response_format={"type": "json_object"},

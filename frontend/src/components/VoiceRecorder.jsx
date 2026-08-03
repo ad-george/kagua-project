@@ -7,6 +7,9 @@ function VoiceRecorder({ onTranscription }) {
   const [audioURL, setAudioURL] = useState(null);
   const [isTranscribing, setIsTranscribing] = useState(false);
   const [error, setError] = useState(null);
+  const [transcriptionFailed, setTranscriptionFailed] = useState(false);
+  const [failureReason, setFailureReason] = useState(null);
+  const lastBlobRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
   const streamRef = useRef(null);
@@ -52,16 +55,28 @@ function VoiceRecorder({ onTranscription }) {
 
   const handleSend = async () => {
     const blob = new Blob(chunksRef.current, { type: "audio/webm" });
+    lastBlobRef.current = blob;
     await sendToBackend(blob);
   };
 
   const handleReRecord = () => {
     setAudioURL(null);
     setError(null);
+    setTranscriptionFailed(false);
+    setFailureReason(null);
   };
 
-  const sendToBackend = async (blob) => {
+  const handleRetryTranscription = async () => {
+    if (lastBlobRef.current) {
+      setTranscriptionFailed(false);
+      setFailureReason(null);
+      await sendToBackend(lastBlobRef.current);
+    }
+  };
+
+  const sendToBackend = async (blob, attempt = 1) => {
     setIsTranscribing(true);
+    setError(null);
     try {
       const formData = new FormData();
       formData.append("file", blob, "recording.webm");
@@ -74,14 +89,66 @@ function VoiceRecorder({ onTranscription }) {
       if (!response.ok) throw new Error("Transcription request failed");
 
       const data = await response.json();
-      if (onTranscription) onTranscription(data.transcription);
+      const transcription = data.transcription || "";
+
+      // Backend signals STT failure with a sentinel prefix rather than
+      // an HTTP error, so we can show a specific message per failure type
+      if (transcription.startsWith("__STT_ERROR__")) {
+        const reason = transcription.replace("__STT_ERROR__", "");
+        setTranscriptionFailed(true);
+        setFailureReason(reason); // "quota" | "unclear" | "failed"
+        return;
+      }
+
+      if (onTranscription) onTranscription(transcription);
     } catch (err) {
-      setError("Could not transcribe your recording. Please try again or type instead.");
       console.error(err);
+      if (attempt < 2) {
+        // Auto-retry once silently before showing the error
+        setIsTranscribing(false);
+        await sendToBackend(blob, attempt + 1);
+      } else {
+        setError(null); // clear so the retry UI renders instead
+        setTranscriptionFailed(true);
+      }
     } finally {
-      setIsTranscribing(false);
+      if (attempt >= 2) setIsTranscribing(false);
     }
   };
+
+  // ── Transcription failed — show retry options ──
+  if (transcriptionFailed) {
+    const isQuota = failureReason === "quota";
+    const isUnclear = failureReason === "unclear";
+    return (
+      <div className="voice-recorder">
+        <div className="voice-recorder-playback-card">
+          <p className="voice-recorder-playback-label">
+            {isQuota ? "Voice service unavailable" : "Could not understand recording"}
+          </p>
+          <p className="voice-recorder-playback-helper">
+            {isQuota
+              ? "Voice recording is not available right now. Please type what you see in your field instead."
+              : isUnclear
+              ? "The recording was too short or unclear. Try again or type instead."
+              : "We couldn't convert your recording. Try again or type instead."}
+          </p>
+          <div className="voice-recorder-playback-actions">
+            {!isQuota && (
+              <button className="btn btn-secondary voice-recorder-rerecord-btn" onClick={handleReRecord}>
+                Record again
+              </button>
+            )}
+            {!isQuota && (
+              <button className="btn btn-primary voice-recorder-send-btn" onClick={handleRetryTranscription}>
+                Try again
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // ── Transcribing ──
   if (isTranscribing) {
@@ -89,7 +156,7 @@ function VoiceRecorder({ onTranscription }) {
       <div className="voice-recorder">
         <div className="voice-recorder-transcribing">
           <span className="voice-recorder-spinner" />
-          <span>Reading your recording…</span>
+          <span>Transcribing your recording…</span>
         </div>
       </div>
     );
@@ -101,6 +168,9 @@ function VoiceRecorder({ onTranscription }) {
       <div className="voice-recorder">
         <div className="voice-recorder-playback-card">
           <p className="voice-recorder-playback-label">Listen to check your recording</p>
+          <p className="voice-recorder-playback-helper">
+            This will turn your audio into text so you can review it before continuing.
+          </p>
           <audio className="voice-recorder-playback" controls src={audioURL} />
           <div className="voice-recorder-playback-actions">
             <button className="btn btn-secondary voice-recorder-rerecord-btn" onClick={handleReRecord}>

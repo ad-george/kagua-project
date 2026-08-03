@@ -79,8 +79,11 @@ function Screen3Observe({ onContinue }) {
     onContinue(finalObservations);
   };
 
-  const hasSomethingSelected =
-    selected.length > 0 || customNotes.length > 0 || otherText.trim().length > 3;
+  const hasSelection = selected.length > 0;
+  const hasDraftNote = otherText.trim().length > 0;
+  const hasCommittedNotes = customNotes.length > 0;
+  const hasMeaningfulInput = hasSelection || hasCommittedNotes || hasDraftNote;
+  const hasSomethingSelected = hasSelection || hasCommittedNotes;
 
   // Left column shows:
   // 1. "Something else" input when that card is open
@@ -88,8 +91,8 @@ function Screen3Observe({ onContinue }) {
   // 3. Both can coexist — if options selected AND something else typed, left shows the input
   //    and "Anything else?" is skipped (they already have custom text)
   const showSomethingElseInput = somethingElseOpen;
-  const showAnythingElse =
-    selected.length > 0 && !somethingElseOpen;
+  const showAnythingElse = hasSelection && !somethingElseOpen && hasMore !== false;
+  const canContinue = hasMeaningfulInput && (!hasSelection || hasMore !== null);
 
   return (
     <div className="screen3-container">
@@ -193,6 +196,9 @@ function Screen3Observe({ onContinue }) {
                   <p className="screen3-other-label">
                     Anything else you've noticed?
                   </p>
+                  <p className="screen3-prompt-help">
+                    Choose No if you are done, or add one more detail.
+                  </p>
                   <div className="screen3-yesno">
                     <button
                       className="btn btn-secondary screen3-yesno-btn"
@@ -202,7 +208,11 @@ function Screen3Observe({ onContinue }) {
                     </button>
                     <button
                       className="btn btn-secondary screen3-yesno-btn"
-                      onClick={() => setHasMore(false)}
+                      onClick={() => {
+                        setHasMore(false);
+                        setShowOtherText(false);
+                        setOtherText("");
+                      }}
                     >
                       No
                     </button>
@@ -313,7 +323,7 @@ function Screen3Observe({ onContinue }) {
           <button
             className="btn btn-primary screen3-continue-btn"
             onClick={handleSubmit}
-            disabled={!hasSomethingSelected}
+            disabled={!canContinue}
           >
             Continue
           </button>

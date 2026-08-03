@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Mic, Keyboard } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Mic } from "lucide-react";
 import VoiceRecorder from "../components/VoiceRecorder";
 import "./Screen1Input.css";
 
@@ -17,10 +17,33 @@ function Screen1Input({ onSubmit, startMode = "voice" }) {
   // transcription comes back, so the person can review/edit it as text.
   const [showTextInput, setShowTextInput] = useState(startMode === "text");
   const [inputText, setInputText] = useState("");
+  const [transcriptionNotice, setTranscriptionNotice] = useState("");
+  const [noticeVisible, setNoticeVisible] = useState(false);
+  const [hasUsedVoice, setHasUsedVoice] = useState(false);
+
+  useEffect(() => {
+    if (!transcriptionNotice) {
+      setNoticeVisible(false);
+      return undefined;
+    }
+
+    setNoticeVisible(true);
+    const hideTimer = window.setTimeout(() => setNoticeVisible(false), 6000);
+    const clearTimer = window.setTimeout(() => setTranscriptionNotice(""), 6500);
+
+    return () => {
+      window.clearTimeout(hideTimer);
+      window.clearTimeout(clearTimer);
+    };
+  }, [transcriptionNotice]);
 
   const handleTranscription = (transcribedText) => {
     setInputText(transcribedText);
     setShowTextInput(true);
+    setHasUsedVoice(true);
+    setTranscriptionNotice(
+      "Your recording has been converted into text. Review and edit it before continuing."
+    );
   };
 
   const handleSubmit = () => {
@@ -31,6 +54,9 @@ function Screen1Input({ onSubmit, startMode = "voice" }) {
   const handleSwitchToVoice = () => {
     setShowTextInput(false);
     setInputText("");
+    setTranscriptionNotice("");
+    setNoticeVisible(false);
+    setHasUsedVoice(false);
   };
 
   return (
@@ -67,18 +93,15 @@ function Screen1Input({ onSubmit, startMode = "voice" }) {
             /* ── Voice mode: recording is the primary action on this screen ── */
             <div className="screen1-voice-mode">
               <VoiceRecorder onTranscription={handleTranscription} />
-
-              <div className="screen1-divider">
-                <span>or</span>
+              <div className="screen1-voice-alt">
+                <span className="screen1-voice-alt-or">or</span>
+                <button
+                  className="screen1-type-instead-link"
+                  onClick={() => setShowTextInput(true)}
+                >
+                  type instead
+                </button>
               </div>
-
-              <button
-                className="screen1-type-instead-link"
-                onClick={() => setShowTextInput(true)}
-              >
-                <Keyboard size={15} strokeWidth={2} />
-                Prefer to type instead
-              </button>
             </div>
           ) : (
             /* ── Text mode: same input card pattern used across the app's
@@ -90,8 +113,19 @@ function Screen1Input({ onSubmit, startMode = "voice" }) {
                   onClick={handleSwitchToVoice}
                 >
                   <Mic size={15} strokeWidth={2} />
-                  Use voice instead
+                  {hasUsedVoice ? "Record again" : "Use voice instead"}
                 </button>
+
+                {transcriptionNotice && (
+                  <div
+                    className={`screen1-transcription-notice ${noticeVisible ? "is-visible" : "is-hidden"}`}
+                    role="status"
+                    aria-live="polite"
+                  >
+                    <span className="screen1-transcription-notice-icon">✓</span>
+                    <span>{transcriptionNotice}</span>
+                  </div>
+                )}
 
                 <textarea
                   className="screen1-textarea"

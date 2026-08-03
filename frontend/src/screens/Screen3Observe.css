@@ -4,11 +4,18 @@ body,
   background-color: var(--bg-color);
 }
 
+body {
+  background: var(--bg-color);
+}
+
 .screen3-container {
   width: 100%;
+  min-height: 100%;
   margin: 0 auto;
-  padding: 8px var(--spacing-md) 20px;
+  padding: 16px var(--spacing-md) 24px;
   font-family: inherit;
+  background: linear-gradient(180deg, var(--bg-color) 0%, #F5F8FB 100%);
+  border-radius: 0;
 }
 
 /* ── Grid ── */
@@ -16,6 +23,7 @@ body,
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 100%;
 }
 
 .screen3-header {
@@ -26,6 +34,7 @@ body,
 
 .screen3-page-header {
   margin-bottom: 20px;
+  padding: 8px 0 4px;
 }
 
 .screen3-main {
@@ -235,7 +244,14 @@ body,
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--text-primary);
+  margin: 0 0 4px;
+}
+
+.screen3-prompt-help {
+  font-size: 0.86rem;
+  color: var(--text-secondary);
   margin: 0 0 var(--spacing-sm);
+  line-height: 1.4;
 }
 
 .screen3-yesno {

@@ -20,20 +20,21 @@ if USE_REAL_TRACK_A:
         from ai_app.extract_context import extract_context
         from ai_app.get_comparison import get_comparison
         from ai_app.get_source_details import get_source_details
+        from ai_app.generate_summary import generate_summary
         print("Using REAL Track A")
     except ImportError as e:
         # If the real Track A can't be imported for any reason, fall back to the stub rather than crashing the whole server.
         print(f"Error loading Track A: {e}")
         print("Falling back to stub")
-        from app.stubs.track_a_stub import extract_context, get_comparison, get_source_details
+        from app.stubs.track_a_stub import extract_context, get_comparison, get_source_details, generate_summary
 else:
-    from app.stubs.track_a_stub import extract_context, get_comparison, get_source_details
+    from app.stubs.track_a_stub import extract_context, get_comparison, get_source_details, generate_summary
     print("Using STUB Track A")
-# Function to return the three core Track A functions, either real or stub, as decided above.
+# Function to return the four core Track A functions, either real or stub, as decided above.
 def get_track_a():
     """
-    Returns Track A's three core functions (extract_context, get_comparison,
-    get_source_details) — either the real implementation or the stub,
-    already decided above when this module was first loaded.
+    Returns Track A's four core functions (extract_context, get_comparison,
+    get_source_details, generate_summary) — either the real implementation
+    or the stub, already decided above when this module was first loaded.
     """
-    return extract_context, get_comparison, get_source_details
+    return extract_context, get_comparison, get_source_details, generate_summary

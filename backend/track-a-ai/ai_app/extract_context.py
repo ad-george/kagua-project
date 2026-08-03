@@ -53,6 +53,15 @@ Normalize equivalent source names where the meaning is clear, for example:
 A named organization (e.g. "One Acre Fund") should be kept as "organization",
 with "source_type" set to the general role (e.g. "trainer").
 
+CRITICAL RULE FOR ADVICE: The "advice" field must be a short factual restatement
+of what was suggested, never the farmer's or the source's reasoning. Do not use
+phrases such as "believes," "thinks," "suspects," "may be based on," "possibly,"
+or "likely because." Extract only what they suggested doing, not why. For
+example, if the farmer says "my neighbour thinks it's pests so he told me to
+spray," extract advice as "Suggested spraying," not "Thinks it's pests,
+suggested spraying." This applies even when the reasoning is stated plainly by
+the farmer — strip it regardless of how it was phrased.
+
 Return only unique observations, do not repeat the same observation twice even
 if the farmer mentions it more than once.
 
@@ -123,4 +132,3 @@ def extract_context(raw_input: str, county: str = "Kiambu") -> dict:
     result.setdefault("season", None)
     result.setdefault("growth_stage", None)
     return result
-

@@ -44,6 +44,15 @@ body,
   margin: 0;
 }
 
+.screen4-bridge {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 4px 0 0;
+  max-width: 560px;
+  align-self: center;
+}
+
 @media (min-width: 1024px) {
   .screen4-title { font-size: 2.1rem; }
 }
@@ -61,6 +70,14 @@ body,
     grid-template-columns: 1fr 1fr;
     gap: 56px;
     align-items: stretch;
+  }
+
+  /* When only one panel renders in a row (e.g. neither advice nor trusted
+     sources exist, so only "What you observed" is present), let it span
+     the full row instead of sitting in column 1 with an empty column 2
+     beside it. */
+  .screen4-row .screen4-panel:only-child {
+    grid-column: 1 / -1;
   }
 }
 
@@ -87,41 +104,35 @@ body,
   border-bottom: 1px solid var(--border-color);
 }
 
-/* ── Observed pills ── */
-.screen4-observed-list {
+/* ── Observed pills ──
+   Renamed from .screen4-observed-list to match the JSX's actual
+   className (.screen4-observed-pills), which previously had zero CSS
+   and rendered as an unstyled default bulleted list. Styled as rounded
+   chips, matching the pill-badge language already used elsewhere in
+   the app (e.g. the county badge on the Home page). */
+.screen4-observed-pills {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
-.screen4-observed-list li {
-  position: relative;
-  padding-left: 12px;
-  font-size: 1rem;
-  color: var(--text-primary);
-  line-height: 1.6;
-}
-
-.screen4-observed-list li::before {
-  content: "•";
-  position: absolute;
-  left: 0;
+.screen4-observed-pills li {
+  background-color: #EFF6FF;
   color: var(--secondary);
-  font-weight: 700;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 999px;
+  line-height: 1.4;
 }
 
-.screen4-observed-list li,
-.screen4-advice-view,
-.screen4-unclear-list li {
-  font-size: 1rem;
-}
-
-/* ── Advice mini-cards ── */
-
-.screen4-advice-list {
+/* ── Advice stack ──
+   Renamed from .screen4-advice-list to match the JSX's actual
+   className (.screen4-advice-stack). */
+.screen4-advice-stack {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -135,10 +146,9 @@ body,
   border-bottom: 1px solid var(--border-color);
 }
 
-
-.screen4-advice-mini-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+.screen4-advice-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
 .screen4-advice-source {
@@ -185,30 +195,21 @@ body,
   margin: 0;
 }
 
-/* What remains unclear */
-
+/* ── What remains unclear ── */
 .screen4-unclear-box {
   background: #FFFCF5;
   border: 1px solid #E8D9B5;
-  /* border-left: 3px solid; */
   border-radius: 20px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  /* min-height: 180px;
-  box-sizing: border-box;
-  height: 100%; */
 }
 
 .screen4-unclear-header {
   display: flex;
   align-items: center;
   gap: 8px;
-}
-
-.screen4-unclear-icon {
-  display: none;
 }
 
 .screen4-unclear-label {
@@ -244,7 +245,7 @@ body,
   margin-top: 2px;
 }
 
-/* What this means right now */
+/* ── What this means right now ── */
 .screen4-reflection-card {
   background: white;
   border: 1px solid var(--border-color);

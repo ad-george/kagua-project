@@ -5,6 +5,7 @@ import io
 import wave
 
 gemini_client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+
 # This is a wrapper around the Gemini TTS API. It takes text and returns WAV audio bytes.
 def _pcm_to_wav(pcm_data: bytes, channels: int = 1, sample_rate: int = 24000, sample_width: int = 2) -> bytes:
     """
@@ -20,17 +21,35 @@ def _pcm_to_wav(pcm_data: bytes, channels: int = 1, sample_rate: int = 24000, sa
         wav_file.setframerate(sample_rate)
         wav_file.writeframes(pcm_data)
     return buffer.getvalue()
+
+
+# Maps the same language values used elsewhere (extract_context.py,
+# generate_summary.py) into an explicit spoken-language instruction for
+# Gemini, since without this the model only guesses the language from the
+# text itself with no explicit steer.
+_LANGUAGE_INSTRUCTIONS = {
+    "english": "in English",
+    "kiswahili": "in Kiswahili",
+    "mixed": "in the same mixed English/Kiswahili it is written in",
+}
+
+
 # Function to convert text to speech using Gemini TTS
 def text_to_speech(text: str, language: str = "english", _retry: bool = True) -> bytes:
     """
     Converts Kagua's text reply into spoken audio using Gemini TTS. Returns proper WAV-formatted audio bytes, ready to play in any player
     or browser. Gemini TTS is Preview status and can occasionally attempt a text response instead of audio, this retries once before failing.
     """
+    language_instruction = _LANGUAGE_INSTRUCTIONS.get(language, _LANGUAGE_INSTRUCTIONS["english"])
+
     # Try to convert text to speech
     try:
         response = gemini_client.models.generate_content(
-            model="gemini-2.5-flash-preview-tts",
-            contents=f"Say exactly the following out loud, do not respond to it or add commentary: {text}",
+            model="gemini-2.0-flash-exp",
+            contents=(
+                f"Say exactly the following out loud {language_instruction}, "
+                f"do not respond to it or add commentary: {text}"
+            ),
             # config is required to specify that we want audio output and to set the voice
             config=types.GenerateContentConfig(
                 response_modalities=["AUDIO"],
@@ -44,9 +63,11 @@ def text_to_speech(text: str, language: str = "english", _retry: bool = True) ->
         # If the response is audio, return it
         pcm_data = response.candidates[0].content.parts[0].inline_data.data
         return _pcm_to_wav(pcm_data)
-    # If the response is not audio, retry once
+    # If the response is not audio, retry once — but log what actually went
+    # wrong first, since silently discarding this made prior failures
+    # undebuggable.
     except Exception as e:
+        print(f"TTS attempt failed (language={language}, retry_remaining={_retry}): {e}")
         if _retry:
             return text_to_speech(text, language, _retry=False)
         raise
-

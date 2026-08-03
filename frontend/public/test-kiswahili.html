@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kiswahili Audio Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-section h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        textarea {
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        button.stop {
+            background-color: #f44336;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e8f5e8;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .result.error {
+            background-color: #ffebee;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kiswahili Audio Test</h1>
+    <p>Test how the browser's Web Speech API handles Kiswahili and mixed language text.</p>
+
+    <!-- Test 1: Simple Kiswahili -->
+    <div class="test-section">
+        <h3>Test 1: Simple Kiswahili</h3>
+        <textarea id="test1">Majani ya mahindi yangu yanageuka njano.</textarea>
+        <button onclick="speak('test1')">Listen</button>
+        <button onclick="stop()" class="stop">Stop</button>
+        <div id="result1" class="result"></div>
+    </div>
+
+    <!-- Test 2: Longer Kiswahili -->
+    <div class="test-section">
+        <h3>Test 2: Longer Kiswahili</h3>
+        <textarea id="test2">Ushauri tofauti umepokelewa kuhusu hali ya mahindi yako. Maelezo zaidi yanaweza kuhitajika kabla ya kufanya uamuzi.</textarea>
+        <button onclick="speak('test2')">Listen</button>
+        <button onclick="stop()" class="stop">Stop</button>
+        <div id="result2" class="result"></div>
+    </div>
+
+    <!-- Test 3: Mixed Language -->
+    <div class="test-section">
+        <h3>Test 3: Mixed Language (Sheng)</h3>
+        <textarea id="test3">Mahindi yangu zimeanza kuwa yellow na jirani amesema nisubiri.</textarea>
+        <button onclick="speak('test3')">Listen</button>
+        <button onclick="stop()" class="stop">Stop</button>
+        <div id="result3" class="result"></div>
+    </div>
+
+    <!-- Test 4: Another Mixed Language -->
+    <div class="test-section">
+        <h3>Test 4: Another Mixed Language</h3>
+        <textarea id="test4">Nimepata advice tofauti kutoka kwa agrovet na jirani.</textarea>
+        <button onclick="speak('test4')">Listen</button>
+        <button onclick="stop()" class="stop">Stop</button>
+        <div id="result4" class="result"></div>
+    </div>
+
+    <!-- Test 5: Custom Test -->
+    <div class="test-section">
+        <h3>Test 5: Custom Test</h3>
+        <textarea id="test5" placeholder="Enter your own text to test..."></textarea>
+        <button onclick="speak('test5')">Listen</button>
+        <button onclick="stop()" class="stop">Stop</button>
+        <div id="result5" class="result"></div>
+    </div>
+
+    <script>
+        let currentUtterance = null;
+
+        function speak(testId) {
+            const text = document.getElementById(testId).value;
+            const resultDiv = document.getElementById(testId.replace('test', 'result'));
+            
+            if (!text) {
+                resultDiv.textContent = 'Please enter some text first.';
+                resultDiv.classList.add('error');
+                return;
+            }
+
+            // Cancel any ongoing speech
+            window.speechSynthesis.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            currentUtterance = utterance;
+
+            // Try to find a Kiswahili voice if available
+            const voices = window.speechSynthesis.getVoices();
+            const kiswahiliVoice = voices.find(voice => 
+                voice.lang.includes('sw') || 
+                voice.lang.includes('ki')
+            );
+            
+            if (kiswahiliVoice) {
+                utterance.voice = kiswahiliVoice;
+                resultDiv.textContent = `Using Kiswahili voice: ${kiswahiliVoice.name}`;
+            } else {
+                resultDiv.textContent = 'No Kiswahili voice found. Using default voice.';
+            }
+
+            utterance.onstart = () => {
+                resultDiv.textContent = 'Speaking...';
+                resultDiv.classList.remove('error');
+            };
+
+            utterance.onend = () => {
+                resultDiv.textContent = 'Finished speaking.';
+            };
+
+            utterance.onerror = (event) => {
+                resultDiv.textContent = `Error: ${event.error}`;
+                resultDiv.classList.add('error');
+            };
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function stop() {
+            window.speechSynthesis.cancel();
+            document.querySelectorAll('.result').forEach(div => {
+                div.textContent = 'Stopped.';
+            });
+        }
+
+        // Load voices when they become available
+        window.speechSynthesis.onvoiceschanged = () => {
+            const voices = window.speechSynthesis.getVoices();
+            console.log('Available voices:', voices.map(v => `${v.name} (${v.lang})`));
+        };
+    </script>
+</body>
+</html>

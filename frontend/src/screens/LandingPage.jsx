@@ -84,7 +84,7 @@ function LandingPage({ user, onNavigate, onLogout, scrollToAbout, onScrollToAbou
       {/* Hero */}
       <section className="lp-hero">
         <div className="lp-hero-inner">
-          <h1 className="lp-hero-headline">Know what you're dealing with.</h1>
+          <h1 className="lp-hero-headline">Understand before you decide.</h1>
           <p className="lp-hero-sub">
             Observe what you see. Compare the advice you receive. Understand what remains uncertain before making a decision.
           </p>
@@ -107,12 +107,9 @@ function LandingPage({ user, onNavigate, onLogout, scrollToAbout, onScrollToAbou
             A trusted companion for organising what you know
           </h2> */}
           <p className="lp-about-text">
-            Kagua is a Media and Information Literacy tool for smallholder
-            farmers in Kenya. It helps you organise what you know, compare
-            different sources of advice, and understand what is still uncertain,
-            so you can prepare for your next conversation with confidence.
+            Kagua helps smallholder farmers organise observations, compare advice, and understand agricultural information before making decisions.
+            It helps you understand what is known, what remains uncertain, and make sense of the information available.          
           </p>
-
           <ul className="lp-capabilities">
             {capabilities.map((c, i) => (
               <li className="lp-capability" key={i}>
@@ -144,6 +141,20 @@ function LandingPage({ user, onNavigate, onLogout, scrollToAbout, onScrollToAbou
         </div>
       </section>
 
+      {/* How Kagua Reviews Information */}
+      <section className="lp-trust">
+        <div className="lp-trust-inner">
+          {/* <p className="lp-section-label">Trust</p> */}
+          <h2 className="lp-trust-title">How Kagua Reviews Information</h2>
+          <p className="lp-trust-text">
+            Kagua helps organize information using agricultural guidance from recognised agricultural organizations. Kagua does not provide treatment recommendations or replace agricultural professionals.
+          </p>
+          <p className="lp-trust-sources">
+            Examples include KALRO, Plantwise (CABI), and Ministry of Agriculture resources
+          </p>
+        </div>
+      </section>
+
       {/* Call to action */}
       
       {/* Call to action */}
@@ -153,7 +164,7 @@ function LandingPage({ user, onNavigate, onLogout, scrollToAbout, onScrollToAbou
           <div className="lp-cta-content">
 
             <div className="lp-cta-text-side">
-              <p className="lp-section-label">Get Started</p>
+              {/* <p className="lp-section-label">Get Started</p> */}
 
               <h2 className="lp-cta-title">
                 Turn Observations into Understanding.

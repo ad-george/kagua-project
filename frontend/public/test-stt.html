@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>STT Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1, h3 {
+            color: #333;
+        }
+        .instructions {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .test-text {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-style: italic;
+            color: #666;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        button.stop {
+            background-color: #f44336;
+        }
+        .status {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .status.recording {
+            background-color: #fff3e0;
+            color: #e65100;
+        }
+        .status.transcribing {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+        .status.success {
+            background-color: #e8f5e8;
+            color: #2e7d32;
+        }
+        .status.error {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        .transcript {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            border-left: 4px solid #4CAF50;
+        }
+        .transcript-label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .transcript-text {
+            font-size: 16px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Speech-to-Text Test</h1>
+    
+    <div class="instructions">
+        <h3>Test Instructions</h3>
+        <p>Test the current STT setup with different languages:</p>
+        <ol>
+            <li><strong>English:</strong> "My maize leaves are turning yellow"</li>
+            <li><strong>Kiswahili:</strong> "Majani ya mahindi yangu yanageuka njano"</li>
+            <li><strong>Mixed:</strong> "Mahindi yangu zimeanza kuwa yellow"</li>
+        </ol>
+        <p>This uses the backend Gemini STT endpoint at <code>/api/test-stt</code></p>
+    </div>
+
+    <div class="test-section">
+        <h3>STT Test</h3>
+        
+        <div class="test-text">
+            Try saying: "My maize leaves are turning yellow" or "Majani ya mahindi yangu yanageuka njano"
+        </div>
+
+        <button id="recordBtn" onclick="startRecording()">🎤 Start Recording</button>
+        <button id="stopBtn" onclick="stopRecording()" disabled class="stop">⏹ Stop Recording</button>
+
+        <div id="status" class="status"></div>
+        
+        <div id="transcript" class="transcript" style="display: none;">
+            <div class="transcript-label">Transcript:</div>
+            <div id="transcriptText" class="transcript-text"></div>
+        </div>
+    </div>
+
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+        let audioBlob;
+
+        async function startRecording() {
+            const statusDiv = document.getElementById('status');
+            const recordBtn = document.getElementById('recordBtn');
+            const stopBtn = document.getElementById('stopBtn');
+            const transcriptDiv = document.getElementById('transcript');
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                audioChunks = [];
+
+                mediaRecorder.ondataavailable = (event) => {
+                    audioChunks.push(event.data);
+                };
+
+                mediaRecorder.onstop = async () => {
+                    audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    stream.getTracks().forEach(track => track.stop());
+                    await transcribeAudio();
+                };
+
+                mediaRecorder.start();
+                
+                recordBtn.disabled = true;
+                stopBtn.disabled = false;
+                statusDiv.textContent = '🎤 Recording... Speak now!';
+                statusDiv.className = 'status recording';
+                transcriptDiv.style.display = 'none';
+
+            } catch (err) {
+                statusDiv.textContent = '❌ Error: Could not access microphone. Please allow microphone access.';
+                statusDiv.className = 'status error';
+                console.error(err);
+            }
+        }
+
+        function stopRecording() {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+                document.getElementById('recordBtn').disabled = false;
+                document.getElementById('stopBtn').disabled = true;
+                document.getElementById('status').textContent = '⏳ Processing audio...';
+                document.getElementById('status').className = 'status transcribing';
+            }
+        }
+
+        async function transcribeAudio() {
+            const statusDiv = document.getElementById('status');
+            const transcriptDiv = document.getElementById('transcript');
+            const transcriptText = document.getElementById('transcriptText');
+
+            try {
+                const formData = new FormData();
+                formData.append('file', audioBlob, 'recording.webm');
+
+                const response = await fetch('/api/test-stt', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                transcriptText.textContent = data.transcription || 'No transcription received';
+                transcriptDiv.style.display = 'block';
+                statusDiv.textContent = '✅ Transcription complete!';
+                statusDiv.className = 'status success';
+
+            } catch (err) {
+                statusDiv.textContent = `❌ Error: ${err.message}. Make sure the backend is running on port 8002.`;
+                statusDiv.className = 'status error';
+                console.error(err);
+            }
+        }
+    </script>
+</body>
+</html>

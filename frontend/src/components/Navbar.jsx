@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Menu, X, Home, Info, LayoutDashboard } from "lucide-react";
 import "./Navbar.css";
 
-function Navbar({ user, currentView, onNavigate, onLogout, onAboutClick, stepLabel }) {
+function Navbar({ user, currentView, onNavigate, onLogout, onAboutClick, stepLabel, isReviewMode = false }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const closeMenu = () => setMenuOpen(false);
@@ -66,7 +66,7 @@ function Navbar({ user, currentView, onNavigate, onLogout, onAboutClick, stepLab
             <span className="navbar-logo-name">Kagua</span>
           </button>
 
-          {stepLabel && <span className="navbar-step-label">{stepLabel}</span>}
+          {stepLabel && !isReviewMode && <span className="navbar-step-label">{stepLabel}</span>}
         </div>
 
         <div className="navbar-desktop">

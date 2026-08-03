@@ -54,6 +54,26 @@ body,
   margin: 0 0 8px;
 }
 
+/* ── Low-confidence warning banner ── */
+.screen2-low-confidence-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: #FFFBEB;
+  border: 1px solid #FCD34D;
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  color: #92400E;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.screen2-low-confidence-icon {
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
 .screen2-section-title {
   font-size: 1.6rem;
   font-weight: 700;
@@ -166,25 +186,13 @@ body,
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   color: var(--text-primary);
-  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
-.screen2-no-btn:hover {
-  background-color: #F4F5F7;
-  border-color: #B8BFC7;
-}
-
-.screen2-retry-hint {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  font-style: italic;
-  margin: 0;
-}
 
 /* ── Retry choice card ── */
 .screen2-retry-choice {
-  background: #EFF6FF;
-  border: 1px solid #BFDBFE;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 22px 24px;
   display: flex;
@@ -193,6 +201,7 @@ body,
   height: 100%;
   box-sizing: border-box;
   animation: retry-appear 0.35s ease;
+  margin-top: 12px;
 }
 
 @keyframes retry-appear {
@@ -223,6 +232,11 @@ body,
   width: auto;
   padding: 12px 24px;
   min-height: 44px;
+}
+
+.screen2-retry-btn:hover {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
 }
 
 /* ══════════════════════════════════════════

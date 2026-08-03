@@ -27,8 +27,10 @@ const CONTINUE_OPTIONS = [
 function Screen5Summary({
   extractedContext,
   comparison,
+  summary,
   sourceDetails,
   onFinish,
+  isReviewMode = false,
 }) {
   const [openShareId, setOpenShareId] = useState(null);
   const [openFindNearbyId, setOpenFindNearbyId] = useState(null);
@@ -43,41 +45,39 @@ function Screen5Summary({
   }
 
   const handleShareWhatsApp = () => {
-    const link = buildWhatsAppLink(extractedContext, comparison);
+    const link = buildWhatsAppLink(extractedContext, comparison, summary);
     window.open(link, "_blank");
   };
 
   const handleSharePDF = () => {
-    generateSummaryPDF(extractedContext, comparison);
+    generateSummaryPDF(extractedContext, comparison, summary);
   };
 
   const handleShareSMS = () => {
-    alert("SMS sharing coming soon");
+    alert("SMS sharing is being prepared for your next update. For now, use WhatsApp or PDF sharing.");
   };
 
   const handleCopyText = async () => {
     try {
-      const summaryText = `
-KAGUA SUMMARY
+      const textToCopy = summary?.summary_text
+        ? `KAGUA SUMMARY\n\n${summary.summary_text}${
+            summary.discussion_points?.length > 0
+              ? `\n\nQuestions to bring up:\n${summary.discussion_points.map((p) => `• ${p}`).join("\n")}`
+              : ""
+          }\n\n_Shared from Kagua_`
+        : [
+            "KAGUA SUMMARY",
+            "",
+            `Crop: ${extractedContext?.crop || "Not specified"}`,
+            `Reported problem: ${extractedContext?.reported_problem || "Not specified"}`,
+            "",
+            comparison?.uncertainty?.length > 0
+              ? `What remains unclear: ${comparison.uncertainty.join("; ")}`
+              : "No major uncertainties were flagged.",
+          ].join("\n");
 
-Crop: ${extractedContext?.crop || "Not specified"}
-
-Reported Problem:
-${extractedContext?.reported_problem || "Not specified"}
-
-Observations:
-${
-  Array.isArray(extractedContext?.observations)
-    ? extractedContext.observations.join(", ")
-    : extractedContext?.observations || "None"
-}
-
-Confidence:
-${comparison?.confidence || "Not available"}
-      `;
-
-      await navigator.clipboard.writeText(summaryText);
-      alert("Summary copied to clipboard");
+      await navigator.clipboard.writeText(textToCopy);
+      alert("Summary copied to clipboard. You can paste it into WhatsApp or SMS.");
     } catch (error) {
       console.error("Failed to copy summary:", error);
       alert("Unable to copy summary");
@@ -88,6 +88,55 @@ ${comparison?.confidence || "Not available"}
     setOpenFindNearbyId((prev) => (prev === id ? null : id));
   };
 
+  // ── MIL skills practiced this session ──
+  // Reads the comparison object already present — no API call needed.
+  // Each condition maps directly to a UNESCO MIL competency.
+  const getMILSkills = () => {
+    if (!comparison) return [];
+    const skills = [];
+    if (comparison.perspectives && comparison.perspectives.length > 1)
+      skills.push("Comparing advice from different sources");
+    if (extractedContext?.observations && extractedContext.observations.length > 0)
+      skills.push("Checking evidence in your own field");
+    if (comparison.uncertainty && comparison.uncertainty.length > 0)
+      skills.push("Understanding what is still uncertain");
+    if (comparison.confidence === "LOW")
+      skills.push("Making a decision with incomplete information");
+    if (comparison.sources_used && comparison.sources_used.length > 0)
+      skills.push("Consulting trusted agricultural sources");
+    return skills;
+  };
+
+  const milSkills = getMILSkills();
+
+  // Build the complete page text for audio playback in logical order.
+  // Prefers the backend-generated summary.summary_text (properly reflects
+  // confidence, uncertainty, and source attribution — see generate_summary.py)
+  // over this hand-built version, which is now only a fallback for cases
+  // where no generated summary is available: the /summary call failed, or
+  // this is an older journey reviewed/resumed from before this feature
+  // existed and so has nothing saved in its steps.
+  const buildPageText = () => {
+    if (summary?.summary_text) {
+      return summary.summary_text;
+    }
+
+    const crop = extractedContext?.crop || "Not specified";
+    const problem = extractedContext?.reported_problem || "Not specified";
+    const observations = Array.isArray(extractedContext?.observations)
+      ? extractedContext.observations.join(", ")
+      : extractedContext?.observations || "None";
+
+    let audioText = `Here is your Kagua summary from our conversation. 
+You came to me about your ${crop} crop, and you noticed ${problem}. 
+I have gathered your field observations and the guidance you received, and I have organized them clearly for you. 
+${isReviewMode ? "This is a summary of your past conversation." : "This summary is meant to help you feel prepared for the next step."} 
+You can share this summary with an agrovet or extension officer, find nearby support, or explore trusted agricultural sources. 
+If you are unsure about the next step, the summary also highlights what still remains unclear.`;
+
+    return audioText;
+  };
+
   return (
     <div className="screen5-container">
       <div className="screen5-grid">
@@ -95,11 +144,12 @@ ${comparison?.confidence || "Not available"}
         {/* ── Left column: what was gathered ── */}
         <div className="screen5-header">
           {/* <p className="screen5-brand">Kagua</p> */}
-          <h1 className="screen5-title">You're Ready to Continue</h1>
+          <h1 className="screen5-title">{isReviewMode ? "Summary" : "You're Ready to Continue"}</h1>
 
           <p className="screen5-transition-note">
-            Kagua has organized the observations, advice received, trusted
-            information, and remaining questions from this conversation.
+            {isReviewMode
+              ? "This is a summary of your past conversation."
+              : "Kagua has organized the observations, advice received, trusted information, and remaining questions from this conversation."}
           </p>
 
           <SummaryCard
@@ -113,16 +163,48 @@ ${comparison?.confidence || "Not available"}
         {/* ── Right column: what to do next ── */}
         <div className="screen5-main">
           <h2 className="screen5-subtitle">
-            How would you like to continue?
+            {isReviewMode ? "What would you like to do?" : "How would you like to continue?"}
           </h2>
 
-          {/* Narrates this column's own content (the options below), so
-              it lives here rather than under the summary card, which is
-              about what was gathered, not what to do next. */}
+          {/* Single Listen button for the entire page */}
           <div className="screen5-audio-row">
-            <p className="screen5-audio-label">Listen to your next steps</p>
-            <AudioPlayer text="You can now choose to discuss this with an agrovet, discuss it with an extension officer, or explore trusted sources to learn more." />
+            <p className="screen5-audio-label">Listen to this page</p>
+            <AudioPlayer text={buildPageText()} language={extractedContext?.language} />
           </div>
+
+          {/* Discussion points from the generated summary — genuinely new
+              content with nowhere else on this screen to live, so it gets
+              its own small section. Only renders when there's something
+              real to show (matches generate_summary.py's own rule: it
+              leaves this list empty rather than inventing generic
+              questions when there's nothing specific to ask). */}
+          {summary?.discussion_points && summary.discussion_points.length > 0 && (
+            <div className="screen5-discussion-points">
+              <p className="screen5-discussion-label">Questions to bring up</p>
+              <ul className="screen5-discussion-list">
+                {summary.discussion_points.map((point, index) => (
+                  <li key={index}>{point}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* MIL skills practiced — derived from comparison data already
+              present, no API call. Makes the MIL impact visible to the
+              farmer and to judges without adding any backend work. */}
+          {!isReviewMode && milSkills.length > 0 && (
+            <div className="screen5-mil-card">
+              <p className="screen5-mil-label">In this conversation you practiced</p>
+              <ul className="screen5-mil-list">
+                {milSkills.map((skill, index) => (
+                  <li key={index}>
+                    <span className="screen5-mil-tick">✓</span>
+                    {skill}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <div className="screen5-options">
             {CONTINUE_OPTIONS.map((option) => (
@@ -174,7 +256,7 @@ ${comparison?.confidence || "Not available"}
             className="btn btn-primary screen5-finish-btn"
             onClick={onFinish}
           >
-            Save
+            {isReviewMode ? "Back to Home" : "Save"}
           </button>
         </div>
 

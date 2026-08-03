@@ -5,12 +5,32 @@ import "./Screen2Context.css";
 
 function Screen2Context({ extractedContext, onConfirm, onRecordAgain, onTypeInstead }) {
   const [showRetryChoice, setShowRetryChoice] = useState(false);
-  const { crop, reported_problem, advice_received, mentioned_weather } = extractedContext;
+  const { crop, reported_problem, advice_received, mentioned_weather, extraction_confidence } = extractedContext;
   const retryChoiceRef = useRef(null);
   const summaryText = `Your crop is ${crop}. The problem reported is ${reported_problem}.`;
+  const isLowConfidence = extraction_confidence === "low";
 
   const hasInformation =
     advice_received.length > 0 || mentioned_weather.length > 0;
+
+  // Build the complete page text for audio playback
+  const buildPageText = () => {
+    let audioText = `Here is what I understood from our conversation. Your crop is ${crop}. The problem reported is ${reported_problem}. `;
+    
+    if (hasInformation) {
+      audioText += "You have also received some information. ";
+      if (advice_received.length > 0) {
+        audioText += `You received advice from ${advice_received.length} source${advice_received.length > 1 ? 's' : ''}. `;
+      }
+      if (mentioned_weather.length > 0) {
+        audioText += "Weather information was also mentioned. ";
+      }
+    }
+    
+    audioText += "Please check that this matches what you described. If it's correct, you can continue. If not, you can explain it again.";
+    
+    return audioText;
+  };
 
   useEffect(() => {
     if (showRetryChoice && retryChoiceRef.current) {
@@ -27,6 +47,15 @@ function Screen2Context({ extractedContext, onConfirm, onRecordAgain, onTypeInst
           <p className="screen2-intro">
             Check that this matches what you described.
           </p>
+          {isLowConfidence && (
+            <div className="screen2-low-confidence-banner" role="alert">
+              <span className="screen2-low-confidence-icon">⚠</span>
+              <span>We weren't sure about some parts — please check carefully before continuing.</span>
+            </div>
+          )}
+          <div className="screen2-audio-row">
+            <AudioPlayer text={buildPageText()} language={extractedContext.language} />
+          </div>
         </div>
 
         {hasInformation && (
@@ -64,7 +93,7 @@ function Screen2Context({ extractedContext, onConfirm, onRecordAgain, onTypeInst
           </>
         )}
 
-        {/* ── Row 2 (left): summary card ── */}
+        {/* ── Summary card ── */}
         <div className="screen2-area-summary">
           <div className="screen2-summary-card">
             <div className="screen2-summary-row">
@@ -77,15 +106,31 @@ function Screen2Context({ extractedContext, onConfirm, onRecordAgain, onTypeInst
               <span className="screen2-summary-value">{reported_problem}</span>
             </div>
             <div className="screen2-summary-divider" />
-            <AudioPlayer text={summaryText} />
           </div>
         </div>
+
+        {/* ── Guidance note — only when retry is not showing ── */}
+        {!showRetryChoice && (
+          <div className="screen2-area-note">
+            <div className="screen2-note">
+              {hasInformation ? (
+                <p>
+                  You have received advice from different people. We will help you check what the evidence says before you decide.
+                </p>
+              ) : (
+                <p>
+                  Next, we will compare what trusted sources say about your crop.
+                </p>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* ── Row 3: retry choice (left, conditional) ↔ note (right) ── */}
         {showRetryChoice && (
           <div className="screen2-area-retry" ref={retryChoiceRef}>
             <div className="screen2-retry-choice">
-              <p className="screen2-retry-label">How would you like to explain it?</p>
+              <p className="screen2-retry-label">How do you want to try again?</p>
               <div className="screen2-retry-buttons-row">
                 <button className="btn btn-secondary screen2-retry-btn" onClick={onRecordAgain}>
                   Speak again
@@ -98,18 +143,10 @@ function Screen2Context({ extractedContext, onConfirm, onRecordAgain, onTypeInst
           </div>
         )}
 
-        <div className="screen2-area-note">
-          <div className="screen2-note">
-            <p>
-              These recommendations come from different types of knowledge and
-              experience. Before deciding, let's check what the evidence says.
-            </p>
-          </div>
-        </div>
 
         {/* ── Row 4: confirm buttons or hint (right column only) ── */}
         <div className="screen2-area-actions">
-          {!showRetryChoice ? (
+          {!showRetryChoice && (
             <div className="screen2-confirm-buttons">
               <button className="btn btn-primary screen2-continue-btn" onClick={onConfirm}>
                 Yes, continue
@@ -121,10 +158,6 @@ function Screen2Context({ extractedContext, onConfirm, onRecordAgain, onTypeInst
                 No, I'll explain it again
               </button>
             </div>
-          ) : (
-            <p className="screen2-retry-hint">
-              See the options on the left to continue.
-            </p>
           )}
         </div>
       </div>

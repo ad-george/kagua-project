@@ -30,3 +30,5 @@ class DecisionJourney(Base):
 
     user = relationship("User", back_populates="journeys")
     steps = Column(JSON, default=dict)  # Store screen-by-screen data
+    follow_up_outcome = Column(String, nullable=True)   # "yes" | "not_yet"
+    follow_up_rating = Column(String, nullable=True)    # "yes" | "somewhat" | "no"
