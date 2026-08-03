@@ -1,4 +1,4 @@
-const BASE_URL = "http://127.0.0.1:8002";
+const BASE_URL = "http://127.0.0.1:8000";
 const CURRENT_USER_KEY = "kagua_current_user";
 
 export async function signup({ name, phone, county }) {

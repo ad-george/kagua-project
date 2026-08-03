@@ -1,16 +1,21 @@
-from fastapi import FastAPI, Depends
+import os
+from datetime import datetime
+from typing import Any, Dict, List, Optional
+from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import Dict, Any, List
 from sqlalchemy.orm import Session
-from datetime import datetime
+from dotenv import load_dotenv
+
+# 1. Force load environmental keys directly into system memory before importing loaders
+load_dotenv()
 
 # Import Track A (stub or real)
 from app.services.track_a_loader import get_track_a
 
 # Import database
 from app.models.base import get_db
-from app.models.models import User, DecisionJourney
+from app.models.models import DecisionJourney, User
 
 # Load Track A once at startup
 extract_context, get_comparison, get_source_details, generate_summary = get_track_a()
@@ -18,19 +23,20 @@ extract_context, get_comparison, get_source_details, generate_summary = get_trac
 # Import Track A functions
 from ai_app.rag.retriever import retrieve_knowledge
 from app.audio_endpoints import register_audio_endpoints
+
 print("Track A loaded successfully")
 
 # Create FastAPI app
 app = FastAPI(
     title="Kagua - Track B Core API",
     description="Core backend for Project Kagua",
-    version="0.1.0"
+    version="0.1.0",
 )
 
-# Add CORS middleware to allow cross-origin requests
+# Add CORS middleware to allow cross-origin requests (Vite dev server)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -64,6 +70,11 @@ class SummaryRequest(BaseModel):
     comparison: Dict[str, Any]
 
 
+# Define request model for source details endpoint
+class SourceDetailsRequest(BaseModel):
+    sources_used: list
+
+
 @app.get("/")
 async def root():
     return {"message": "Kagua Track B is running!", "status": "healthy"}
@@ -73,7 +84,8 @@ async def root():
 @app.post("/analyze")
 async def analyze(request: AnalyzeRequest, db: Session = Depends(get_db)):
     """Extract context from user's input and save journey"""
-    from app.services.journey_service import get_or_create_user, create_journey
+    from app.services.journey_service import create_journey, get_or_create_user
+
     user = get_or_create_user(db, request.phone, request.county, request.name)
     result = extract_context(request.raw_input, request.county)
 
@@ -95,11 +107,13 @@ async def analyze(request: AnalyzeRequest, db: Session = Depends(get_db)):
         result["user_id"] = user.id
     return result
 
+
 # Compare endpoint: Search knowledge base, get comparison and guidance, and save to journey
 @app.post("/compare")
 async def compare(request: CompareRequest, db: Session = Depends(get_db)):
     """Search the knowledge base, get comparison and guidance, and save to journey"""
     from app.services.journey_service import update_journey_step
+
     journey_id = request.context.get("journey_id")
 
     # Combine what extract_context already found with Screen 3's field observations.
@@ -163,18 +177,23 @@ async def summary(request: SummaryRequest, db: Session = Depends(get_db)):
 
 # Source details endpoint: Get detailed content from sources
 @app.post("/source-details")
-async def source_details(sources: List[Dict[str, Any]]):
-    """Get detailed content from sources"""
-    result = get_source_details(sources)
+async def source_details(request: SourceDetailsRequest):
+    """Forward source details retrieval to Track A"""
+    result = get_source_details(request.sources_used)
     return result
+
 
 # Test endpoint to create or get a user
 @app.post("/test-user")
-async def test_user(phone: str, county: str, name: str = None, db: Session = Depends(get_db)):
+async def test_user(
+    phone: str, county: str, name: str = None, db: Session = Depends(get_db)
+):
     """Test: Create or get user"""
     from app.services.journey_service import get_or_create_user
+
     user = get_or_create_user(db, phone, county, name)
     return {"user_id": user.id, "phone": user.phone_number, "county": user.county, "name": user.name}
+
 
 # Test endpoint to create a journey
 @app.get("/user/{phone}/journeys")
@@ -183,9 +202,12 @@ async def get_user_journeys(phone: str, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.phone_number == phone).first()
     if not user:
         return {"error": "User not found", "phone": phone}
-    journeys = db.query(DecisionJourney).filter(
-        DecisionJourney.user_id == user.id
-    ).order_by(DecisionJourney.created_at.desc()).all()
+    journeys = (
+        db.query(DecisionJourney)
+        .filter(DecisionJourney.user_id == user.id)
+        .order_by(DecisionJourney.created_at.desc())
+        .all()
+    )
     result = []
     for journey in journeys:
         result.append({
@@ -207,6 +229,7 @@ async def get_user_journeys(phone: str, db: Session = Depends(get_db)):
         "journeys": result,
     }
 
+
 # Test endpoint to get a single journey by ID
 @app.get("/journey/{journey_id}")
 async def get_journey(journey_id: int, db: Session = Depends(get_db)):
@@ -225,19 +248,23 @@ async def get_journey(journey_id: int, db: Session = Depends(get_db)):
         "problem": journey.problem,
         "status": journey.status,
         "steps": journey.steps,
-        "created_at": journey.created_at.isoformat() if journey.created_at else None,
-        "updated_at": journey.updated_at.isoformat() if journey.updated_at else None,
+        "created_at": (
+            journey.created_at.isoformat() if journey.created_at else None
+        ),
+        "updated_at": (
+            journey.updated_at.isoformat() if journey.updated_at else None
+        ),
     }
+
 
 # Follow-up endpoint: saves the farmer's post-conversation outcome and
 # rating. Called from the Home screen when the farmer responds to the
 # "How did it go?" card. Both fields are optional so a partial response
 # (e.g. only outcome, no rating yet) is still saved.
-from typing import Optional
-
 class FollowUpRequest(BaseModel):
     outcome: Optional[str] = None
     rating: Optional[str] = None
+
 
 @app.put("/journey/{journey_id}/follow-up")
 async def update_follow_up(journey_id: int, request: FollowUpRequest, db: Session = Depends(get_db)):
@@ -256,7 +283,9 @@ async def update_follow_up(journey_id: int, request: FollowUpRequest, db: Sessio
 
 # Test endpoint to update the status of a journey
 @app.put("/journey/{journey_id}/status")
-async def update_journey_status(journey_id: int, status: str, db: Session = Depends(get_db)):
+async def update_journey_status(
+    journey_id: int, status: str, db: Session = Depends(get_db)
+):
     """Update journey status (in_progress, completed)"""
     journey = db.query(DecisionJourney).filter(
         DecisionJourney.id == journey_id
@@ -270,5 +299,5 @@ async def update_journey_status(journey_id: int, status: str, db: Session = Depe
     return {
         "message": "Status updated",
         "journey_id": journey.id,
-        "new_status": journey.status,
+        "status": journey.status,
     }
