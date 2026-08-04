@@ -130,7 +130,8 @@ function Home({ user, onStartNew, onContinueJourney, onSelectSummary }) {
                   <div className="home-panel-section">
                     <p className="home-panel-eyebrow">Continuing</p>
                     <p className="home-current-crop">
-                      {activeJourney.crop}: {activeJourney.problem}
+                      <span className="home-current-crop-name">{activeJourney.crop}:</span>{" "}
+                      <span className="home-current-problem">{activeJourney.problem}</span>
                     </p>
                     <p className="home-current-meta">
                       Started{" "}
@@ -238,7 +239,8 @@ function Home({ user, onStartNew, onContinueJourney, onSelectSummary }) {
                         onClick={() => onSelectSummary && onSelectSummary(c)}
                       >
                         <span className="home-row-crop">
-                          {c.crop}: {c.problem}
+                          <span className="home-row-crop-name">{c.crop}:</span>{" "}
+                          <span className="home-row-problem">{c.problem}</span>
                         </span>
                         <span className="home-row-meta">
                           {c.created_at ? new Date(c.created_at).toLocaleDateString() : ""}
@@ -297,7 +299,8 @@ function Home({ user, onStartNew, onContinueJourney, onSelectSummary }) {
                             onClick={() => onSelectSummary && onSelectSummary(c)}
                           >
                             <span className="home-row-crop">
-                              {c.crop}: {c.problem}
+                              <span className="home-row-crop-name">{c.crop}:</span>{" "}
+                              <span className="home-row-problem">{c.problem}</span>
                             </span>
                             <span className="home-row-meta">
                               {c.created_at ? new Date(c.created_at).toLocaleDateString() : ""}

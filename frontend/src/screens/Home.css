@@ -240,11 +240,18 @@ body,
 /* ── Current conversation content ── */
 .home-current-crop {
   font-size: 1rem;
-  font-weight: 700;
   color: var(--primary);
   text-transform: capitalize;
   margin: 0 0 3px;
   line-height: 1.35;
+}
+
+.home-current-crop-name {
+  font-weight: 700;
+}
+
+.home-current-problem {
+  font-weight: 400;
 }
 
 .home-current-meta {
@@ -279,7 +286,7 @@ body,
 .home-preview-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  gap: 4px;
 }
 
 .home-preview-tile {
@@ -421,13 +428,19 @@ body,
 .home-row:last-child {
   border-bottom: none;
 }
-
 .home-row-crop {
   font-size: 0.96rem;
-  font-weight: 600;
   color: var(--text-primary);
   text-transform: capitalize;
   line-height: 1.4;
+}
+
+.home-row-crop-name {
+  font-weight: 700;
+}
+
+.home-row-problem {
+  font-weight: 400;
 }
 
 .home-row-meta {
@@ -512,7 +525,7 @@ body,
 
 @media (min-width: 1024px) {
   .home-container {
-    max-width: 1180px;
+    max-width: 1600px;
     padding: 8px clamp(24px, 4vw, 64px) 48px;
     margin: 0 auto;
   }
@@ -527,9 +540,9 @@ body,
      column's summaries list. */
   .home-grid {
     display: grid;
-    grid-template-columns: minmax(360px, 560px) 1fr;
+    grid-template-columns: minmax(360px, 480px) 1fr;
     align-items: start;
-    column-gap: 48px;
+    column-gap: 60px;
   }
 
   .home-left {
@@ -537,7 +550,7 @@ body,
   }
 
   .home-panel--tall {
-    height: 100%;
+      max-height: 600px; 
   }
 
   /* 3 columns × 2 rows for the 6-item preview on wider screens */
@@ -554,11 +567,11 @@ body,
 
 @media (min-width: 1440px) {
   .home-container {
-    max-width: 1320px;
+    max-width: 1800px;
   }
 
   .home-grid {
     grid-template-columns: minmax(420px, 620px) 1fr;
-    column-gap: 56px;
+    column-gap: 60px;
   }
 }
