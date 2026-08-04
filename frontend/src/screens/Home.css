@@ -112,7 +112,11 @@ body,
    Stacked with a horizontal divider on narrow screens; side-by-side
    with a vertical divider once there's room, so "Continuing" and
    "Start a new conversation" read as two peer options rather than
-   one strictly following the other. */
+   one strictly following the other. The follow-up section (when
+   present) always gets its own full-width row below them — see
+   .home-panel-section--followup — rather than squeezing into a third
+   equal column, since it has much more content (a question, several
+   buttons, and a skip link) than the other two. */
 .home-panel-sections {
   display: flex;
   flex-direction: column;
@@ -131,6 +135,7 @@ body,
 @media (min-width: 480px) {
   .home-panel-sections {
     flex-direction: row;
+    flex-wrap: wrap;
     gap: 24px;
   }
 
@@ -143,6 +148,17 @@ body,
     border-top: none;
     padding-left: 24px;
     border-left: 1px solid var(--border-color);
+  }
+
+  /* Follow-up section breaks onto its own full-width row instead of
+     sharing a third of the row with Continuing / Start a new
+     conversation — it needs the room. */
+  .home-panel-section--followup {
+    flex: 1 1 100%;
+    padding-left: 0;
+    border-left: none;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
   }
 }
 
@@ -505,11 +521,15 @@ body,
     font-size: 2.1rem;
   }
 
+  /* Left column widened (was minmax(320px, 480px)) so the merged
+     panel — especially the follow-up section's buttons — has more
+     breathing room and doesn't look squeezed against the right
+     column's summaries list. */
   .home-grid {
     display: grid;
-    grid-template-columns: minmax(320px, 480px) 1fr;
+    grid-template-columns: minmax(360px, 560px) 1fr;
     align-items: start;
-    column-gap: 64px;
+    column-gap: 48px;
   }
 
   .home-left {
@@ -538,7 +558,7 @@ body,
   }
 
   .home-grid {
-    grid-template-columns: minmax(360px, 520px) 1fr;
-    column-gap: 72px;
+    grid-template-columns: minmax(420px, 620px) 1fr;
+    column-gap: 56px;
   }
 }

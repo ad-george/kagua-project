@@ -1,4 +1,4 @@
-const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = "http://127.0.0.1:8002";
 
 export async function analyzeInput(rawInput, county, phone, name) {
   const response = await fetch(`${BASE_URL}/analyze`, {
@@ -33,11 +33,13 @@ export async function getSummary(context, comparison) {
   return response.json();
 }
 
+// The backend's SourceDetailsRequest model expects { sources_used: [...] },
+// not a bare array — sending sourcesUsed directly as the body causes a 422.
 export async function getSourceDetails(sourcesUsed) {
   const response = await fetch(`${BASE_URL}/source-details`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(sourcesUsed),
+    body: JSON.stringify({ sources_used: sourcesUsed }),
   });
   if (!response.ok) throw new Error("Source details request failed");
   return response.json();

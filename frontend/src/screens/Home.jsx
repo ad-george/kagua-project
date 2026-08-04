@@ -31,12 +31,26 @@ function Home({ user, onStartNew, onContinueJourney, onSelectSummary }) {
   );
   const pastSummaries = conversations.filter((c) => c !== activeJourney);
 
-  const followUpJourney = pastSummaries.find(
-    (c) =>
-      (c.status || "").toLowerCase() === "completed" &&
-      !c.follow_up_outcome &&
-      !dismissedFollowUps[c.id]
-  );
+  // Feedback is only ever asked about the single most recent completed
+  // summary — never a backlog of older ones. If the latest has already been
+  // answered (follow_up_outcome set) or dismissed this session, nothing shows,
+  // and we never fall back to asking about an older summary instead.
+  const latestCompletedJourney = useMemo(() => {
+    const completed = pastSummaries.filter(
+      (c) => (c.status || "").toLowerCase() === "completed"
+    );
+    if (completed.length === 0) return null;
+    return [...completed].sort(
+      (a, b) => new Date(b.created_at) - new Date(a.created_at)
+    )[0];
+  }, [pastSummaries]);
+
+  const followUpJourney =
+    latestCompletedJourney &&
+    !latestCompletedJourney.follow_up_outcome &&
+    !dismissedFollowUps[latestCompletedJourney.id]
+      ? latestCompletedJourney
+      : null;
 
   const handleFollowUpOutcome = (journeyId, outcome) => {
     // Step 1 answered — store outcome and show step 2
@@ -54,8 +68,14 @@ function Home({ user, onStartNew, onContinueJourney, onSelectSummary }) {
     setDismissedFollowUps((prev) => ({ ...prev, [journeyId]: true }));
   };
 
-  const handleFollowUpSkip = (journeyId) => {
+  const handleFollowUpSkip = async (journeyId) => {
     setDismissedFollowUps((prev) => ({ ...prev, [journeyId]: true }));
+    try {
+      await saveFollowUp(journeyId, "skipped", null);
+    } catch {
+      // Non-critical for this session — it's already hidden locally. If this
+      // fails, the summary could reappear on next login, but nothing breaks.
+    }
   };
 
   const filtered = useMemo(() => {
@@ -136,28 +156,30 @@ function Home({ user, onStartNew, onContinueJourney, onSelectSummary }) {
                   </button>
                 </div>
                 {followUpJourney && (
-                  <div className="home-panel-section">
-                    <p className="home-panel-eyebrow">How did it go?</p>
+                  <div className="home-panel-section home-panel-section--followup">
+                    <p className="home-panel-eyebrow">How did your last summary help?</p>
                     {!followUpStep[followUpJourney.id] ? (
                       <>
                         <p className="home-followup-question">
-                          Did you get help for your {followUpJourney.crop}?
+                          Did it help you better understand the situation?
                         </p>
                         <div className="home-followup-row">
                           <button className="home-followup-btn" onClick={() => handleFollowUpOutcome(followUpJourney.id, "yes")}>Yes</button>
+                          <button className="home-followup-btn" onClick={() => handleFollowUpOutcome(followUpJourney.id, "somewhat")}>A little</button>
                           <button className="home-followup-btn" onClick={() => handleFollowUpOutcome(followUpJourney.id, "not_yet")}>Not yet</button>
-                          <button className="home-followup-skip" onClick={() => handleFollowUpSkip(followUpJourney.id)}>Not now</button>
                         </div>
+                        <button className="home-followup-skip" onClick={() => handleFollowUpSkip(followUpJourney.id)}>Not now</button>
                       </>
                     ) : (
                       <>
                         <p className="home-followup-question">
-                          Was Kagua helpful?
+                          What happened after your last summary?
                         </p>
                         <div className="home-followup-row">
-                          <button className="home-followup-btn" onClick={() => handleFollowUpRating(followUpJourney.id, "yes")}>Yes</button>
-                          <button className="home-followup-btn" onClick={() => handleFollowUpRating(followUpJourney.id, "somewhat")}>A little</button>
-                          <button className="home-followup-btn" onClick={() => handleFollowUpRating(followUpJourney.id, "no")}>No</button>
+                          <button className="home-followup-btn" onClick={() => handleFollowUpRating(followUpJourney.id, "agrovet")}>Discussed with an agrovet</button>
+                          <button className="home-followup-btn" onClick={() => handleFollowUpRating(followUpJourney.id, "extension_officer")}>Discussed with an extension officer</button>
+                          <button className="home-followup-btn" onClick={() => handleFollowUpRating(followUpJourney.id, "gathering_info")}>Still gathering information</button>
+                          <button className="home-followup-btn" onClick={() => handleFollowUpRating(followUpJourney.id, "not_acted")}>Haven't acted yet</button>
                         </div>
                       </>
                     )}

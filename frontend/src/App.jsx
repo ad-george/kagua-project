@@ -264,6 +264,17 @@ function App() {
     setCurrentScreen(1);
   };
 
+  // Source details (used by Screen 5's "Explore Trusted Sources" modal) are
+  // supplementary to the comparison itself — Screen 4 renders straight from
+  // `comparison.sources_used`, not from `sourceDetails`. So a source-details
+  // failure is handled the same non-critical way as in
+  // handleContinueJourney/handleSelectSummary: its own try/catch, falls back
+  // to an empty list, and never blocks advancing to Screen 4. Previously
+  // this was inside the same try block as getComparison, which meant a
+  // source-details hiccup both (a) showed the wrong error — "Could not
+  // compare information" — even though the comparison itself had already
+  // succeeded, and (b) left the farmer stuck on Screen 3 with a valid
+  // comparison sitting unused in state.
   const handleScreen3Continue = async (observations) => {
     setIsLoading(true);
     setErrorMsg(null);
@@ -271,11 +282,19 @@ function App() {
       const result = await getComparison(extractedContext, observations);
       setComparison(result);
       saveDraft(4, extractedContext, result);
-      if (result.sources_used && result.sources_used.length > 0) {
-        const details = await getSourceDetails(result.sources_used);
-        setSourceDetails(details);
-      }
       setCurrentScreen(4);
+
+      if (result.sources_used && result.sources_used.length > 0) {
+        try {
+          const details = await getSourceDetails(result.sources_used);
+          setSourceDetails(details);
+        } catch (detailsErr) {
+          console.error("Could not fetch source details:", detailsErr);
+          setSourceDetails([]);
+        }
+      } else {
+        setSourceDetails([]);
+      }
     } catch (err) {
       setErrorMsg("Could not compare information. Is the backend running?");
       console.error(err);

@@ -40,10 +40,10 @@ body,
 
 /* ── Title ── */
 .screen5-title {
-  font-size: 1.6rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: var(--primary);
-  line-height: 1.25;
+  line-height: 1.3;
   margin: 0 0 10px;
 }
 
@@ -55,117 +55,138 @@ body,
   margin: 0 0 18px;
 }
 
-/* ── Audio row ──
-   Narrates this column's own content (the continue options below), so
-   it sits directly under the subtitle rather than attached to the
-   summary card in the other column — light card treatment matches the
-   app's other secondary panels (e.g. the Find-nearby placeholder). */
-.screen5-audio-row {
-  margin-bottom: 16px;
-  padding: 14px 16px;
+/* ── Shared card styling ──
+   Every info card on this screen (Listen to this page, During this
+   conversation, Questions you may want to ask, Continue with your
+   summary) uses this same background/border/radius/padding, and every
+   card title uses the same label style — this is the single source of
+   truth for "all cards look consistent", not per-card duplication. */
+.screen5-info-card {
   background: var(--bg-color);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  box-sizing: border-box;
 }
 
-.screen5-audio-label {
+.screen5-info-card-label {
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--text-secondary);
   margin: 0 0 10px;
 }
 
-/* ── Section subtitle ──
-   Sized to match .screen5-title — both are headings (one per column),
-   so they should read as equivalent weight, not primary/secondary. */
-.screen5-subtitle {
-  font-size: 1.6rem;
+/* ── Audio row ── pushed down slightly from the top of the column */
+.screen5-audio-row {
+  margin-top: 10px;
+  margin-bottom: 16px;
+}
+
+/* ── "During this conversation" card ── */
+.screen5-session-summary {
+  margin-top: 16px;
+}
+
+.screen5-session-summary-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.screen5-session-summary-list li {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+  padding-left: 14px;
+  position: relative;
+}
+
+.screen5-session-summary-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--secondary);
   font-weight: 700;
-  color: var(--primary);
-  line-height: 1.25;
-  margin: 0 0 16px;
 }
 
-/* ── Options list ── */
-.screen5-options {
+/* ── "Questions you may want to ask" card ── */
+.screen5-discussion-points {
+  margin-bottom: 16px;
+}
+
+.screen5-discussion-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
+  gap: 8px;
+}
+
+.screen5-discussion-list li {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+  padding-left: 14px;
+  position: relative;
+}
+
+.screen5-discussion-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--secondary);
+  font-weight: 700;
+}
+
+/* ── Actions card: 2-by-2 grid of tiles ── */
+.screen5-action-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
-  margin-bottom: 8px;
 }
 
-/* ── Combined option card (label + description + action buttons) ── */
-.screen5-option-card {
+.screen5-action-tile {
   background: var(--card-bg);
-  border: 1.5px solid var(--border-color);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
-  padding: 16px 18px;
-  box-sizing: border-box;
-}
-
-.screen5-option-header {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-bottom: 14px;
-}
-
-.screen5-option-label {
-  font-size: 1rem;
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--primary);
-  line-height: 1.4;
-}
-
-.screen5-option-description {
-  font-size: 0.88rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
-  font-weight: 400;
-}
-
-/* ── Action buttons row inside each option card ──
-   Plain text-style actions, not bordered card-like buttons — avoids
-   the "card inside a card" look from the screenshot. */
-.screen5-option-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.screen5-action-btn {
-  width: auto;
-  background: none;
-  border: none;
-  padding: 8px 0;
-  min-height: 40px;
-  font-family: inherit;
-  font-size: 0.92rem;
-  font-weight: 700;
-  color: var(--secondary);
-  cursor: pointer;
+  line-height: 1.35;
   text-align: left;
+  cursor: pointer;
+  outline: none;
   -webkit-tap-highlight-color: transparent;
 }
 
-.screen5-action-btn:hover {
-  color: var(--primary);
-  /* text-decoration: underline; */
+.screen5-action-tile:hover,
+.screen5-action-tile:active {
+  color: var(--secondary);
+  border-color: var(--border-color);
+  outline: none;
 }
 
-.screen5-action-btn:focus-visible {
+.screen5-action-tile:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.screen5-action-tile:focus-visible {
   outline: 2px solid var(--secondary);
   outline-offset: 2px;
-  border-radius: 2px;
 }
 
-/* ── Find nearby placeholder panel ── */
-.screen5-findnearby-placeholder {
-  margin-top: 14px;
-  padding: 14px 16px;
-  background: var(--bg-color);
-  border: 1px dashed var(--border-color);
-  border-radius: var(--radius-sm);
+/* ── Find nearby modal body text ── */
+.screen5-findnearby-modal-text {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
 }
 
 .screen5-findnearby-placeholder p {
@@ -173,6 +194,19 @@ body,
   color: var(--text-secondary);
   margin: 0;
   line-height: 1.5;
+}
+
+/* ── Save & Return — centered below both columns ── */
+.screen5-finish-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+.screen5-finish-btn {
+  width: auto;
+  padding: 12px 32px;
+  min-height: 48px;
 }
 
 /* ── Share popup ── */
@@ -242,120 +276,6 @@ body,
   color: var(--primary);
 }
 
-/* ── Standalone option button (Explore Trusted Sources) ── */
-.screen5-option-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
-  width: 100%;
-  background: var(--card-bg);
-  border: 1.5px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  padding: 16px 18px;
-  cursor: pointer;
-  text-align: left;
-  transition: transform 0.15s ease;
-  -webkit-tap-highlight-color: transparent;
-  box-sizing: border-box;
-}
-
-.screen5-option-btn:hover {
-  transform: scale(0.98);
-}
-
-/* ── Finish button ──
-   align-self added: .screen5-main is a column flex container with no
-   align-items set, so its default "stretch" was overriding width:auto
-   and forcing this button to fill the whole column's width. */
-.screen5-finish-btn {
-  align-self: flex-start;
-  width: auto;
-  padding: 12px 32px;
-  min-height: 48px;
-  margin-top: 4px;
-}
-
-.screen5-discussion-points {
-  margin-bottom: 16px;
-  padding: 14px 16px;
-  background: var(--bg-color);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-}
-
-.screen5-discussion-label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  margin: 0 0 10px;
-}
-
-.screen5-discussion-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.screen5-discussion-list li {
-  font-size: 0.95rem;
-  color: var(--text-primary);
-  line-height: 1.5;
-  padding-left: 14px;
-  position: relative;
-}
-
-.screen5-discussion-list li::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  color: var(--secondary);
-  font-weight: 700;
-}
-
-/* ── MIL skills card ── */
-.screen5-mil-card {
-  margin-bottom: 16px;
-  padding: 14px 16px;
-  background: #F0FDF4;
-  border: 1px solid #86EFAC;
-  border-radius: var(--radius-sm);
-}
-
-.screen5-mil-label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #166534;
-  margin: 0 0 10px;
-}
-
-.screen5-mil-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.screen5-mil-list li {
-  font-size: 0.92rem;
-  color: #15803D;
-  line-height: 1.5;
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-}
-
-.screen5-mil-tick {
-  flex-shrink: 0;
-  font-weight: 700;
-  color: #16A34A;
-}
-
 
 /* ══════════════════════════════════════════
    RESPONSIVE
@@ -373,11 +293,7 @@ body,
   }
 
   .screen5-title {
-    font-size: 1.9rem;
-  }
-
-  .screen5-subtitle {
-    font-size: 1.9rem;
+    font-size: 1.5rem;
   }
 }
 
@@ -389,11 +305,7 @@ body,
   }
 
   .screen5-title {
-    font-size: 2.1rem;
-  }
-
-  .screen5-subtitle {
-    font-size: 2.1rem;
+    font-size: 1.7rem;
   }
 
   .screen5-transition-note {
@@ -432,6 +344,6 @@ body,
 
 @media (max-width: 359px) {
   .screen5-title {
-    font-size: 1.6rem;
+    font-size: 1.15rem;
   }
 }

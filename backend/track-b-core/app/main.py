@@ -218,6 +218,11 @@ async def get_user_journeys(phone: str, db: Session = Depends(get_db)):
             "problem": journey.problem,
             "status": journey.status,
             "steps": journey.steps,
+            # Needed so the frontend's feedback prompt can tell whether the
+            # most recent summary was already answered or skipped, instead
+            # of re-asking about it on every login.
+            "follow_up_outcome": journey.follow_up_outcome,
+            "follow_up_rating": journey.follow_up_rating,
             "created_at": journey.created_at.isoformat() if journey.created_at else None,
             "updated_at": journey.updated_at.isoformat() if journey.updated_at else None,
         })
@@ -248,6 +253,8 @@ async def get_journey(journey_id: int, db: Session = Depends(get_db)):
         "problem": journey.problem,
         "status": journey.status,
         "steps": journey.steps,
+        "follow_up_outcome": journey.follow_up_outcome,
+        "follow_up_rating": journey.follow_up_rating,
         "created_at": (
             journey.created_at.isoformat() if journey.created_at else None
         ),

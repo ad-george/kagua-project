@@ -9,19 +9,14 @@ import {
 } from "../services/exportSummary";
 import "./Screen5Summary.css";
 
-const CONTINUE_OPTIONS = [
-  {
-    id: "professional",
-    label: "Discuss with an Agrovet or Extension Officer",
-    description: "Share your Kagua summary during your conversation with them.",
-    hasFindNearby: true,
-  },
-  // {
-  //   id: "other",
-  //   label: "Share with someone else",
-  //   description: "Send your summary to a neighbour, friend, or anyone else.",
-  //   hasFindNearby: false,
-  // },
+// All four "what to do next" actions live together in one card, in this
+// order. "hasFindNearby" rows toggle an inline placeholder panel instead
+// of firing onClick directly; the other two open their respective modals.
+const ACTION_ROWS = [
+  { id: "agrovet", label: "Discuss with an Agrovet", hasFindNearby: true },
+  { id: "extension", label: "Discuss with an Extension Officer", hasFindNearby: true },
+  { id: "sources", label: "Explore Trusted Sources" },
+  { id: "share", label: "Share Summary" },
 ];
 
 function Screen5Summary({
@@ -32,9 +27,9 @@ function Screen5Summary({
   onFinish,
   isReviewMode = false,
 }) {
-  const [openShareId, setOpenShareId] = useState(null);
   const [openFindNearbyId, setOpenFindNearbyId] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [showSourcesModal, setShowSourcesModal] = useState(false);
 
   if (!extractedContext || !comparison) {
     return (
@@ -59,12 +54,15 @@ function Screen5Summary({
 
   const handleCopyText = async () => {
     try {
+      // summary.summary_text already starts with the "KAGUA SUMMARY" /
+      // "MUHTASARI WA KAGUA" header (baked in by generate_summary.py) —
+      // never prepend the header again here, or it prints twice.
       const textToCopy = summary?.summary_text
-        ? `KAGUA SUMMARY\n\n${summary.summary_text}${
+        ? `${summary.summary_text}${
             summary.discussion_points?.length > 0
-              ? `\n\nQuestions to bring up:\n${summary.discussion_points.map((p) => `• ${p}`).join("\n")}`
+              ? `\n\nQuestions you may want to ask:\n${summary.discussion_points.map((p) => `• ${p}`).join("\n")}`
               : ""
-          }\n\n_Shared from Kagua_`
+          }\n\nPrepared by Kagua`
         : [
             "KAGUA SUMMARY",
             "",
@@ -74,6 +72,8 @@ function Screen5Summary({
             comparison?.uncertainty?.length > 0
               ? `What remains unclear: ${comparison.uncertainty.join("; ")}`
               : "No major uncertainties were flagged.",
+            "",
+            "Prepared by Kagua",
           ].join("\n");
 
       await navigator.clipboard.writeText(textToCopy);
@@ -84,30 +84,40 @@ function Screen5Summary({
     }
   };
 
-  const toggleFindNearby = (id) => {
-    setOpenFindNearbyId((prev) => (prev === id ? null : id));
+  const openFindNearby = (id) => {
+    setOpenFindNearbyId(id);
   };
 
-  // ── MIL skills practiced this session ──
+  const handleActionClick = (row) => {
+    if (row.hasFindNearby) {
+      openFindNearby(row.id);
+    } else if (row.id === "sources") {
+      setShowSourcesModal(true);
+    } else if (row.id === "share") {
+      setShowShareModal(true);
+    }
+  };
+
+  // ── What Kagua did this session ──
   // Reads the comparison object already present — no API call needed.
-  // Each condition maps directly to a UNESCO MIL competency.
-  const getMILSkills = () => {
+  // Framed as things Kagua organized/surfaced for the farmer, not skills
+  // the farmer practiced — Kagua isn't teaching a lesson, it's helping
+  // organize information.
+  const getSessionSummaryPoints = () => {
     if (!comparison) return [];
-    const skills = [];
+    const points = [];
     if (comparison.perspectives && comparison.perspectives.length > 1)
-      skills.push("Comparing advice from different sources");
+      points.push("Reviewed information from different sources");
     if (extractedContext?.observations && extractedContext.observations.length > 0)
-      skills.push("Checking evidence in your own field");
+      points.push("Organised your field observations");
     if (comparison.uncertainty && comparison.uncertainty.length > 0)
-      skills.push("Understanding what is still uncertain");
-    if (comparison.confidence === "LOW")
-      skills.push("Making a decision with incomplete information");
+      points.push("Identified what remains uncertain");
     if (comparison.sources_used && comparison.sources_used.length > 0)
-      skills.push("Consulting trusted agricultural sources");
-    return skills;
+      points.push("Drew on trusted agricultural sources");
+    return points;
   };
 
-  const milSkills = getMILSkills();
+  const sessionSummaryPoints = getSessionSummaryPoints();
 
   // Build the complete page text for audio playback in logical order.
   // Prefers the backend-generated summary.summary_text (properly reflects
@@ -143,44 +153,56 @@ If you are unsure about the next step, the summary also highlights what still re
 
         {/* ── Left column: what was gathered ── */}
         <div className="screen5-header">
-          {/* <p className="screen5-brand">Kagua</p> */}
-          <h1 className="screen5-title">{isReviewMode ? "Summary" : "You're Ready to Continue"}</h1>
+          <h1 className="screen5-title">Your Kagua Summary</h1>
 
           <p className="screen5-transition-note">
             {isReviewMode
               ? "This is a summary of your past conversation."
-              : "Kagua has organized the observations, advice received, trusted information, and remaining questions from this conversation."}
+              : "This summary brings together the information from your conversation."}
           </p>
 
           <SummaryCard
             crop={extractedContext?.crop}
             reportedProblem={extractedContext?.reported_problem}
             observations={extractedContext?.observations}
+            adviceReceived={extractedContext?.advice_received}
             confidence={comparison?.confidence}
           />
+
+          {/* What Kagua did this session — same shared card styling as
+              every other info card on this screen (background, border,
+              radius, padding, label style all come from .screen5-info-card
+              / .screen5-info-card-label so they stay consistent). */}
+          {!isReviewMode && sessionSummaryPoints.length > 0 && (
+            <div className="screen5-session-summary screen5-info-card">
+              <p className="screen5-info-card-label">During this conversation</p>
+              <ul className="screen5-session-summary-list">
+                {sessionSummaryPoints.map((point, index) => (
+                  <li key={index}>{point}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         {/* ── Right column: what to do next ── */}
         <div className="screen5-main">
-          <h2 className="screen5-subtitle">
-            {isReviewMode ? "What would you like to do?" : "How would you like to continue?"}
-          </h2>
 
-          {/* Single Listen button for the entire page */}
-          <div className="screen5-audio-row">
-            <p className="screen5-audio-label">Listen to this page</p>
+          {/* Single Listen button for the entire page — nudged down a
+              little from the top of the column via margin-top. */}
+          <div className="screen5-audio-row screen5-info-card">
+            <p className="screen5-info-card-label">Listen to this page</p>
             <AudioPlayer text={buildPageText()} language={extractedContext?.language} />
           </div>
 
-          {/* Discussion points from the generated summary — genuinely new
-              content with nowhere else on this screen to live, so it gets
-              its own small section. Only renders when there's something
-              real to show (matches generate_summary.py's own rule: it
-              leaves this list empty rather than inventing generic
-              questions when there's nothing specific to ask). */}
+          {/* Discussion points from the generated summary — only renders
+              when there's something real to show (matches
+              generate_summary.py's own rule: it leaves this list empty
+              rather than inventing generic questions when there's nothing
+              specific to ask). */}
           {summary?.discussion_points && summary.discussion_points.length > 0 && (
-            <div className="screen5-discussion-points">
-              <p className="screen5-discussion-label">Questions to bring up</p>
+            <div className="screen5-discussion-points screen5-info-card">
+              <p className="screen5-info-card-label">Questions you may want to ask</p>
               <ul className="screen5-discussion-list">
                 {summary.discussion_points.map((point, index) => (
                   <li key={index}>{point}</li>
@@ -189,85 +211,75 @@ If you are unsure about the next step, the summary also highlights what still re
             </div>
           )}
 
-          {/* MIL skills practiced — derived from comparison data already
-              present, no API call. Makes the MIL impact visible to the
-              farmer and to judges without adding any backend work. */}
-          {!isReviewMode && milSkills.length > 0 && (
-            <div className="screen5-mil-card">
-              <p className="screen5-mil-label">In this conversation you practiced</p>
-              <ul className="screen5-mil-list">
-                {milSkills.map((skill, index) => (
-                  <li key={index}>
-                    <span className="screen5-mil-tick">✓</span>
-                    {skill}
-                  </li>
-                ))}
-              </ul>
+          {/* Actions: same shared card styling as the other info cards.
+              Laid out 2-by-2 rather than stacked, so this card's height
+              stays in line with the others instead of running long. */}
+          <div className="screen5-actions-card screen5-info-card">
+            <p className="screen5-info-card-label">
+              {isReviewMode ? "What would you like to do?" : "Continue with your summary"}
+            </p>
+
+            <div className="screen5-action-grid">
+              {ACTION_ROWS.map((row) => (
+                <button
+                  key={row.id}
+                  className="screen5-action-tile"
+                  onClick={() => handleActionClick(row)}
+                >
+                  {row.label}
+                </button>
+              ))}
             </div>
-          )}
-
-          <div className="screen5-options">
-            {CONTINUE_OPTIONS.map((option) => (
-              <div key={option.id} className="screen5-option-card">
-                <div className="screen5-option-header">
-                  <span className="screen5-option-label">{option.label}</span>
-                  <span className="screen5-option-description">{option.description}</span>
-                </div>
-
-                <div className="screen5-option-actions">
-                  {option.hasFindNearby && (
-                    <button
-                      className="screen5-action-btn"
-                      onClick={() => toggleFindNearby(option.id)}
-                    >
-                      {openFindNearbyId === option.id ? "Hide nearby options" : "Find nearby"}
-                    </button>
-                  )}
-                  <button
-                    className="screen5-action-btn"
-                    onClick={() => setOpenShareId(option.id)}
-                  >
-                    Share summary
-                  </button>
-                </div>
-
-                {option.hasFindNearby && openFindNearbyId === option.id && (
-                  <div className="screen5-findnearby-placeholder">
-                    <p>Nearby agrovets and extension officers will appear here.</p>
-                  </div>
-                )}
-              </div>
-            ))}
-
-            <button
-              className="screen5-option-btn screen5-option-btn--sources"
-              onClick={() => setShowModal(true)}
-            >
-              <span className="screen5-option-label">
-                Explore Trusted Sources
-              </span>
-              <span className="screen5-option-description">
-                See the verified guidance related to your situation.
-              </span>
-            </button>
           </div>
-
-          <button
-            className="btn btn-primary screen5-finish-btn"
-            onClick={onFinish}
-          >
-            {isReviewMode ? "Back to Home" : "Save"}
-          </button>
         </div>
 
       </div>
 
-      {/* Share popup — overlays the screen instead of expanding inline
-          under whichever option card triggered it. */}
-      {openShareId && (
+      {/* Save & Return — centered below both columns */}
+      <div className="screen5-finish-row">
+        <button
+          className="btn btn-primary screen5-finish-btn"
+          onClick={onFinish}
+        >
+          {isReviewMode ? "Back to Home" : "Save & Return Home"}
+        </button>
+      </div>
+
+      {/* Find nearby popup — same overlay/modal treatment as Share, so it
+          appears as a centered popup rather than expanding inline. */}
+      {openFindNearbyId && (
         <div
           className="screen5-modal-overlay"
-          onClick={() => setOpenShareId(null)}
+          onClick={() => setOpenFindNearbyId(null)}
+        >
+          <div
+            className="screen5-share-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="screen5-share-modal-header">
+              <h3 className="screen5-share-modal-title">
+                {ACTION_ROWS.find((row) => row.id === openFindNearbyId)?.label}
+              </h3>
+              <button
+                className="screen5-modal-close"
+                onClick={() => setOpenFindNearbyId(null)}
+                aria-label="Close"
+              >
+                ×
+              </button>
+            </div>
+            <p className="screen5-findnearby-modal-text">
+              Nearby agrovets and extension officers will appear here.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Share popup */}
+      {showShareModal && (
+        <div
+          className="screen5-modal-overlay"
+          onClick={() => setShowShareModal(false)}
         >
           <div
             className="screen5-share-modal"
@@ -277,7 +289,7 @@ If you are unsure about the next step, the summary also highlights what still re
               <h3 className="screen5-share-modal-title">Share summary</h3>
               <button
                 className="screen5-modal-close"
-                onClick={() => setOpenShareId(null)}
+                onClick={() => setShowShareModal(false)}
                 aria-label="Close"
               >
                 ×
@@ -293,10 +305,10 @@ If you are unsure about the next step, the summary also highlights what still re
         </div>
       )}
 
-      {showModal && (
+      {showSourcesModal && (
         <UnderstandMoreModal
           sourceDetails={sourceDetails}
-          onClose={() => setShowModal(false)}
+          onClose={() => setShowSourcesModal(false)}
         />
       )}
     </div>
