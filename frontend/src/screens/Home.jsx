@@ -17,6 +17,25 @@ function Home({ user, onStartNew, onContinueJourney, onSelectSummary }) {
   const [dismissedFollowUps, setDismissedFollowUps] = useState({});
   const [followUpStep, setFollowUpStep] = useState({}); // journeyId -> { outcome }
 
+  // The follow-up prompt should only surface right after the user actually
+  // logs in — not every time Home is revisited in-app, e.g. immediately
+  // after clicking "Save & Return Home" on Screen 5. Login.jsx sets this
+  // localStorage flag the moment a real login succeeds; Home consumes
+  // (deletes) it on the very first mount after that, so it's eligible
+  // exactly once per login — not once per tab/browser session, which
+  // matters once this becomes a PWA that can stay open indefinitely
+  // without the user ever explicitly logging out. Closing the app without
+  // logging out and reopening it does NOT re-set this flag, since no real
+  // login occurred.
+  const [isFreshLoginSession] = useState(() => {
+    const key = `kagua_followup_eligible_${user?.phone || "anon"}`;
+    const eligible = localStorage.getItem(key) === "1";
+    if (eligible) {
+      localStorage.removeItem(key);
+    }
+    return eligible;
+  });
+
   useEffect(() => {
     async function loadJourneys() {
       const journeys = await fetchJourneys(user.phone);
@@ -46,6 +65,7 @@ function Home({ user, onStartNew, onContinueJourney, onSelectSummary }) {
   }, [pastSummaries]);
 
   const followUpJourney =
+    isFreshLoginSession &&
     latestCompletedJourney &&
     !latestCompletedJourney.follow_up_outcome &&
     !dismissedFollowUps[latestCompletedJourney.id]

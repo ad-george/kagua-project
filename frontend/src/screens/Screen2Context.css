@@ -8,7 +8,7 @@ body,
 .screen2-container {
   width: 100%;
   margin: 0 auto;
-  padding: 8px var(--spacing-md) 20px;
+  padding: 6px var(--spacing-md) 16px;
   font-family: inherit;
 }
 
@@ -40,15 +40,15 @@ body,
 }
 
 .screen2-title {
-  font-size: 1.6rem;
-  font-weight: 700;
+  font-size: 1.4rem;
+  font-weight: 600;
   color: var(--primary);
   line-height: 1.25;
-  margin: 0 0 10px;
+  margin: 0 0 8px;
 }
 
 .screen2-intro {
-  font-size: 1rem;
+  font-size: 1.05rem;
   color: var(--text-secondary);
   line-height: 1.6;
   margin: 0 0 8px;
@@ -75,11 +75,11 @@ body,
 }
 
 .screen2-section-title {
-  font-size: 1.6rem;
-  font-weight: 700;
+  font-size: 1.4rem;
+  font-weight: 600;
   color: var(--primary);
   line-height: 1.25;
-  margin: 0 0 10px;
+  margin: 0 0 8px;
 }
 
 .screen2-section-subtitle {
@@ -87,6 +87,28 @@ body,
   color: var(--text-secondary);
   line-height: 1.6;
   margin: 0 0 8px;
+}
+
+.screen2-section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.screen2-audio-row {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 1023px) {
+  .screen2-section-header-row {
+    flex-direction: column;
+  }
+
+  .screen2-section-header-row .screen2-audio-row {
+    margin-top: 12px;
+  }
 }
 
 /* ── Summary card ──
@@ -98,14 +120,22 @@ body,
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  padding: 22px 28px;
+  padding: 14px 20px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 14px;
+  gap: 6px;
   box-shadow: none;
   height: 100%;
   box-sizing: border-box;
+}
+
+.screen2-summary-heading {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--primary);
+  line-height: 1.25;
+  margin: 0 0 4px;
 }
 
 .screen2-summary-row {
@@ -116,23 +146,26 @@ body,
 }
 
 .screen2-summary-label {
-  font-size: 0.92rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: var(--primary);
   text-align: left;
 }
 
 .screen2-summary-value {
-  font-size: 1.05rem;
-  font-weight: 500;
+  font-size: 0.95rem;
+  font-weight: 400;
   color: var(--text-primary);
-  line-height: 1.5;
+  line-height: 1.4;
   text-transform: capitalize;
   text-align: left;
 }
 
 .screen2-summary-divider {
-  display: none;
+  display: block;
+  height: 1px;
+  background: var(--border-color);
+  margin: 4px 0;
 }
 
 /* ── Source cards row ── */
@@ -142,6 +175,29 @@ body,
   grid-auto-rows: 1fr;
   gap: 14px;
   height: 100%;
+}
+
+/* ── Weather section ──
+   Kept visually distinct from the advice cards above — its own small
+   label instead of being folded into "Information you've received",
+   since weather isn't advice from a person or service. Sits in the
+   same grid-area (cards) as .screen2-cards; the gap below gives
+   spacing between them when both are present. */
+.screen2-area-cards {
+  gap: 14px;
+}
+
+.screen2-weather-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.screen2-weather-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0;
 }
 
 /* ── Framing note ── */
@@ -245,17 +301,17 @@ body,
 
 @media (min-width: 480px) {
   .screen2-container {
-    padding: 12px var(--spacing-lg, 24px) 24px;
+    padding: 10px var(--spacing-lg, 24px) 20px;
   }
 }
 
 @media (min-width: 640px) {
   .screen2-container {
-    padding: 14px var(--spacing-xl) 24px;
+    padding: 12px var(--spacing-xl) 20px;
   }
 
   .screen2-title {
-    font-size: 1.9rem;
+    font-size: 1.5rem;
   }
 }
 
@@ -263,19 +319,23 @@ body,
 @media (min-width: 1024px) {
   .screen2-container {
     max-width: 1180px;
-    padding: 18px clamp(24px, 4vw, 64px) 32px;
+    padding: 14px clamp(20px, 3.5vw, 56px) 24px;
     margin: 0 auto;
   }
 
   .screen2-title,
   .screen2-section-title {
-    font-size: 2.1rem;
+    font-size: 1.5rem;
   }
 
   .screen2-intro,
   .screen2-section-subtitle {
     font-size: 1.05rem;
     margin: 0 0 20px;
+  }
+
+  .screen2-section-header-row {
+    align-items: flex-start;
   }
 
   .screen2-grid {
@@ -369,6 +429,7 @@ body,
 @media (min-width: 1440px) {
   .screen2-container {
     max-width: 1320px;
+    padding: 14px clamp(20px, 3.5vw, 56px) 24px;
   }
 
   .screen2-grid {

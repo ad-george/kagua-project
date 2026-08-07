@@ -3,6 +3,7 @@ import SummaryCard from "../components/SummaryCard";
 import ShareOptions from "../components/ShareOptions";
 import UnderstandMoreModal from "../components/UnderstandMoreModal";
 import AudioPlayer from "../components/AudioPlayer";
+import { getExplanationLabel } from "../i18n/explanationLabels";
 import {
   generateSummaryPDF,
   buildWhatsAppLink,
@@ -39,6 +40,8 @@ function Screen5Summary({
     );
   }
 
+  const language = extractedContext?.language;
+
   const handleShareWhatsApp = () => {
     const link = buildWhatsAppLink(extractedContext, comparison, summary);
     window.open(link, "_blank");
@@ -60,7 +63,7 @@ function Screen5Summary({
       const textToCopy = summary?.summary_text
         ? `${summary.summary_text}${
             summary.discussion_points?.length > 0
-              ? `\n\nQuestions you may want to ask:\n${summary.discussion_points.map((p) => `• ${p}`).join("\n")}`
+              ? `\n\n${getExplanationLabel("questionsToAsk", language)}:\n${summary.discussion_points.map((p) => `• ${p}`).join("\n")}`
               : ""
           }\n\nPrepared by Kagua`
         : [
@@ -103,6 +106,11 @@ function Screen5Summary({
   // Framed as things Kagua organized/surfaced for the farmer, not skills
   // the farmer practiced — Kagua isn't teaching a lesson, it's helping
   // organize information.
+  // Each bullet is independently conditional on its own data (multiple
+  // perspectives, observations, uncertainty, trusted sources), so a
+  // session with no trusted sources simply omits that one line rather
+  // than needing separate handling — the card as a whole only disappears
+  // when none of the four conditions are met.
   const getSessionSummaryPoints = () => {
     if (!comparison) return [];
     const points = [];
@@ -118,6 +126,7 @@ function Screen5Summary({
   };
 
   const sessionSummaryPoints = getSessionSummaryPoints();
+  const showSessionSummary = !isReviewMode && sessionSummaryPoints.length > 0;
 
   // Build the complete page text for audio playback in logical order.
   // Prefers the backend-generated summary.summary_text (properly reflects
@@ -149,18 +158,30 @@ If you are unsure about the next step, the summary also highlights what still re
 
   return (
     <div className="screen5-container">
-      <div className="screen5-grid">
 
-        {/* ── Left column: what was gathered ── */}
-        <div className="screen5-header">
-          <h1 className="screen5-title">Your Kagua Summary</h1>
-
+      {/* ── Page header — full width, centered above both columns ──
+          Moved out of the left column so "Your Kagua Summary" centers
+          against the whole page instead of just the narrow left column,
+          matching Screen4's header pattern. The Listen button now sits
+          inline next to the subtitle here (no card wrapper) instead of
+          living in its own card in the right column — also matching
+          Screen4. */}
+      <div className="screen5-page-header">
+        <h1 className="screen5-title">Your Kagua Summary</h1>
+        <div className="screen5-subtitle-row">
           <p className="screen5-transition-note">
             {isReviewMode
               ? "This is a summary of your past conversation."
               : "This summary brings together the information from your conversation."}
           </p>
+          <AudioPlayer text={buildPageText()} language={extractedContext?.language} />
+        </div>
+      </div>
 
+      <div className="screen5-grid">
+
+        {/* ── Left column: what was gathered ── */}
+        <div className="screen5-left">
           <SummaryCard
             crop={extractedContext?.crop}
             reportedProblem={extractedContext?.reported_problem}
@@ -168,14 +189,15 @@ If you are unsure about the next step, the summary also highlights what still re
             adviceReceived={extractedContext?.advice_received}
             confidence={comparison?.confidence}
           />
+        </div>
 
-          {/* What Kagua did this session — same shared card styling as
-              every other info card on this screen (background, border,
-              radius, padding, label style all come from .screen5-info-card
-              / .screen5-info-card-label so they stay consistent). */}
-          {!isReviewMode && sessionSummaryPoints.length > 0 && (
+        {/* ── Right column: what to do next ── */}
+        <div className="screen5-main">
+
+          {/* "During this conversation" — session recap, sits first. */}
+          {showSessionSummary && (
             <div className="screen5-session-summary screen5-info-card">
-              <p className="screen5-info-card-label">During this conversation</p>
+              <p className="screen5-info-card-label">{getExplanationLabel("duringThisConversation", language)}</p>
               <ul className="screen5-session-summary-list">
                 {sessionSummaryPoints.map((point, index) => (
                   <li key={index}>{point}</li>
@@ -183,17 +205,6 @@ If you are unsure about the next step, the summary also highlights what still re
               </ul>
             </div>
           )}
-        </div>
-
-        {/* ── Right column: what to do next ── */}
-        <div className="screen5-main">
-
-          {/* Single Listen button for the entire page — nudged down a
-              little from the top of the column via margin-top. */}
-          <div className="screen5-audio-row screen5-info-card">
-            <p className="screen5-info-card-label">Listen to this page</p>
-            <AudioPlayer text={buildPageText()} language={extractedContext?.language} />
-          </div>
 
           {/* Discussion points from the generated summary — only renders
               when there's something real to show (matches
@@ -202,7 +213,7 @@ If you are unsure about the next step, the summary also highlights what still re
               specific to ask). */}
           {summary?.discussion_points && summary.discussion_points.length > 0 && (
             <div className="screen5-discussion-points screen5-info-card">
-              <p className="screen5-info-card-label">Questions you may want to ask</p>
+              <p className="screen5-info-card-label">{getExplanationLabel("questionsToAsk", language)}</p>
               <ul className="screen5-discussion-list">
                 {summary.discussion_points.map((point, index) => (
                   <li key={index}>{point}</li>
@@ -308,6 +319,7 @@ If you are unsure about the next step, the summary also highlights what still re
       {showSourcesModal && (
         <UnderstandMoreModal
           sourceDetails={sourceDetails}
+          selectionReason={comparison?.sources_selection_reason}
           onClose={() => setShowSourcesModal(false)}
         />
       )}

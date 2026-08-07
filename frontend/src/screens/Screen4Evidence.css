@@ -7,7 +7,7 @@ body,
 .screen4-container {
   width: 100%;
   margin: 0 auto;
-  padding: 8px var(--spacing-md) 40px;
+  padding: 2px var(--spacing-md) 10px;
   font-family: inherit;
   display: flex;
   flex-direction: column;
@@ -17,7 +17,7 @@ body,
 @media (min-width: 1024px) {
   .screen4-container {
     max-width: 1180px;
-    padding: 18px clamp(24px, 4vw, 64px) 48px;
+    padding: 4px clamp(10px, 2vw, 36px) 14px;
   }
 }
 
@@ -44,41 +44,79 @@ body,
   margin: 0;
 }
 
-.screen4-bridge {
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  margin: 4px 0 0;
-  max-width: 560px;
-  align-self: center;
+/* Subtitle and Listen button sit inline as one line — "Here's what we
+   know so far.   Listen" — centered under the title, wrapping to two
+   lines only if the row runs out of horizontal space. */
+.screen4-subtitle-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 @media (min-width: 1024px) {
   .screen4-title { font-size: 2.1rem; }
 }
 
-/* ── Two-column row ── */
-.screen4-row {
+/* ── Two independent columns, side by side on desktop ──
+   Replaces the old paired-row layout (.screen4-row). Still a 2-column
+   layout side by side on desktop — same visual arrangement as before.
+   The difference: each column now stacks and sizes to its OWN content,
+   instead of two rows each forcing left/right to match height. That
+   shared-row height was what created the dead space; a taller-card
+   fix alone couldn't remove it because the grid row track height was
+   never about the card's own height. */
+.screen4-columns {
   display: flex;
   flex-direction: column;
-  gap: 56px;
+  gap: 32px;
+}
+
+.screen4-column {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
 @media (min-width: 1024px) {
-  .screen4-row {
+  .screen4-columns {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    align-items: flex-start;
     gap: 56px;
-    align-items: stretch;
   }
 
-  /* When only one panel renders in a row (e.g. neither advice nor trusted
-     sources exist, so only "What you observed" is present), let it span
-     the full row instead of sitting in column 1 with an empty column 2
-     beside it. */
-  .screen4-row .screen4-panel:only-child {
-    grid-column: 1 / -1;
+  .screen4-column {
+    gap: 56px;
   }
+
+  .screen4-column-left {
+    gap: 28px;
+  }
+
+  /* No advice and no trusted sources — right column isn't rendered at
+     all (see JSX), so the left column runs full width instead of
+     sitting in a half-width track with an empty gutter beside it. */
+  .screen4-columns--single {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile: dissolve the column wrapper so the panels become direct flex
+   children of .screen4-columns, then use `order` to restore the
+   observed → advice → unclear → reflection reading sequence (Reflection
+   now lives in the left column's DOM position, ahead of Advice, which
+   would otherwise read out of order on mobile). */
+@media (max-width: 1023px) {
+  .screen4-column {
+    display: contents;
+  }
+
+  .screen4-panel-observed { order: 1; }
+  .screen4-panel-advice { order: 2; }
+  .screen4-panel-unclear { order: 3; }
+  .screen4-panel-reflection { order: 4; }
 }
 
 /* ── Panel ── */
@@ -90,7 +128,6 @@ body,
   display: flex;
   flex-direction: column;
   gap: 20px;
-  height: 100%;
 }
 
 .screen4-panel-title {
@@ -104,12 +141,7 @@ body,
   border-bottom: 1px solid var(--border-color);
 }
 
-/* ── Observed pills ──
-   Renamed from .screen4-observed-list to match the JSX's actual
-   className (.screen4-observed-pills), which previously had zero CSS
-   and rendered as an unstyled default bulleted list. Styled as rounded
-   chips, matching the pill-badge language already used elsewhere in
-   the app (e.g. the county badge on the Home page). */
+/* ── Observed pills ── */
 .screen4-observed-pills {
   list-style: none;
   margin: 0;
@@ -129,9 +161,7 @@ body,
   line-height: 1.4;
 }
 
-/* ── Advice stack ──
-   Renamed from .screen4-advice-list to match the JSX's actual
-   className (.screen4-advice-stack). */
+/* ── Advice stack ── */
 .screen4-advice-stack {
   display: flex;
   flex-direction: column;
@@ -168,58 +198,52 @@ body,
   flex-grow: 1;
 }
 
-/* ── Trusted sources ── */
-.screen4-sources-stack {
+/* ── Trusted sources — compact list, not full-paragraph cards ──
+   Previously each source rendered as a bordered block with a full
+   snippet paragraph (up to 3 of them). That's now deliberately
+   removed — full reading detail lives in the "Explore Trusted
+   Sources" modal on Screen 5 instead; Screen 4 only needs to signal
+   that relevant sources exist and roughly what each covers. */
+.screen4-sources-note {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin: -4px 0 4px;
+}
+
+.screen4-sources-compact-list {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0 4px 14px;
+  border-left: 2px solid var(--secondary);
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-top: 4px;
+  gap: 10px;
 }
 
-.screen4-source-item {
-  border-left: 2px solid var(--secondary);
-  padding: 4px 0 4px 14px;
+.screen4-source-compact-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px;
 }
 
-.screen4-source-name {
+.screen4-source-compact-name {
   font-weight: 700;
   font-size: 0.85rem;
   color: var(--primary);
-  margin: 0 0 3px;
 }
 
-.screen4-source-snippet {
-  font-size: 0.88rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
-  margin: 0;
-}
-
-/* ── What remains unclear ── */
-.screen4-unclear-box {
-  background: #FFFCF5;
-  border: 1px solid #E8D9B5;
-  border-radius: 20px;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.screen4-unclear-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.screen4-unclear-label {
+.screen4-source-compact-topic {
   font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: #8A5D00;
+  color: var(--text-secondary);
 }
 
+/* ── What remains unclear ──
+   Previously wrapped in its own bordered/rounded box nested inside the
+   panel — two cards stacked inside each other. That box is removed;
+   the amber accent color on the bullets is kept so this content still
+   reads as distinct, without being boxed. */
 .screen4-unclear-list {
   list-style: none;
   margin: 0;
@@ -231,7 +255,7 @@ body,
 
 .screen4-unclear-list li {
   font-size: 0.95rem;
-  color: #6B4E00;
+  color: var(--text-primary);
   line-height: 1.6;
   display: flex;
   align-items: flex-start;
@@ -245,17 +269,10 @@ body,
   margin-top: 2px;
 }
 
-/* ── What this means right now ── */
-.screen4-reflection-card {
-  background: white;
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
+/* ── What this means right now ──
+   Was also wrapped in its own bordered/rounded box nested inside the
+   panel — removed for the same reason as Unclear above; the text now
+   sits directly in the outer panel. */
 .screen4-reflection-text {
   font-size: 0.95rem;
   color: var(--text-primary);

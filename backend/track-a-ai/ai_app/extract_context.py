@@ -53,14 +53,21 @@ Normalize equivalent source names where the meaning is clear, for example:
 A named organization (e.g. "One Acre Fund") should be kept as "organization",
 with "source_type" set to the general role (e.g. "trainer").
 
-CRITICAL RULE FOR ADVICE: The "advice" field must be a short factual restatement
-of what was suggested, never the farmer's or the source's reasoning. Do not use
-phrases such as "believes," "thinks," "suspects," "may be based on," "possibly,"
-or "likely because." Extract only what they suggested doing, not why. For
-example, if the farmer says "my neighbour thinks it's pests so he told me to
-spray," extract advice as "Suggested spraying," not "Thinks it's pests,
-suggested spraying." This applies even when the reasoning is stated plainly by
-the farmer — strip it regardless of how it was phrased.
+CRITICAL RULE FOR ADVICE: The "advice" field must always lead with a short
+factual restatement of what was suggested — that part must never contain
+speculation words like "believes," "thinks," "suspects," "possibly," or
+"likely because." If the source also gave a reason for their advice, append
+it in parentheses using clearly attributed, neutral phrasing (e.g. "thought
+it might be...", "believed it was..."), so it reads as the source's stated
+belief, never as Kagua asserting a fact. Do not drop a stated reason
+entirely — losing it changes the meaning of what was actually said — but
+never let the reason stand alone as an unattributed causal claim.
+Examples, given "my neighbour thinks it's pests so he told me to spray":
+BAD: "Thinks it's pests, suggested spraying." (reason stated as if fact, no attribution)
+BAD: "Suggested spraying." (reason dropped entirely, loses information)
+GOOD: "Suggested spraying (thought it might be pests)."
+This applies even when the reasoning is stated plainly by the farmer —
+preserve it, but always wrapped in attributed language.
 
 Return only unique observations, do not repeat the same observation twice even
 if the farmer mentions it more than once.

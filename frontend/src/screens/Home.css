@@ -7,7 +7,7 @@ body,
 .home-container {
   width: 100%;
   margin: 0 auto;
-  padding: 16px var(--spacing-md) 40px;
+  padding: 8px var(--spacing-md) 20px;
   font-family: inherit;
   box-sizing: border-box;
 }
@@ -519,14 +519,14 @@ body,
 
 @media (min-width: 480px) {
   .home-container {
-    padding: 20px var(--spacing-lg, 24px) 40px;
+    padding: 10px var(--spacing-lg, 24px) 24px;
   }
 }
 
 @media (min-width: 1024px) {
   .home-container {
     max-width: 1600px;
-    padding: 8px clamp(24px, 4vw, 64px) 48px;
+    padding: 4px clamp(14px, 3vw, 44px) 28px;
     margin: 0 auto;
   }
 

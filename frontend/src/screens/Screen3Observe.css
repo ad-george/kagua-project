@@ -12,7 +12,7 @@ body {
   width: 100%;
   min-height: 100%;
   margin: 0 auto;
-  padding: 16px var(--spacing-md) 24px;
+  padding: 6px var(--spacing-md) 14px;
   font-family: inherit;
   background: linear-gradient(180deg, var(--bg-color) 0%, #F5F8FB 100%);
   border-radius: 0;
@@ -34,7 +34,7 @@ body {
 
 .screen3-page-header {
   margin-bottom: 20px;
-  padding: 8px 0 4px;
+  padding: 0 0 4px;
 }
 
 .screen3-main {
@@ -95,6 +95,10 @@ body {
   color: var(--text-secondary);
   margin: 0 0 8px;
 }
+
+/* ── Selected checklist tags ──
+   Short 1-line items (e.g. "Wilting") — stays a 2-column grid, bullet
+   vertically centered since there's only ever one line to center against. */
 .screen3-summary-list {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -117,8 +121,53 @@ body {
   overflow-wrap: anywhere;
   word-break: break-word;
 }
+.screen3-summary-item::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--secondary);
+  flex-shrink: 0;
+}
 
-.screen3-summary-item-text {
+/* ── Custom typed/voice notes ──
+   Full sentences, so these get their own full-width single-column list
+   instead of being squeezed into a half-width grid column (which is what
+   forced long notes to wrap 4+ lines). align-items: flex-start (not
+   center) keeps the bullet and the × button pinned to the first line
+   instead of floating in the vertical middle of a wrapped paragraph. */
+.screen3-summary-notes-list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.screen3-summary-note-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  padding: 3px 0;
+  line-height: 1.4;
+  min-width: 0;
+}
+
+.screen3-summary-note-item::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background-color: var(--secondary);
+  flex-shrink: 0;
+}
+
+.screen3-summary-note-item-text {
   flex: 1;
   min-width: 0;
   overflow-wrap: anywhere;
@@ -138,14 +187,6 @@ body {
 
 .screen3-summary-item-remove:hover {
   color: var(--primary);
-}
-.screen3-summary-item::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: var(--secondary);
-  flex-shrink: 0;
 }
 
 /* ── Options list ── */
@@ -234,17 +275,18 @@ body {
 
 /* ── Other observation section ── */
 .screen3-other {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 18px;
-  padding: 14px 18px;
+  padding: 0 4px;
 }
 
 .screen3-other-label {
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--text-primary);
-  margin: 0 0 4px;
+  margin: 0;
+  text-align: center;
 }
 
 .screen3-prompt-help {
@@ -265,7 +307,7 @@ body {
 }
 
 .screen3-other-expand {
-  margin-top: 10px;
+  margin-top: 0;
 }
 
 .screen3-other-voice {
@@ -273,6 +315,8 @@ body {
   flex-direction: row;
   align-items: center;
   gap: 0;
+  margin-bottom: 12px;
+  justify-content: center;
 }
 
 /* or divider */
@@ -309,6 +353,8 @@ body {
   text-align: center;
   cursor: pointer;
   transition: transform 0.2s ease, color 0.2s ease;
+  padding: 12px 16px;
+  margin-top: -4px;
 }
 
 .screen3-type-btn:hover {
@@ -336,6 +382,7 @@ body {
   transition: border-color 0.15s ease;
   min-width: 0;
   max-width: 100%;
+  padding: 0 2px;
 }
 
 .screen3-other-input-card:hover {
@@ -373,6 +420,7 @@ body {
 }
 
 .screen3-other-input {
+  display: block;
   width: 100%;
   padding: 4px var(--spacing-md) 10px;
   font-size: 1rem;
@@ -383,7 +431,9 @@ body {
   outline: none;
   box-shadow: none;
   box-sizing: border-box;
-  min-height: 40px;
+  resize: none;
+  overflow: hidden;
+  line-height: 1.4;
 }
 
 .screen3-other-input:focus {
@@ -396,12 +446,13 @@ body {
   color: #9CA3AF;
 }
 
-/* ── Continue button — full width on right column ── */
+/* ── Continue button — in left column below summary ── */
 .screen3-continue-btn {
-  width: auto;
-  align-self: flex-start;
-  padding: 14px 40px;
-  min-height: 52px;
+  width: fit-content;
+  padding: 10px 24px;
+  min-height: 42px;
+  margin-top: 12px;
+  font-size: 0.95rem;
 }
 
 .screen3-also-selected-hint {
@@ -417,13 +468,13 @@ body {
 
 @media (min-width: 480px) {
   .screen3-container {
-    padding: 12px var(--spacing-lg, 24px) 24px;
+    padding: 8px var(--spacing-lg, 24px) 16px;
   }
 }
 
 @media (min-width: 640px) {
   .screen3-container {
-    padding: 14px var(--spacing-xl) 24px;
+    padding: 10px var(--spacing-xl) 16px;
   }
 
   .screen3-title {
@@ -437,7 +488,7 @@ body {
 @media (min-width: 1024px) {
   .screen3-container {
     max-width: 1180px;
-    padding: 4px clamp(20px, 3.5vw, 56px) 24px;
+    padding: 4px clamp(12px, 2.5vw, 40px) 16px;
     margin: 0 auto;
   }
 
@@ -481,6 +532,7 @@ body {
 @media (min-width: 1440px) {
   .screen3-container {
     max-width: 1320px;
+    padding: 4px clamp(12px, 2.5vw, 40px) 16px;
   }
 
   .screen3-grid {

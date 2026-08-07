@@ -19,7 +19,16 @@ def get_source_details(sources_used: list) -> list:
             details.append({
                 "name": source.get("name"),
                 "topic": topic,
-                "summary": matching_entry.get("document_summary"),
+                # Prefer the already-simplified, farmer-friendly text that
+                # get_comparison.py already generated once (stored on
+                # source["snippet"]) over the knowledge base's raw
+                # document_summary, which is written in technical/research
+                # language (e.g. "diagnostic field markers", "endemic
+                # chewing pests"). No new LLM call needed here — this reuses
+                # the simplification work already done, rather than
+                # re-doing it or skipping it entirely. Only falls back to
+                # the raw technical text if no friendly snippet exists.
+                "summary": source.get("snippet") or matching_entry.get("document_summary"),
                 # clarifying_questions are written in plain farmer language —
                 # more useful in the modal than the technical learning points
                 "learning_points": matching_entry.get("clarifying_questions", []),

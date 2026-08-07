@@ -7,8 +7,27 @@ body,
 .screen5-container {
   width: 100%;
   margin: 0 auto;
-  padding: 8px var(--spacing-md) 20px;
+  padding: 4px var(--spacing-md) 12px;
   font-family: inherit;
+}
+
+/* ── Page header — full width, centered above both columns ──
+   Matches Screen4's header pattern: title, then a subtitle line with
+   the Listen button sitting inline next to it (no card wrapper). */
+.screen5-page-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+
+.screen5-subtitle-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 10px;
 }
 
 /* ── Grid ── */
@@ -18,7 +37,7 @@ body,
   gap: 20px;
 }
 
-.screen5-header {
+.screen5-left {
   display: flex;
   flex-direction: column;
 }
@@ -44,23 +63,23 @@ body,
   font-weight: 700;
   color: var(--primary);
   line-height: 1.3;
-  margin: 0 0 10px;
+  margin: 0;
 }
 
-/* ── Transition note ── */
+/* ── Transition note — now inline next to the Listen button ── */
 .screen5-transition-note {
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: var(--text-secondary);
-  line-height: 1.6;
-  margin: 0 0 18px;
+  line-height: 1.5;
+  margin: 0;
 }
 
 /* ── Shared card styling ──
-   Every info card on this screen (Listen to this page, During this
-   conversation, Questions you may want to ask, Continue with your
-   summary) uses this same background/border/radius/padding, and every
-   card title uses the same label style — this is the single source of
-   truth for "all cards look consistent", not per-card duplication. */
+   Every info card on this screen (During this conversation, Questions
+   you may want to ask, Continue with your summary) uses this same
+   background/border/radius/padding, and every card title uses the
+   same label style — this is the single source of truth for "all
+   cards look consistent", not per-card duplication. */
 .screen5-info-card {
   background: var(--bg-color);
   border: 1px solid var(--border-color);
@@ -76,15 +95,9 @@ body,
   margin: 0 0 10px;
 }
 
-/* ── Audio row ── pushed down slightly from the top of the column */
-.screen5-audio-row {
-  margin-top: 10px;
-  margin-bottom: 16px;
-}
-
 /* ── "During this conversation" card ── */
 .screen5-session-summary {
-  margin-top: 16px;
+  margin-bottom: 16px;
 }
 
 .screen5-session-summary-list {
@@ -283,13 +296,13 @@ body,
 
 @media (min-width: 480px) {
   .screen5-container {
-    padding: 12px var(--spacing-lg, 24px) 24px;
+    padding: 8px var(--spacing-lg, 24px) 16px;
   }
 }
 
 @media (min-width: 640px) {
   .screen5-container {
-    padding: 14px var(--spacing-xl) 24px;
+    padding: 10px var(--spacing-xl) 18px;
   }
 
   .screen5-title {
@@ -322,7 +335,7 @@ body,
     row-gap: 24px;
   }
 
-  .screen5-header {
+  .screen5-left {
     padding-top: 0;
   }
 

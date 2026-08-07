@@ -73,6 +73,20 @@
   margin: 0 0 18px;
 }
 
+/* ── "Why these sources were selected" note ──
+   Same neutral info-card treatment used elsewhere in the app — a light
+   bordered box, not a paragraph blending into the intro text above it. */
+.modal-selection-note {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  margin: 0 0 16px;
+}
+
 /* ── Each source block ── */
 .modal-source {
   margin-bottom: 20px;
@@ -123,7 +137,11 @@
   line-height: 1.55;
 }
 
-/* ── Subsections inside each source ── */
+/* ── Subsections inside each source ──
+   Now <details>/<summary> elements (collapsible) rather than always-open
+   divs — .modal-section-label is applied directly to the <summary>, so
+   cursor:pointer makes the clickable affordance obvious. The browser's
+   native disclosure triangle provides the expand/collapse indicator. */
 .modal-section {
   margin-bottom: 12px;
 }
@@ -135,6 +153,11 @@
   text-transform: uppercase;
   color: var(--text-secondary);
   margin: 0 0 6px;
+  cursor: pointer;
+}
+
+.modal-section[open] .modal-section-label {
+  margin-bottom: 8px;
 }
 
 /* ── Source action buttons ── */

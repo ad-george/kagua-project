@@ -1,4 +1,5 @@
 import json
+import re
 from groq import Groq
 import os
 from ai_app.prompts.system_prompt import KAGUA_SYSTEM_PROMPT
@@ -22,6 +23,16 @@ the document is, before any labeled sections. For English:
 It can be used when discussing the situation with an agrovet or extension officer."
 For Kiswahili, translate this sentence naturally rather than reusing the English text.
 
+CROP NAME IN KISWAHILI: the crop field arrives already normalized to one of
+three standard English names by extraction. When writing in Kiswahili, use
+exactly these translations — do not substitute a different vegetable name:
+- "maize" → "mahindi"
+- "irish potatoes" → "viazi"
+- "cabbage" → "kabichi" (NOT "kale" — kale/sukuma wiki is a different,
+  unrelated leafy vegetable; do not conflate the two)
+If the crop is something outside these three, translate it as accurately as
+you can, but never substitute a different, unrelated crop name.
+
 Follow the KAGUA SUMMARY structure, but use the headings in the same language as the farmer's preferred response language.
 
 For English responses use:
@@ -31,7 +42,6 @@ For English responses use:
 - Field observations
 - What we know
 - What remains uncertain
-- Discussion Points (only if genuinely useful; omit entirely if not needed)
 
 For Kiswahili responses use:
 - Zao
@@ -40,13 +50,30 @@ For Kiswahili responses use:
 - Uchunguzi wa shambani
 - Tunachojua
 - Kinachobaki hakijathibitishwa
-- Mambo ya Kujadili (only if genuinely useful; omit entirely if not needed)
+
+Do NOT include a "Discussion Points" / "Mambo ya Kujadili" section inside
+summary_text. Discussion points are returned ONLY in the separate
+discussion_points field below — the application already displays and shares
+them from that field independently. Including them a second time inside
+summary_text causes them to appear twice anywhere summary_text and
+discussion_points are both shown together (e.g. when a farmer shares or
+copies her summary). summary_text should end after "What remains uncertain"
+(or after "What we know" if there is no uncertainty to report).
 
 Do not reproduce the "------" divider lines shown as formatting decoration in
 the KAGUA SUMMARY structure above — those are illustrative only, never part
 of the actual text you output. Always write each section as "Label: value"
 on a single line (e.g. "Crop: maize"), never as a label alone followed by
 the value on a separate line with no colon.
+
+CRITICAL — THE EXAMPLES BELOW ARE FORMAT ILLUSTRATIONS ONLY, NEVER CONTENT
+TO REUSE: every BAD/GOOD example in this prompt (crop names, symptoms,
+causes, phrasing) is invented purely to show sentence structure. Never copy
+any example's specific wording, symptoms, or claims into your actual answer,
+even if it happens to superficially resemble the real farmer's situation.
+Every sentence you write must be grounded only in the actual data given to
+you in this conversation's farmer_situation and comparison_result — never in
+an example from these instructions.
 
 "WHAT REMAINS UNCERTAIN" IS NEVER OPTIONAL WHEN UNCERTAINTY DATA EXISTS: if
 the comparison result's uncertainty list is non-empty, this section must
@@ -59,63 +86,96 @@ Confirm before finalizing your response: did I include every section that
 has genuine content, and only omit the ones that are truly empty?
 
 ATTRIBUTION RULE FOR "WHAT WE KNOW": Only the farmer's own reported problem and
-observations may be stated as plain fact (e.g., "The maize has yellow
-leaves."). Anything drawn from trusted-source content (sources_used) must be
-explicitly attributed to those sources, never stated as a flat unattributed
-fact. Use neutral, non-diagnostic phrasing such as "Trusted sources suggest
-this may be associated with..." or "Trusted agricultural guidance notes that
-this may be associated with..." rather than language that sounds like a
-determination (avoid "suggests your problem is X" — prefer "may be
-associated with X"). Kagua organizes what sources say — it does not assert
-agricultural claims in its own voice.
-BAD: "What we know: Yellowing with wilting can indicate nitrogen deficiency or waterlogging."
-GOOD: "What we know: Trusted agricultural guidance notes that yellowing with wilting may be associated with nitrogen deficiency or waterlogging."
+observations may be stated as plain fact. Anything drawn from trusted-source
+content (sources_used) must be explicitly attributed to those sources, never
+stated as a flat unattributed fact. Use neutral, non-diagnostic phrasing such
+as "Trusted sources suggest this may be associated with..." rather than
+language that sounds like a determination. Kagua organizes what sources say —
+it does not assert agricultural claims in its own voice. Base this section
+ONLY on this farmer's actual reported_problem, observations, and sources_used
+content — never on any example phrasing shown elsewhere in this prompt.
+Format pattern (invented placeholder content, not real symptoms — do not
+reuse): "What we know: [farmer's own reported fact, stated plainly]. Trusted
+sources suggest [attributed claim drawn from this farmer's actual
+sources_used] may be associated with [cause, only if actually present in
+sources_used]."
 
 "ADVICE RECEIVED" MUST RESTATE ACTUAL CONTENT, NOT JUST NAME SOURCES:
 When perspectives exist, state what each one actually said (using the factual
 restatement already given in perspectives[].view), not merely which sources
-were consulted.
-BAD: "Advice received: Advice from neighbour and agrovet."
-GOOD: "Advice received: The neighbour suggested waiting. The agrovet suggested spraying."
+were consulted. Base this only on this farmer's actual perspectives data.
+
+"FIELD OBSERVATIONS" MAY ARRIVE IN ENGLISH EVEN IN A KISWAHILI CONVERSATION:
+observations often come from a fixed on-screen checklist (e.g. "White powder",
+"Brown spots") rather than from what the farmer said herself, so they can be
+in English regardless of her response language. When composing this section
+in Kiswahili, translate these terms naturally into Kiswahili rather than
+reproducing the English words verbatim — the farmer should never see an
+English phrase sitting inside an otherwise-Kiswahili sentence.
+This applies only to how these terms are rendered inside summary_text — it
+does not change what was extracted or how it's stored elsewhere.
+
+"ADVICE RECEIVED" MAY ALSO CONTAIN STRAY ENGLISH ACTION WORDS: an advice
+entry's action (e.g. "spray") may sometimes appear as an English or
+untranslated loanword even in an otherwise-Kiswahili advice item, since it
+was extracted from mixed-language speech. When composing this section in
+Kiswahili, translate the action itself naturally into Kiswahili too, the same
+way field-observation terms are translated above — do not leave an
+English/loanword action verb sitting inside an otherwise-Kiswahili sentence.
+Any reasoning already attributed in parentheses (e.g. "(thought it might be
+pests)") should stay attributed the same way, just also in Kiswahili.
 
 STRICT RULES FOR THIS TASK:
 - Never include diagnoses, treatment recommendations, product names, pesticide
   names, chemical names, or brand names.
 - Never rank perspectives or sources as better/worse/correct/incorrect.
-- If confidence is "LOW", do not invent an explanation — say plainly that
-  trusted sources don't have a confident match yet, and keep tone encouraging,
-  not alarming.
+- If confidence is "LOW", do not invent an explanation — say plainly that the
+  available guidance does not confirm the exact cause yet, and keep tone
+  encouraging, not alarming.
 - CRITICAL — for every section in the summary (Advice received, Field
-  observations, What we know, What remains uncertain, Discussion Points): if
-  there is nothing genuine to put there, omit that section or line entirely.
-  Never write a sentence whose only job is to announce that something is
-  missing. This applies to every section equally, not only advice.
-  BAD: "Advice received: No advice was received."
-  BAD: "Field observations: No observations were recorded."
-  GOOD: (the line or section is simply not present in summary_text at all)
+  observations, What we know, What remains uncertain): if there is nothing
+  genuine to put there, omit that section or line entirely. Never write a
+  sentence whose only job is to announce that something is missing. This
+  applies to every section equally, not only advice, and applies EQUALLY in
+  Kiswahili as in English — "hakuna" ("none") is exactly the same violation
+  as writing "None" in English, just in a different language. A missing
+  section must be silently absent, never announced in any language.
+  BAD (English): "Advice received: No advice was received."
+  BAD (Kiswahili): "Ushauri uliopokelewa: hakuna."
+  BAD (Kiswahili): "Uchunguzi wa shambani: hakuna."
+  BAD (Kiswahili): "Tunachojua: hakuna."
+  GOOD: (the line or section is simply not present in summary_text at all,
+  in either language)
   A sentence that only states an absence does not help the farmer and must
-  never appear, regardless of which section it would have belonged to.
+  never appear, regardless of which section it would have belonged to or
+  which language the response is in.
 - This omission rule applies even to "What we know," which is otherwise a
   core section — an empty label with nothing after it is the exact same
-  problem as a placeholder sentence, just phrased differently. If there is
-  nothing beyond the farmer's own reported problem to state there, omit the
-  entire "What we know" line, label included, rather than leaving the label
-  present with blank or no content after it.
-  BAD: "What we know: " (label present, nothing after it)
-  GOOD: (the "What we know" line is simply absent from summary_text entirely)
-  The same applies to "Field observations": never emit the label with nothing
-  after it — either include the actual observations or omit the label
-  entirely.
-- Discussion Points, if included, must arise naturally from the uncertainty
-  listed — never invent generic checklist-style questions just to fill space.
-- Keep each discussion point SHORT — one plain question a farmer could ask
-  out loud in a single breath, roughly 8-12 words. Long, multi-clause
-  questions read as homework and are intimidating; short ones are easy to
-  scan and easy to actually ask.
-  BAD: "What are the possible underlying causes of the yellowing observed on the maize leaves, and how might these differ based on the growth stage?"
-  GOOD: "What could be causing the leaves to dry?"
-  Limit to at most 3 discussion points, even if more uncertainty exists —
-  pick the ones most useful to raise with an agrovet or extension officer.
+  problem as a placeholder sentence, just phrased differently, in ANY
+  language. If there is nothing beyond the farmer's own reported problem to
+  state there, omit the entire "What we know" line, label included, rather
+  than leaving the label present with blank, "none", or "hakuna" after it.
+  The same applies to "Field observations" and "Advice received": never
+  emit any label with nothing (or "hakuna"/"none") after it — either
+  include the actual content or omit the label entirely, in every language
+  you might respond in.
+  A LABEL FOLLOWED IMMEDIATELY BY THE NEXT LABEL IS THE SAME VIOLATION,
+  JUST WITHOUT A VISIBLE PLACEHOLDER WORD: dropping "hakuna"/"none" does
+  not satisfy this rule if the empty label itself is still present and
+  simply runs straight into the next label with nothing between them.
+  BAD: "Ushauri uliopokelewa: Uchunguzi wa shambani: Tunachojua: Kinachobaki..."
+  (three empty labels stacked with no content, no placeholder word — still
+  a violation, since each of those labels is present with nothing after it)
+  GOOD: skip straight from the last section that HAS content to the next
+  section that HAS content, with no empty labels anywhere in between —
+  the reader should never see a label you didn't also fill in.
+- discussion_points (the separate JSON field, not part of summary_text):
+  if included, must arise naturally from the uncertainty listed — never
+  invent generic checklist-style questions just to fill space. Keep each
+  one SHORT — one plain question a farmer could ask out loud in a single
+  breath, roughly 8-12 words. Limit to at most 3, even if more uncertainty
+  exists — pick the ones most useful to raise with an agrovet or extension
+  officer.
 - Keep sentences short and simple, suitable for a low-literacy rural farmer.
 - Always begin the summary with the header "KAGUA SUMMARY" exactly as written,
   ONCE only, when the response language is English. For Kiswahili responses,
@@ -128,7 +188,7 @@ STRICT RULES FOR THIS TASK:
 
 Return ONLY valid JSON, no other text, matching exactly this shape:
 {
-  "summary_text": "<the full natural-language Kagua Summary, as short labeled sections or short paragraphs, ready to be read aloud or displayed as-is>",
+  "summary_text": "<the full natural-language Kagua Summary through 'What remains uncertain' only — no Discussion Points section — as short labeled sections or short paragraphs, ready to be read aloud or displayed as-is>",
   "discussion_points": [<0 or more short, natural discussion points for talking with an agrovet or extension officer — omit or leave empty if none genuinely apply>]
 }
 """
@@ -140,6 +200,56 @@ SUMMARY_FALLBACK = {
     "summary_text": None,
     "discussion_points": [],
 }
+
+# Known section headings, English and Kiswahili, in the order they appear in
+# the KAGUA SUMMARY structure. Used only to detect and strip empty stacked
+# labels below — not used to generate content.
+_SECTION_HEADINGS = [
+    "Crop", "Observed problem", "Advice received", "Field observations",
+    "What we know", "What remains uncertain",
+    "Zao", "Tatizo lililoonekana", "Ushauri uliopokelewa",
+    "Uchunguzi wa shambani", "Tunachojua", "Kinachobaki hakijathibitishwa",
+]
+
+
+def _strip_empty_stacked_labels(text: str) -> str:
+    """
+    Deterministic backstop for a failure mode the prompt alone couldn't
+    reliably prevent: the model sometimes drops a section's *content* (per
+    the "omit if empty" rule) but leaves the label itself behind, so two or
+    more empty labels end up sitting back-to-back with nothing between them
+    (e.g. "Ushauri uliopokelewa: Uchunguzi wa shambani: Tunachojua: ...").
+    Prompt instructions with explicit matching examples were tried twice and
+    did not reliably stop this, so it's handled here in code instead —
+    strips any heading that is immediately followed (only whitespace between)
+    by another known heading, repeating until no more such pairs remain
+    (handles chains of 3+ stacked empty labels, not just 2).
+    """
+    if not text:
+        return text
+
+    escaped = [re.escape(h) for h in _SECTION_HEADINGS]
+    heading_pattern = "|".join(escaped)
+    # Matches "<Heading>:" followed by whitespace and OPTIONAL stray
+    # punctuation (a period, comma, etc. the model sometimes leaves behind
+    # when a section has no content — e.g. "Ushauri uliopokelewa: ." — not
+    # just whitespace alone), then a lookahead confirming the very next
+    # token is another known heading + ":".
+    pattern = re.compile(
+        rf"(?:{heading_pattern}):\s*[.,;:]?\s*(?=(?:{heading_pattern}):)"
+    )
+
+    previous = None
+    cleaned = text
+    # Loop until stable: removing one empty label can newly-expose another
+    # (e.g. "A: B: C: content" needs two passes to fully strip A: and B:).
+    while cleaned != previous:
+        previous = cleaned
+        cleaned = pattern.sub("", cleaned)
+
+    # Collapse any double-spacing left behind by the removals.
+    cleaned = re.sub(r"[ \t]{2,}", " ", cleaned)
+    return cleaned.strip()
 
 
 def generate_summary(context: dict, comparison: dict) -> dict:
@@ -185,4 +295,10 @@ def generate_summary(context: dict, comparison: dict) -> dict:
 
     result.setdefault("summary_text", None)
     result.setdefault("discussion_points", [])
+
+    # Deterministic cleanup — see _strip_empty_stacked_labels docstring for
+    # why this can't be left to the prompt alone.
+    if result["summary_text"]:
+        result["summary_text"] = _strip_empty_stacked_labels(result["summary_text"])
+
     return result

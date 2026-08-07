@@ -33,6 +33,14 @@ function Login({
       return;
     }
 
+    // Marks this login as eligible to show the "How did your last summary
+    // help?" prompt the next time Home mounts. Home consumes (deletes) this
+    // flag on that first mount, so it only ever shows once per real login —
+    // not on every in-app return to Home (e.g. right after Screen5's
+    // "Save & Return Home"), and not based on tab/browser session lifetime,
+    // which matters once this becomes a PWA that can stay "open" indefinitely.
+    localStorage.setItem(`kagua_followup_eligible_${result.user.phone}`, "1");
+
     onLoginSuccess(result.user);
   };
 

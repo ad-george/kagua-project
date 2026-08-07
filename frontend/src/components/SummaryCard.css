@@ -50,6 +50,35 @@
   line-height: 1.4;
 }
 
+/* ── Advice received — one row per source ──
+   Was previously a single joined string ("a; b; c") inside
+   .summary-card-value, which rendered as one unbroken line no matter
+   how many sources there were. Each source now gets its own line, with
+   the source name bold and the advice text normal weight — same visual
+   language as the advice rows on Screen 4 (source bold, view normal). */
+.summary-card-advice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.summary-card-advice-item {
+  font-size: 1rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.summary-card-advice-source {
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: capitalize;
+}
+
+.summary-card-advice-text {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
 /* ── Listen button ── */
 .summary-card-audio {
   flex-shrink: 0;
@@ -62,15 +91,16 @@
   margin: 0 0 20px;
 }
 
-/* ── Low-confidence warning ── */
+/* ── Low-confidence note ──
+   Previously boxed in its own bordered/rounded card nested inside the
+   outer summary-card — same double-card pattern removed elsewhere on
+   Screen 4. Now plain text with just an accent color, no box, sitting
+   directly below the divider. */
 .summary-card-warning {
-  padding: 16px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  background: #faf8f2;
-  color: var(--primary);
+  color: #8A5D00;
   font-size: 0.95rem;
   line-height: 1.6;
+  margin: 0;
 }
 
 /* ══════════════════════════════════════════

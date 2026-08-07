@@ -10,8 +10,12 @@ function Screen2Context({ extractedContext, onConfirm, onRecordAgain, onTypeInst
   const summaryText = `Your crop is ${crop}. The problem reported is ${reported_problem}.`;
   const isLowConfidence = extraction_confidence === "low";
 
-  const hasInformation =
-    advice_received.length > 0 || mentioned_weather.length > 0;
+  // Tracked separately (rather than one combined hasInformation flag) so
+  // weather can get its own heading/section instead of being folded into
+  // "Advice you've received" — weather isn't advice from a person.
+  const hasAdvice = advice_received.length > 0;
+  const hasWeather = mentioned_weather.length > 0;
+  const hasInformation = hasAdvice || hasWeather;
 
   // Build the complete page text for audio playback
   const buildPageText = () => {
@@ -19,10 +23,10 @@ function Screen2Context({ extractedContext, onConfirm, onRecordAgain, onTypeInst
     
     if (hasInformation) {
       audioText += "You have also received some information. ";
-      if (advice_received.length > 0) {
+      if (hasAdvice) {
         audioText += `You received advice from ${advice_received.length} source${advice_received.length > 1 ? 's' : ''}. `;
       }
-      if (mentioned_weather.length > 0) {
+      if (hasWeather) {
         audioText += "Weather information was also mentioned. ";
       }
     }
@@ -43,7 +47,7 @@ function Screen2Context({ extractedContext, onConfirm, onRecordAgain, onTypeInst
       <div className={`screen2-grid ${!hasInformation ? "no-info" : ""}`}>
         {/* ── Row 1: headings, one per column, same row ── */}
         <div className="screen2-area-title">
-          <h1 className="screen2-title">Here's what I understood</h1>
+          <h1 className="screen2-title">What Kagua understood</h1>
           <p className="screen2-intro">
             Check that this matches what you described.
           </p>
@@ -53,42 +57,81 @@ function Screen2Context({ extractedContext, onConfirm, onRecordAgain, onTypeInst
               <span>We weren't sure about some parts — please check carefully before continuing.</span>
             </div>
           )}
-          <div className="screen2-audio-row">
-            <AudioPlayer text={buildPageText()} language={extractedContext.language} />
-          </div>
+          {!hasInformation && (
+            <div className="screen2-audio-row">
+              <AudioPlayer text={buildPageText()} language={extractedContext.language} />
+            </div>
+          )}
         </div>
 
         {hasInformation && (
           <>
             <div className="screen2-area-section">
-              <h2 className="screen2-section-title">
-                Information you've received
-              </h2>
-              <p className="screen2-section-subtitle">
-                Advice from people and services you've mentioned.
-              </p>
+              <div className="screen2-section-header-row">
+                <div>
+                  {/* Heading text now depends on what's actually present.
+                      Advice takes priority when both exist — weather still
+                      gets its own labeled block below, just not the
+                      section heading, since the heading previously always
+                      said "Advice you've received" even when the only
+                      thing present was weather. */}
+                  {hasAdvice ? (
+                    <>
+                      <h2 className="screen2-section-title">
+                        Advice you've received
+                      </h2>
+                      <p className="screen2-section-subtitle">
+                        Advice from people and services you've mentioned.
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <h2 className="screen2-section-title">
+                        Weather mentioned
+                      </h2>
+                      <p className="screen2-section-subtitle">
+                        Weather information you've mentioned.
+                      </p>
+                    </>
+                  )}
+                </div>
+                <div className="screen2-audio-row">
+                  <AudioPlayer text={buildPageText()} language={extractedContext.language} />
+                </div>
+              </div>
             </div>
 
-            {/* ── Row 2: source cards ── */}
+            {/* ── Row 2: source cards + weather ── */}
             <div className="screen2-area-cards">
-              <div className="screen2-cards">
-                {advice_received.map((item, index) => (
-                  <SourceCard
-                    key={index}
-                    sourceType={item.source_type}
-                    organization={item.organization}
-                    advice={item.advice}
-                  />
-                ))}
+              {hasAdvice && (
+                <div className="screen2-cards">
+                  {advice_received.map((item, index) => (
+                    <SourceCard
+                      key={index}
+                      sourceType={item.source_type}
+                      organization={item.organization}
+                      advice={item.advice}
+                    />
+                  ))}
+                </div>
+              )}
 
-                {mentioned_weather.length > 0 && (
+              {hasWeather && (
+                <div className="screen2-weather-section">
+                  {/* Only show this small label when advice cards are also
+                      present above — if weather is the only thing here,
+                      the section heading above already says "Weather
+                      mentioned", so a second label would be redundant. */}
+                  {hasAdvice && (
+                    <p className="screen2-weather-label">Weather mentioned</p>
+                  )}
                   <SourceCard
                     sourceType="weather"
                     organization={null}
                     advice={mentioned_weather[0]}
                   />
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </>
         )}
@@ -96,6 +139,7 @@ function Screen2Context({ extractedContext, onConfirm, onRecordAgain, onTypeInst
         {/* ── Summary card ── */}
         <div className="screen2-area-summary">
           <div className="screen2-summary-card">
+            <h3 className="screen2-summary-heading">Your information</h3>
             <div className="screen2-summary-row">
               <span className="screen2-summary-label">Crop:</span>
               <span className="screen2-summary-value">{crop}</span>
@@ -109,11 +153,15 @@ function Screen2Context({ extractedContext, onConfirm, onRecordAgain, onTypeInst
           </div>
         </div>
 
-        {/* ── Guidance note — only when retry is not showing ── */}
+        {/* ── Guidance note — only when retry is not showing ──
+            Now keyed on hasAdvice specifically, not hasInformation — a
+            weather-only conversation was previously showing "You have
+            received advice from different people...", which isn't true
+            when nobody actually gave advice. */}
         {!showRetryChoice && (
           <div className="screen2-area-note">
             <div className="screen2-note">
-              {hasInformation ? (
+              {hasAdvice ? (
                 <p>
                   You have received advice from different people. We will help you check what the evidence says before you decide.
                 </p>

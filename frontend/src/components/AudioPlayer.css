@@ -2,23 +2,27 @@
   margin-top: 4px;
 }
 
+/* ── Listen button ──
+   Was a pill button (background, border, rounded corners, border-color
+   hover). Now a plain text button — no background, no border, no
+   radius — matching the "What would you like to do?" action-tile
+   hover treatment: hover only shifts the text color, nothing else
+   changes. */
 .audio-player-btn {
-  background-color: var(--card-bg);
-  border: 1.5px solid var(--border-color);
+  background: none;
+  border: none;
   color: var(--primary);
   font-family: inherit;
   font-size: 0.875rem;
   font-weight: 600;
-  padding: 8px 18px;
-  border-radius: var(--radius-full);
+  padding: 0;
   cursor: pointer;
-  transition: border-color 0.15s ease, color 0.15s ease;
+  transition: color 0.15s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
 .audio-player-btn:hover {
-  border-color: #9AA3AE;
-  color: var(--primary);
+  color: var(--secondary);
 }
 
 .audio-player-btn:disabled {

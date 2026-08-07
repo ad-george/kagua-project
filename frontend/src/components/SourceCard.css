@@ -1,10 +1,10 @@
 .source-card {
-  background-color: var(--card-bg);
-  border: 1.5px solid var(--border-color);
+  background-color: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: var(--radius-md);
   padding: 18px;
   text-align: left;
-  box-shadow: var(--shadow-sm);
+  box-shadow: none;
   min-height: 140px;
   display: flex;
   flex-direction: column;

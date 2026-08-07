@@ -1,5 +1,5 @@
 import { Mic, Check } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import VoiceRecorder from "../components/VoiceRecorder";
 import "./Screen3Observe.css";
 
@@ -23,6 +23,27 @@ function Screen3Observe({ onContinue }) {
   const [showOtherText, setShowOtherText] = useState(false);
   const [hasMore, setHasMore] = useState(null);
   const [somethingElseOpen, setSomethingElseOpen] = useState(false);
+
+  // The typed-note field is a <textarea> (was a single-line <input>, which
+  // could only scroll horizontally and never wrap). This ref + resize
+  // helper grows the box to fit the wrapped text as the person types,
+  // instead of leaving it a fixed one-line height with hidden overflow.
+  const otherTextareaRef = useRef(null);
+
+  const resizeOtherTextarea = () => {
+    const el = otherTextareaRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = `${el.scrollHeight}px`;
+  };
+
+  // Runs on every otherText change — typing, clearing after commit, and
+  // clearing after a voice transcription all update otherText, so this
+  // single effect keeps the box's height in sync with all three instead
+  // of needing a resize call duplicated at each call site.
+  useEffect(() => {
+    resizeOtherTextarea();
+  }, [otherText]);
 
   const toggleOption = (option) => {
     setSelected((prev) => {
@@ -54,7 +75,7 @@ function Screen3Observe({ onContinue }) {
   };
 
   const handleOtherKeyDown = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       commitOtherText();
     }
@@ -82,7 +103,14 @@ function Screen3Observe({ onContinue }) {
   const hasSelection = selected.length > 0;
   const hasDraftNote = otherText.trim().length > 0;
   const hasCommittedNotes = customNotes.length > 0;
-  const hasMeaningfulInput = hasSelection || hasCommittedNotes || hasDraftNote;
+  // Continue only becomes visible once there's committed input (a selected
+  // option, or a note that's been through Enter/blur) — not the instant
+  // someone starts typing. A live, uncommitted draft (hasDraftNote) no
+  // longer counts here, so the button doesn't light up mid-word on an
+  // unfinished thought. Submission itself is unaffected: handleSubmit
+  // still includes any leftover draft text if Continue is clicked while
+  // one is present (e.g. after already committing an earlier note).
+  const hasMeaningfulInput = hasSelection || hasCommittedNotes;
   const hasSomethingSelected = hasSelection || hasCommittedNotes;
 
   // Left column shows:
@@ -102,7 +130,7 @@ function Screen3Observe({ onContinue }) {
       <div className="screen3-page-header">
         <h1 className="screen3-title">What do you see on the plant?</h1>
         <p className="screen3-subtitle">
-          Check one affected plant and select everything that applies.
+          Select everything you notice.
         </p>
       </div>
 
@@ -114,26 +142,41 @@ function Screen3Observe({ onContinue }) {
           {hasSomethingSelected && (
             <div className="screen3-summary-card">
               <p className="screen3-summary-label">What you've noted so far</p>
-              <ul className="screen3-summary-list">
-                {selected.map((item) => (
-                  <li key={item} className="screen3-summary-item">
-                    {item}
-                  </li>
-                ))}
-                {customNotes.map((note, index) => (
-                  <li key={`note-${index}`} className="screen3-summary-item">
-                    <span className="screen3-summary-item-text">{note}</span>
-                    <button
-                      type="button"
-                      className="screen3-summary-item-remove"
-                      onClick={() => removeCustomNote(index)}
-                      aria-label={`Remove "${note}"`}
-                    >
-                      ×
-                    </button>
-                  </li>
-                ))}
-              </ul>
+
+              {/* Short selected checklist tags — stays in the 2-column
+                  grid, bullet vertically centered (fine for 1-line text). */}
+              {selected.length > 0 && (
+                <ul className="screen3-summary-list">
+                  {selected.map((item) => (
+                    <li key={item} className="screen3-summary-item">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {/* Custom typed/voice notes — full sentences, so they get
+                  full width instead of being squeezed into a half-width
+                  grid column, and the bullet/× top-align to the first
+                  line instead of floating in the vertical center of a
+                  wrapped multi-line block. */}
+              {customNotes.length > 0 && (
+                <ul className="screen3-summary-notes-list">
+                  {customNotes.map((note, index) => (
+                    <li key={`note-${index}`} className="screen3-summary-note-item">
+                      <span className="screen3-summary-note-item-text">{note}</span>
+                      <button
+                        type="button"
+                        className="screen3-summary-item-remove"
+                        onClick={() => removeCustomNote(index)}
+                        aria-label={`Remove "${note}"`}
+                      >
+                        ×
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           )}
 
@@ -143,15 +186,16 @@ function Screen3Observe({ onContinue }) {
               <p className="screen3-other-label">What did you notice?</p>
               <div className="screen3-other-expand">
                 {!showOtherText ? (
-                  <div className="screen3-other-voice">
-                    <VoiceRecorder onTranscription={handleOtherTranscription} />
-                    <div className="screen3-other-divider"><span>or</span></div>
+                  <div className="screen3-other-input-card">
                     <button
                       className="btn btn-secondary screen3-type-btn"
                       onClick={() => setShowOtherText(true)}
                     >
                       Type instead
                     </button>
+                    <div className="screen3-other-voice">
+                      <VoiceRecorder onTranscription={handleOtherTranscription} />
+                    </div>
                   </div>
                 ) : (
                   <div className="screen3-other-input-card">
@@ -165,14 +209,15 @@ function Screen3Observe({ onContinue }) {
                       <Mic size={15} strokeWidth={2} />
                       Use voice instead
                     </button>
-                    <input
-                      type="text"
+                    <textarea
+                      ref={otherTextareaRef}
                       className="screen3-other-input"
                       placeholder="Describe what you see, then press Enter..."
                       value={otherText}
                       onChange={(e) => setOtherText(e.target.value)}
                       onKeyDown={handleOtherKeyDown}
                       onBlur={commitOtherText}
+                      rows={1}
                       autoFocus
                     />
                   </div>
@@ -223,15 +268,16 @@ function Screen3Observe({ onContinue }) {
               {hasMore === true && (
                 <div className="screen3-other-expand">
                   {!showOtherText ? (
-                    <div className="screen3-other-voice">
-                      <VoiceRecorder onTranscription={handleOtherTranscription} />
-                      <div className="screen3-other-divider"><span>or</span></div>
+                    <div className="screen3-other-input-card">
                       <button
                         className="btn btn-secondary screen3-type-btn"
                         onClick={() => setShowOtherText(true)}
                       >
                         Type instead
                       </button>
+                      <div className="screen3-other-voice">
+                        <VoiceRecorder onTranscription={handleOtherTranscription} />
+                      </div>
                     </div>
                   ) : (
                     <div className="screen3-other-input-card">
@@ -245,14 +291,15 @@ function Screen3Observe({ onContinue }) {
                         <Mic size={15} strokeWidth={2} />
                         Use voice instead
                       </button>
-                      <input
-                        type="text"
+                      <textarea
+                        ref={otherTextareaRef}
                         className="screen3-other-input"
                         placeholder="e.g. wilting stems, then press Enter..."
                         value={otherText}
                         onChange={(e) => setOtherText(e.target.value)}
                         onKeyDown={handleOtherKeyDown}
                         onBlur={commitOtherText}
+                        rows={1}
                         autoFocus
                       />
                     </div>
@@ -260,6 +307,16 @@ function Screen3Observe({ onContinue }) {
                 </div>
               )}
             </div>
+          )}
+
+          {/* Continue button in left column */}
+          {canContinue && (
+            <button
+              className="btn btn-primary screen3-continue-btn"
+              onClick={handleSubmit}
+            >
+              Continue
+            </button>
           )}
         </div>
 
@@ -319,14 +376,6 @@ function Screen3Observe({ onContinue }) {
               Something else
             </label>
           </div>
-
-          <button
-            className="btn btn-primary screen3-continue-btn"
-            onClick={handleSubmit}
-            disabled={!canContinue}
-          >
-            Continue
-          </button>
         </div>
 
       </div>

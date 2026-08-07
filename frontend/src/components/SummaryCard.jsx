@@ -7,16 +7,19 @@ function SummaryCard({ crop, reportedProblem, observations, adviceReceived, conf
   // so source_type must be checked, not just source/person/who/given_by.
   // Falls back to just the advice text if a source-like key isn't found,
   // rather than ever printing "undefined:".
-  const formattedAdvice = Array.isArray(adviceReceived)
-    ? adviceReceived
-        .map((item) => {
-          if (typeof item === "string") return item;
-          const source =
-            item.source || item.source_type || item.person || item.who || item.given_by;
-          const text = item.advice || item.text || item.suggestion;
-          return source ? `${source}: ${text}` : text;
-        })
-        .join("; ")
+  //
+  // Kept as an array of {source, text} rows (not joined into one string)
+  // so each piece of advice can render on its own line with the source
+  // bolded — a joined string had no way to break lines or bold just the
+  // source name once it became plain text.
+  const adviceRows = Array.isArray(adviceReceived)
+    ? adviceReceived.map((item) => {
+        if (typeof item === "string") return { source: null, text: item };
+        const source =
+          item.source || item.source_type || item.person || item.who || item.given_by;
+        const text = item.advice || item.text || item.suggestion;
+        return { source: source || null, text };
+      })
     : null;
 
   return (
@@ -41,10 +44,19 @@ function SummaryCard({ crop, reportedProblem, observations, adviceReceived, conf
           </div>
         )}
 
-        {formattedAdvice && (
+        {adviceRows && adviceRows.length > 0 && (
           <div className="summary-card-row">
             <span className="summary-card-label">Advice received</span>
-            <span className="summary-card-value">{formattedAdvice}</span>
+            <div className="summary-card-advice-list">
+              {adviceRows.map((row, index) => (
+                <p className="summary-card-advice-item" key={index}>
+                  {row.source && (
+                    <span className="summary-card-advice-source">{row.source}: </span>
+                  )}
+                  <span className="summary-card-advice-text">{row.text}</span>
+                </p>
+              ))}
+            </div>
           </div>
         )}
       </div>
@@ -52,9 +64,9 @@ function SummaryCard({ crop, reportedProblem, observations, adviceReceived, conf
       <div className="summary-card-divider" />
 
       {confidence === "LOW" && (
-        <div className="summary-card-warning">
+        <p className="summary-card-warning">
           More information may be needed before deciding what to do next
-        </div>
+        </p>
       )}
     </div>
   );
