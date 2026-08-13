@@ -1,249 +1,608 @@
-/* ── Page ── */
-body,
-.home-container {
-  background-color: var(--bg-color);
+/* ═══════════════════════════════════════════════
+   KAGUA HOME
+   Information Literacy for Farmers
+   ═══════════════════════════════════════════════ */
+
+body {
+  margin: 0;
+  background: #ffffff;
 }
 
 .home-container {
   width: 100%;
-  margin: 0 auto;
-  padding: 8px var(--spacing-md) 20px;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0 0 40px;
+  box-sizing: border-box;
   font-family: inherit;
+  background: #ffffff;
+  color: #172535;
+}
+
+/* ═══════════════════════════════════════════════
+   TOP NAVIGATION
+   ═══════════════════════════════════════════════ */
+
+.kagua-topbar {
+  width: 100%;
+  height: 92px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 58px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #edf0ed;
+
+  position: relative;
+  z-index: 50;
+}
+
+/* ───────── BRAND ───────── */
+
+.kagua-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  min-width: 0;
+}
+
+.kagua-brand-mark {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #218646;
+
+  flex-shrink: 0;
+}
+
+.kagua-brand-name {
+  color: #16733b;
+
+  font-size: 1.28rem;
+  font-weight: 750;
+
+  letter-spacing: -0.025em;
+
+  white-space: nowrap;
+}
+
+.kagua-brand-divider {
+  width: 1px;
+  height: 34px;
+
+  margin-left: 8px;
+  margin-right: 3px;
+
+  background: #dfe5df;
+}
+
+.kagua-brand-tagline {
+  color: #344238;
+
+  font-size: 0.75rem;
+  font-weight: 500;
+
+  line-height: 1.35;
+
+  white-space: nowrap;
+}
+
+/* ───────── NAVIGATION ───────── */
+
+.kagua-navigation {
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+}
+
+/* Navigation buttons */
+
+.kagua-nav-item {
+  position: relative;
+
+  height: 100%;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  padding: 0 20px;
+
+  color: #17232b;
+
+  background: transparent;
+
+  border: none;
+
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.kagua-nav-item svg {
+  color: #435049;
+}
+
+.kagua-nav-item:hover {
+  color: #16733b;
+}
+
+.kagua-nav-item:hover svg {
+  color: #16733b;
+}
+
+/* Active Home */
+
+.kagua-nav-item--active {
+  color: #16733b;
+}
+
+.kagua-nav-item--active svg {
+  color: #16733b;
+}
+
+.kagua-nav-item--active::after {
+  content: "";
+
+  position: absolute;
+
+  left: 15px;
+  right: 15px;
+  bottom: 0;
+
+  height: 3px;
+
+  background: #168342;
+
+  border-radius: 3px 3px 0 0;
+}
+
+/* ───────── PROFILE ───────── */
+
+.kagua-profile {
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-left: 10px;
+  padding: 0 4px 0 10px;
+
+  color: #17232b;
+
+  background: transparent;
+
+  border: none;
+
+  font-family: inherit;
+
+  cursor: pointer;
+}
+
+.kagua-avatar {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  color: #ffffff;
+
+  background: #159447;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.kagua-profile-name {
+  color: #1e2924;
+
+  font-size: 0.88rem;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.kagua-profile svg {
+  color: #647069;
+}
+
+/* ═══════════════════════════════════════════════
+   WELCOME HERO
+   ═══════════════════════════════════════════════ */
+
+.kagua-welcome {
+  position: relative;
+
+  min-height: 300px;
+
+  width: 100%;
+
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+
+  box-sizing: border-box;
+
+  background: linear-gradient(
+    90deg,
+    #f8fbf7 0%,
+    #f8fbf7 34%,
+    rgba(248, 251, 247, 0.96) 47%,
+    rgba(248, 251, 247, 0.6) 66%,
+    rgba(248, 251, 247, 0.1) 100%
+  );
+
+  border-bottom: 1px solid #e7eee8;
+}
+
+/* ───────── HERO CONTENT ───────── */
+
+.kagua-welcome-content {
+  position: relative;
+
+  z-index: 10;
+
+  width: 52%;
+
+  padding-left: 68px;
+
   box-sizing: border-box;
 }
 
-/* ── Page header — spans full width above both columns, centered ── */
-.home-page-header {
-  text-align: center;
-  margin-bottom: 12px;
-}
-
-.home-title {
-  font-size: clamp(1.5rem, 4vw, 1.9rem);
-  font-weight: 700;
-  color: var(--primary);
-  margin: 0 0 6px;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-}
-
-.home-county {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
+.kagua-welcome-content h1 {
   margin: 0;
+
+  color: #172535;
+
+  font-size: clamp(2.2rem, 4vw, 3.15rem);
+
+  font-weight: 650;
+
+  line-height: 1.05;
+
+  letter-spacing: -0.045em;
 }
 
-/* ── Grid ── */
-.home-grid {
+.kagua-welcome-content h1 strong {
+  display: block;
+
+  margin-top: 5px;
+
+  color: #176b37;
+
+  font-size: 1.12em;
+
+  font-weight: 750;
+}
+
+.kagua-location {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  align-items: center;
+
+  gap: 9px;
+
+  margin: 18px 0 0;
+
+  color: #3d4b55;
+
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.kagua-location svg {
+  color: #52636b;
+}
+
+/* ═══════════════════════════════════════════════
+   MAIZE IMAGE
+   ═══════════════════════════════════════════════ */
+
+.kagua-welcome-image {
+  position: absolute;
+
+  top: 0;
+  right: 0;
+
+  width: 64%;
+  height: 100%;
+
+  overflow: hidden;
+
+  z-index: 1;
+
+  pointer-events: none;
+}
+
+.kagua-welcome-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  object-position: center;
+
+  opacity: 0.88;
+}
+
+/*
+   Fade the image into the hero background.
+   The image itself remains visible on the right
+   while becoming almost invisible toward the left.
+*/
+
+.kagua-image-fade {
+  position: absolute;
+
+  inset: 0;
+
+  background: linear-gradient(
+    90deg,
+    #f8fbf7 0%,
+    rgba(248, 251, 247, 0.97) 7%,
+    rgba(248, 251, 247, 0.85) 20%,
+    rgba(248, 251, 247, 0.52) 38%,
+    rgba(248, 251, 247, 0.16) 57%,
+    rgba(248, 251, 247, 0) 76%
+  );
+
+  z-index: 2;
+}
+
+/* ═══════════════════════════════════════════════
+   REMOVE OLD CSS LANDSCAPE
+   ═══════════════════════════════════════════════ */
+
+/*
+   The old CSS-created farm landscape is no longer
+   needed because the real maize image is being used.
+*/
+
+.home-hero-landscape,
+.home-sun,
+.home-hill,
+.home-hill-one,
+.home-hill-two,
+.home-field,
+.field-one,
+.field-two,
+.field-three,
+.home-farm-house,
+.home-house-roof,
+.home-house-body,
+.home-house-door,
+.home-house-window,
+.home-tree,
+.tree-one,
+.tree-two,
+.tree-three {
+  display: none;
+}
+
+/* ═══════════════════════════════════════════════
+   MAIN CONTENT
+   ═══════════════════════════════════════════════ */
+
+.home-grid {
+  width: calc(100% - 128px);
+
+  max-width: 1400px;
+
+  margin: 28px auto 0;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(330px, 0.82fr)
+    minmax(0, 1.35fr);
+
+  gap: 26px;
+
+  align-items: start;
 }
 
 .home-left {
   display: flex;
+
   flex-direction: column;
-  gap: 16px;
+
+  gap: 20px;
 }
 
 .home-right {
-  display: flex;
-  flex-direction: column;
-}
-
-/* ── Flat panel system ── */
-.home-panel {
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  overflow: hidden;
-  background: var(--card-bg);
-}
-
-.home-panel-header {
-  padding: 10px 16px;
-  background: var(--bg-color);
-  border-bottom: 1px solid var(--border-color);
-}
-
-.home-panel-header--with-count {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.home-panel-title {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--primary);
-  margin: 0;
-  letter-spacing: 0.01em;
-}
-
-.home-panel-count {
-  font-size: 0.82rem;
-  color: var(--text-secondary);
-  font-weight: 500;
-}
-
-.home-panel-body {
-  padding: 16px;
-}
-
-.home-panel-text {
-  font-size: 0.92rem;
-  color: var(--text-secondary);
-  line-height: 1.55;
-  margin: 0 0 12px;
-}
-
-/* ── Eyebrow label — used when two sections share one card
-   (e.g. "Continuing" and "Start a new conversation" in the merged
-   panel), instead of giving each its own separate bordered box. ── */
-.home-panel-eyebrow {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-secondary);
-  margin: 0 0 6px;
-}
-
-/* ── Merged-panel sections ──
-   Stacked with a horizontal divider on narrow screens; side-by-side
-   with a vertical divider once there's room, so "Continuing" and
-   "Start a new conversation" read as two peer options rather than
-   one strictly following the other. The follow-up section (when
-   present) always gets its own full-width row below them — see
-   .home-panel-section--followup — rather than squeezing into a third
-   equal column, since it has much more content (a question, several
-   buttons, and a skip link) than the other two. */
-.home-panel-sections {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.home-panel-section {
   min-width: 0;
 }
 
-.home-panel-section:not(:first-child) {
-  padding-top: 16px;
-  border-top: 1px solid var(--border-color);
-}
+/* ═══════════════════════════════════════════════
+   START CONVERSATION CARD
+   ═══════════════════════════════════════════════ */
 
-@media (min-width: 480px) {
-  .home-panel-sections {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 24px;
-  }
-
-  .home-panel-section {
-    flex: 1;
-  }
-
-  .home-panel-section:not(:first-child) {
-    padding-top: 0;
-    border-top: none;
-    padding-left: 24px;
-    border-left: 1px solid var(--border-color);
-  }
-
-  /* Follow-up section breaks onto its own full-width row instead of
-     sharing a third of the row with Continuing / Start a new
-     conversation — it needs the room. */
-  .home-panel-section--followup {
-    flex: 1 1 100%;
-    padding-left: 0;
-    border-left: none;
-    padding-top: 16px;
-    border-top: 1px solid var(--border-color);
-  }
-}
-
-.home-panel--muted .home-panel-body {
-  padding-top: 14px;
-}
-
-.home-panel--muted .home-panel-text {
-  margin: 0;
-}
-
-.home-followup-question {
-  font-size: 0.88rem;
-  color: var(--text-primary);
-  margin: 0 0 8px;
-}
-
-.home-followup-row {
+.home-action-card {
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 12px;
+
+  gap: 20px;
+
+  align-items: flex-start;
+
+  padding: 27px;
+
+  border: 1px solid #dce9db;
+
+  border-radius: 16px;
+
+  background: linear-gradient(135deg, #f5faf3, #fbfdfb);
+
+  box-shadow: 0 5px 18px rgba(35, 75, 43, 0.045);
 }
 
-.home-followup-btn {
-  background: var(--card-bg);
-  border: 1.5px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  padding: 6px 14px;
-  font-family: inherit;
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--primary);
-  cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
-  min-height: 34px;
-}
+.home-action-icon {
+  flex: 0 0 54px;
 
-.home-followup-btn:hover {
-  background: #F1F5F9;
-  border-color: var(--secondary);
-}
+  width: 54px;
+  height: 54px;
 
-.home-followup-skip {
-  background: none;
-  border: none;
-  font-family: inherit;
-  font-size: 0.82rem;
-  color: var(--text-secondary);
-  cursor: pointer;
-  padding: 6px 0;
-  align-self: center;
-}
+  display: flex;
 
-.home-followup-skip:hover {
-  color: var(--text-primary);
-}
-
-/* ── Panel action link ── */
-.home-panel-link {
-  display: inline-flex;
   align-items: center;
-  gap: 6px;
-  background: none;
-  border: none;
-  color: var(--secondary);
-  font-family: inherit;
-  font-size: 0.92rem;
+  justify-content: center;
+
+  color: #208143;
+
+  background: #e2f1df;
+
+  border-radius: 15px;
+}
+
+.home-action-content {
+  min-width: 0;
+}
+
+.home-action-content h2,
+.home-info-card h2 {
+  margin: 1px 0 7px;
+
+  color: #172535;
+
+  font-size: 1.1rem;
+
   font-weight: 700;
-  padding: 0;
+
+  line-height: 1.3;
+}
+
+.home-action-content p {
+  margin: 0 0 17px;
+
+  max-width: 330px;
+
+  color: #596872;
+
+  font-size: 0.91rem;
+
+  line-height: 1.5;
+}
+
+.home-primary-button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  min-height: 42px;
+
+  padding: 9px 20px;
+
+  color: white;
+
+  background: #248346;
+
+  border: none;
+
+  border-radius: 9px;
+
+  font-family: inherit;
+
+  font-size: 0.9rem;
+
+  font-weight: 700;
+
   cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
+
+  box-shadow: 0 4px 10px rgba(36, 131, 70, 0.16);
+
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
 }
 
-.home-panel-link:hover {
-  color: var(--primary);
+.home-primary-button:hover {
+  background: #1d713b;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 6px 14px rgba(36, 131, 70, 0.22);
 }
 
-/* ── Current conversation content ── */
+/* ═══════════════════════════════════════════════
+   CURRENT CONVERSATION
+   ═══════════════════════════════════════════════ */
+
+.home-current-card {
+  padding: 20px 22px;
+
+  border: 1px solid #dfe8e0;
+
+  border-radius: 14px;
+
+  background: white;
+}
+
+.home-current-card-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 13px;
+
+  color: #65736c;
+
+  font-size: 0.76rem;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.05em;
+}
+
+.home-current-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #2d914b;
+}
+
 .home-current-crop {
-  font-size: 1rem;
-  color: var(--primary);
-  text-transform: capitalize;
-  margin: 0 0 3px;
-  line-height: 1.35;
+  margin: 0 0 4px;
+
+  color: #23312a;
+
+  font-size: 0.96rem;
+
+  line-height: 1.45;
 }
 
 .home-current-crop-name {
@@ -255,183 +614,369 @@ body,
 }
 
 .home-current-meta {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  margin: 0 0 12px;
+  margin: 0 0 14px;
+
+  color: #75817b;
+
+  font-size: 0.82rem;
 }
 
-/* ── Empty states ── */
-.home-empty-note {
-  color: var(--text-primary);
-  font-size: 0.95rem;
-  font-weight: 500;
-  margin: 0 0 6px;
-  line-height: 1.5;
+.home-secondary-button {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 0;
+
+  color: #247a43;
+
+  background: none;
+
+  border: none;
+
+  font-family: inherit;
+
+  font-size: 0.88rem;
+
+  font-weight: 700;
+
+  cursor: pointer;
 }
 
-.home-empty-hint {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
+/* ═══════════════════════════════════════════════
+   REMEMBER
+   ═══════════════════════════════════════════════ */
+
+.home-info-card {
+  display: flex;
+
+  gap: 17px;
+
+  align-items: flex-start;
+
+  padding: 23px 25px;
+
+  border: 1px solid #eee5c9;
+
+  border-radius: 15px;
+
+  background: #fffdf5;
+}
+
+.home-info-icon {
+  flex: 0 0 48px;
+
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #c69518;
+
+  background: #fff4ce;
+
+  border-radius: 14px;
+}
+
+.home-info-card p {
+  max-width: 390px;
+
   margin: 0;
+
+  color: #6a6759;
+
+  font-size: 0.86rem;
+
   line-height: 1.5;
 }
 
-/* ── "View all" link at top of collapsed preview ── */
-.home-toggle-link--top {
-  margin-bottom: 12px;
-  padding-top: 0;
+/* ═══════════════════════════════════════════════
+   FOLLOW UP
+   ═══════════════════════════════════════════════ */
+
+.home-followup-card {
+  padding: 21px 23px;
+
+  border: 1px solid #dfe8e0;
+
+  border-radius: 14px;
+
+  background: white;
 }
 
-/* ── Preview grid: 6 items, 3 columns × 2 rows on desktop ── */
+.home-followup-title {
+  margin-bottom: 9px;
+
+  color: #26352c;
+
+  font-size: 0.95rem;
+
+  font-weight: 700;
+}
+
+.home-followup-question {
+  margin: 0 0 10px;
+
+  color: #657169;
+
+  font-size: 0.86rem;
+}
+
+.home-followup-row {
+  display: flex;
+
+  gap: 8px;
+
+  flex-wrap: wrap;
+
+  margin-bottom: 8px;
+}
+
+.home-followup-btn {
+  padding: 7px 13px;
+
+  color: #277843;
+
+  background: white;
+
+  border: 1px solid #cfded1;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+
+  font-size: 0.82rem;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.home-followup-btn:hover {
+  background: #f3f9f2;
+
+  border-color: #8eb79a;
+}
+
+.home-followup-skip {
+  padding: 4px 0;
+
+  color: #77817c;
+
+  background: none;
+
+  border: none;
+
+  font-family: inherit;
+
+  font-size: 0.78rem;
+
+  cursor: pointer;
+}
+
+/* ═══════════════════════════════════════════════
+   PREVIOUS SUMMARIES
+   ═══════════════════════════════════════════════ */
+
+.home-summary-card {
+  min-height: 405px;
+
+  border: 1px solid #dce5de;
+
+  border-radius: 17px;
+
+  background: white;
+
+  box-shadow: 0 5px 20px rgba(33, 63, 42, 0.04);
+
+  overflow: hidden;
+}
+
+.home-summary-header {
+  padding: 22px 25px;
+
+  border-bottom: 1px solid #edf1ed;
+}
+
+.home-summary-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+}
+
+.home-summary-icon {
+  width: 43px;
+  height: 43px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #248346;
+
+  background: #e8f4e6;
+
+  border-radius: 13px;
+}
+
+.home-summary-title h2 {
+  margin: 0;
+
+  color: #182634;
+
+  font-size: 1.08rem;
+
+  font-weight: 700;
+}
+
+.home-summary-count {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #7b8780;
+
+  font-size: 0.76rem;
+}
+
+.home-summary-body {
+  min-height: 330px;
+
+  padding: 24px;
+}
+
+/* ═══════════════════════════════════════════════
+   EMPTY STATE
+   ═══════════════════════════════════════════════ */
+
+.home-empty-state {
+  min-height: 285px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+}
+
+.home-empty-illustration {
+  width: 76px;
+  height: 76px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 18px;
+
+  color: #2b8447;
+
+  background: #edf7eb;
+
+  border-radius: 50%;
+}
+
+.home-empty-state h3 {
+  margin: 0 0 7px;
+
+  color: #202d38;
+
+  font-size: 1.02rem;
+
+  font-weight: 700;
+}
+
+.home-empty-state p {
+  max-width: 320px;
+
+  margin: 0;
+
+  color: #7a8580;
+
+  font-size: 0.88rem;
+
+  line-height: 1.5;
+}
+
+.home-empty-note {
+  margin: 0;
+
+  color: #4f5d56;
+
+  font-size: 0.9rem;
+}
+
+/* ═══════════════════════════════════════════════
+   SUMMARY GRID
+   ═══════════════════════════════════════════════ */
+
 .home-preview-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 4px;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 8px;
 }
 
 .home-preview-tile {
   display: flex;
+
   flex-direction: column;
-  gap: 4px;
-  background: none;
-  border: none;
-  border-radius: 6px;
-  padding: 12px;
-  cursor: pointer;
+
+  gap: 6px;
+
+  min-width: 0;
+
+  padding: 14px;
+
   text-align: left;
+
+  background: #fbfcfb;
+
+  border: 1px solid #edf1ed;
+
+  border-radius: 10px;
+
   font-family: inherit;
-  transition: background-color 0.15s ease;
-  -webkit-tap-highlight-color: transparent;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    transform 0.15s ease;
 }
 
 .home-preview-tile:hover {
-  background-color: var(--bg-color);
+  background: #f5faf4;
+
+  border-color: #d5e5d6;
+
+  transform: translateY(-1px);
 }
 
-/* ── Filters: search + plain text links ── */
-.home-filters {
-  padding-bottom: 14px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid var(--border-color);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.home-search {
-  position: relative;
-  display: flex;
-  align-items: center;
-  max-width: 340px;
-}
-
-.home-search-icon {
-  position: absolute;
-  left: 0;
-  color: var(--text-secondary);
-  pointer-events: none;
-}
-
-.home-search-input {
-  width: 100%;
-  padding: 8px 0 8px 22px;
-  font-size: 0.92rem;
-  font-family: inherit;
-  color: var(--text-primary);
-  background: transparent;
-  border: none;
-  border-bottom: 1.5px solid var(--border-color);
-  border-radius: 0;
-  outline: none;
-  box-shadow: none;
-  -webkit-appearance: none;
-  appearance: none;
-  box-sizing: border-box;
-  transition: border-color 0.15s ease;
-}
-
-.home-search-input:focus {
-  border-color: var(--secondary);
-  outline: none;
-  box-shadow: none;
-}
-
-.home-filter-links {
-  font-size: 0.88rem;
-}
-
-.home-filter-sep {
-  color: var(--border-color);
-  margin: 0 8px;
-}
-
-.home-filter-link {
-  background: none;
-  border: none;
-  color: var(--text-secondary);
-  font-family: inherit;
-  font-size: 0.88rem;
-  font-weight: 600;
-  padding: 0;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.home-filter-link:hover {
-  color: var(--primary);
-}
-
-.home-filter-link--active {
-  color: var(--secondary);
-}
-
-/* ── Scrollable list container ──
-   Caps the expanded list's height so the panel doesn't grow taller
-   than the left column — the list scrolls internally instead of
-   pushing the whole page down and leaving empty space beside a
-   short left column. */
-.home-list-scroll {
-  max-height: 420px;
-  overflow-y: auto;
-}
-
-.home-list {
-  display: flex;
-  flex-direction: column;
-}
-
-.home-row {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 3px;
-  width: 100%;
-  background: none;
-  border: none;
-  border-bottom: 1px solid var(--border-color);
-  padding: 12px 0;
-  cursor: pointer;
-  text-align: left;
-  font-family: inherit;
-  transition: padding-left 0.15s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.home-row:hover {
-  padding-left: 6px;
-}
-
-.home-row:first-child {
-  padding-top: 0;
-}
-
-.home-row:last-child {
-  border-bottom: none;
-}
 .home-row-crop {
-  font-size: 0.96rem;
-  color: var(--text-primary);
-  text-transform: capitalize;
+  color: #25342b;
+
+  font-size: 0.88rem;
+
   line-height: 1.4;
 }
 
@@ -444,8 +989,9 @@ body,
 }
 
 .home-row-meta {
-  font-size: 0.83rem;
-  color: var(--text-secondary);
+  color: #89928d;
+
+  font-size: 0.75rem;
 }
 
 .home-row-status {
@@ -453,125 +999,367 @@ body,
 }
 
 .home-row-status--completed {
-  color: #047857;
+  color: #238046;
 }
 
 .home-row-status--progress {
-  color: #92400E;
+  color: #a26a13;
 }
 
-/* ── Toggle link (View all / Show less) ── */
+/* ═══════════════════════════════════════════════
+   VIEW ALL
+   ═══════════════════════════════════════════════ */
+
 .home-toggle-link {
   display: inline-block;
+
+  padding: 13px 0 0;
+
+  color: #247a43;
+
   background: none;
+
   border: none;
-  color: var(--secondary);
+
   font-family: inherit;
-  font-size: 0.9rem;
+
+  font-size: 0.85rem;
+
   font-weight: 700;
-  padding: 14px 0 0;
+
   cursor: pointer;
-  text-align: left;
-  -webkit-tap-highlight-color: transparent;
 }
 
 .home-toggle-link:hover {
-  color: var(--primary);
+  color: #185d31;
 }
 
-/* ── Pagination ── */
+.home-toggle-link--top {
+  padding-top: 0;
+
+  margin-bottom: 14px;
+}
+
+/* ═══════════════════════════════════════════════
+   FILTERS
+   ═══════════════════════════════════════════════ */
+
+.home-filters {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding-bottom: 15px;
+
+  margin-bottom: 14px;
+
+  border-bottom: 1px solid #edf1ed;
+}
+
+.home-search {
+  position: relative;
+
+  width: 100%;
+
+  max-width: 330px;
+}
+
+.home-search-icon {
+  position: absolute;
+
+  left: 0;
+  top: 50%;
+
+  color: #7a8580;
+
+  transform: translateY(-50%);
+
+  pointer-events: none;
+}
+
+.home-search-input {
+  width: 100%;
+
+  padding: 8px 0 8px 24px;
+
+  color: #27352d;
+
+  background: transparent;
+
+  border: none;
+
+  border-bottom: 1px solid #dce4de;
+
+  outline: none;
+
+  font-family: inherit;
+
+  font-size: 0.86rem;
+
+  box-sizing: border-box;
+}
+
+.home-search-input:focus {
+  border-color: #3b8b55;
+}
+
+.home-filter-links {
+  white-space: nowrap;
+
+  color: #7b8780;
+
+  font-size: 0.82rem;
+}
+
+.home-filter-sep {
+  margin: 0 7px;
+
+  color: #d4dcd6;
+}
+
+.home-filter-link {
+  padding: 0;
+
+  color: #7b8780;
+
+  background: none;
+
+  border: none;
+
+  font-family: inherit;
+
+  font-size: 0.82rem;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.home-filter-link--active,
+.home-filter-link:hover {
+  color: #247a43;
+}
+
+/* ═══════════════════════════════════════════════
+   EXPANDED LIST
+   ═══════════════════════════════════════════════ */
+
+.home-list-scroll {
+  max-height: 420px;
+
+  overflow-y: auto;
+}
+
 .home-pagination {
   display: flex;
+
   align-items: center;
-  gap: 16px;
-  padding-top: 14px;
+
+  gap: 15px;
+
+  padding-top: 15px;
 }
 
 .home-page-link {
-  background: none;
-  border: none;
-  color: var(--secondary);
-  font-family: inherit;
-  font-size: 0.86rem;
-  font-weight: 600;
   padding: 0;
+
+  color: #247a43;
+
+  background: none;
+
+  border: none;
+
+  font-family: inherit;
+
+  font-size: 0.82rem;
+
+  font-weight: 600;
+
   cursor: pointer;
 }
 
 .home-page-link:disabled {
-  color: var(--text-secondary);
-  opacity: 0.4;
+  color: #aab2ad;
+
   cursor: not-allowed;
 }
 
-.home-page-link:hover:not(:disabled) {
-  color: var(--primary);
-}
-
 .home-page-info {
-  font-size: 0.84rem;
-  color: var(--text-secondary);
+  color: #7b8780;
+
+  font-size: 0.8rem;
 }
 
-/* ══════════════════════════════════════════
+/* ═══════════════════════════════════════════════
    RESPONSIVE
-   ══════════════════════════════════════════ */
+   ═══════════════════════════════════════════════ */
 
-@media (min-width: 480px) {
-  .home-container {
-    padding: 10px var(--spacing-lg, 24px) 24px;
+@media (max-width: 1000px) {
+  .kagua-topbar {
+    padding: 0 30px;
+  }
+
+  .kagua-brand-tagline {
+    display: none;
+  }
+
+  .kagua-brand-divider {
+    display: none;
+  }
+
+  .home-grid {
+    width: calc(100% - 60px);
+
+    grid-template-columns: 1fr;
+  }
+
+  .kagua-welcome-content {
+    width: 55%;
+
+    padding-left: 40px;
+  }
+
+  .kagua-welcome-image {
+    width: 65%;
   }
 }
 
-@media (min-width: 1024px) {
-  .home-container {
-    max-width: 1600px;
-    padding: 4px clamp(14px, 3vw, 44px) 28px;
-    margin: 0 auto;
+@media (max-width: 700px) {
+  .kagua-topbar {
+    height: 76px;
+
+    padding: 0 20px;
   }
 
-  .home-title {
-    font-size: 2.1rem;
+  .kagua-brand-name {
+    font-size: 1.12rem;
   }
 
-  /* Left column widened (was minmax(320px, 480px)) so the merged
-     panel — especially the follow-up section's buttons — has more
-     breathing room and doesn't look squeezed against the right
-     column's summaries list. */
+  .kagua-brand-mark {
+    width: 30px;
+    height: 30px;
+  }
+
+  .kagua-nav-item {
+    padding: 0 10px;
+  }
+
+  .kagua-nav-item span {
+    display: none;
+  }
+
+  .kagua-profile {
+    margin-left: 3px;
+
+    padding-left: 5px;
+  }
+
+  .kagua-profile-name {
+    display: none;
+  }
+
+  .kagua-welcome {
+    min-height: 270px;
+  }
+
+  .kagua-welcome-content {
+    width: 75%;
+
+    padding-left: 28px;
+  }
+
+  .kagua-welcome-content h1 {
+    font-size: 2.15rem;
+  }
+
+  .kagua-welcome-image {
+    width: 80%;
+
+    opacity: 0.65;
+  }
+
   .home-grid {
-    display: grid;
-    grid-template-columns: minmax(360px, 480px) 1fr;
-    align-items: start;
-    column-gap: 60px;
+    width: calc(100% - 32px);
+
+    margin-top: 20px;
   }
 
-  .home-left {
-    padding-top: 4px;
-  }
-
-  .home-panel--tall {
-      max-height: 600px; 
-  }
-
-  /* 3 columns × 2 rows for the 6-item preview on wider screens */
   .home-preview-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .home-filters {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    grid-template-columns: 1fr;
   }
 }
 
-@media (min-width: 1440px) {
-  .home-container {
-    max-width: 1800px;
+@media (max-width: 450px) {
+  .kagua-topbar {
+    padding: 0 14px;
   }
 
-  .home-grid {
-    grid-template-columns: minmax(420px, 620px) 1fr;
-    column-gap: 60px;
+  .kagua-brand-name {
+    font-size: 1rem;
+  }
+
+  .kagua-navigation {
+    gap: 0;
+  }
+
+  .kagua-nav-item {
+    padding: 0 7px;
+  }
+
+  .kagua-nav-item--active::after {
+    left: 7px;
+    right: 7px;
+  }
+
+  .kagua-welcome {
+    min-height: 240px;
+  }
+
+  .kagua-welcome-content {
+    width: 100%;
+
+    padding: 30px 22px;
+  }
+
+  .kagua-welcome-content h1 {
+    font-size: 1.9rem;
+  }
+
+  .kagua-welcome-image {
+    width: 100%;
+
+    opacity: 0.35;
+  }
+
+  .home-action-card {
+    padding: 21px;
+  }
+
+  .home-action-icon {
+    flex-basis: 46px;
+
+    width: 46px;
+    height: 46px;
+  }
+
+  .home-info-card {
+    gap: 13px;
+
+    padding: 20px;
+  }
+
+  .home-info-icon {
+    flex-basis: 42px;
+
+    width: 42px;
+    height: 42px;
+  }
+
+  .home-summary-body {
+    padding: 18px;
   }
 }
