@@ -1,4 +1,4 @@
-const BASE_URL = "http://127.0.0.1:8002";
+const BASE_URL = "http://127.0.0.1:8001";
 
 export async function analyzeInput(rawInput, county, phone, name) {
   const response = await fetch(`${BASE_URL}/analyze`, {
@@ -48,7 +48,7 @@ export async function getSourceDetails(sourcesUsed) {
 export async function completeJourney(journeyId) {
   const response = await fetch(
     `${BASE_URL}/journey/${journeyId}/status?status=completed`,
-    { method: "PUT" }
+    { method: "PUT" },
   );
   if (!response.ok) throw new Error("Could not mark journey complete");
   return response.json();

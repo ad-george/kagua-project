@@ -23,9 +23,14 @@ function Login({
       return;
     }
 
+    if (!/^\d{4}$/.test(password)) {
+      setError("PIN must be exactly 4 digits.");
+      return;
+    }
+
     setLoading(true);
     setError("");
-    const result = await login({ phone });
+    const result = await login({ phone, password });
     setLoading(false);
 
     if (!result.success) {
@@ -33,14 +38,7 @@ function Login({
       return;
     }
 
-    // Marks this login as eligible to show the "How did your last summary
-    // help?" prompt the next time Home mounts. Home consumes (deletes) this
-    // flag on that first mount, so it only ever shows once per real login —
-    // not on every in-app return to Home (e.g. right after Screen5's
-    // "Save & Return Home"), and not based on tab/browser session lifetime,
-    // which matters once this becomes a PWA that can stay "open" indefinitely.
     localStorage.setItem(`kagua_followup_eligible_${result.user.phone}`, "1");
-
     onLoginSuccess(result.user);
   };
 
@@ -57,7 +55,9 @@ function Login({
       <div className="auth-page">
         <div className="auth-container">
           <h1 className="auth-title">Welcome back</h1>
-          <p className="auth-subtitle">Log in with your phone number and PIN.</p>
+          <p className="auth-subtitle">
+            Log in with your phone number and PIN.
+          </p>
 
           <div className="auth-field">
             <label htmlFor="login-phone">Phone number</label>
@@ -77,21 +77,31 @@ function Login({
               id="login-pin"
               className="auth-input"
               type="password"
-              placeholder="Enter your PIN"
+              inputMode="numeric"
+              maxLength={4}
+              placeholder="4-digit PIN"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) =>
+                setPassword(e.target.value.replace(/\D/g, "").slice(0, 4))
+              }
             />
           </div>
 
           {error && <p className="auth-error">{error}</p>}
 
-          <button className="auth-submit-btn" onClick={handleSubmit} disabled={loading}>
+          <button
+            className="auth-submit-btn"
+            onClick={handleSubmit}
+            disabled={loading}
+          >
             {loading ? "Logging in…" : "Log in"}
           </button>
 
           <p className="auth-switch-text">
             Don't have an account?{" "}
-            <span className="auth-switch-link" onClick={onSwitchToSignup}>Sign up</span>
+            <span className="auth-switch-link" onClick={onSwitchToSignup}>
+              Sign up
+            </span>
           </p>
         </div>
       </div>

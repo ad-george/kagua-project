@@ -1,11 +1,13 @@
 import os
 from datetime import datetime
 from typing import Any, Dict, List, Optional
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from dotenv import load_dotenv
+import bcrypt
+# from passlib.context import CryptContext
 
 # 1. Force load environmental keys directly into system memory before importing loaders
 load_dotenv()
@@ -44,6 +46,35 @@ app.add_middleware(
 
 # Register audio endpoints
 register_audio_endpoints(app)
+
+# ====================== AUTH SETUP ======================
+# pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+# ADD THIS INSTEAD:
+# import bcrypt
+
+# ====================== AUTH SETUP ======================
+def hash_pin(pin: str) -> str:
+    """Hashes a plain text PIN/Password safely."""
+    # Convert string to bytes, generate a fresh salt, and hash it
+    bytes_pin = pin.encode('utf-8')
+    salt = bcrypt.gensalt()
+    return bcrypt.hashpw(bytes_pin, salt).decode('utf-8')
+
+def verify_pin(plain_pin: str, hashed_pin: str) -> bool:
+    """Verifies a plain text PIN against a stored hash."""
+    return bcrypt.checkpw(plain_pin.encode('utf-8'), hashed_pin.encode('utf-8'))
+
+
+class SignupRequest(BaseModel):
+    name: Optional[str] = None
+    phone: str
+    county: str
+    pin: str
+
+class LoginRequest(BaseModel):
+    phone: str
+    pin: str
 
 
 # Define request models for analyze and compare endpoints
@@ -286,6 +317,64 @@ async def update_follow_up(journey_id: int, request: FollowUpRequest, db: Sessio
     journey.updated_at = datetime.utcnow()
     db.commit()
     return {"message": "Follow-up saved", "journey_id": journey_id}
+
+# ====================== AUTH ENDPOINTS ======================
+
+@app.post("/auth/signup")
+def auth_signup(payload: SignupRequest, db: Session = Depends(get_db)):
+    # 1. Validate PIN is exactly 4 digits
+    if not payload.pin or not payload.pin.isdigit() or len(payload.pin) != 4:
+        raise HTTPException(status_code=400, detail="PIN must be exactly 4 digits")
+
+    # 2. Check if phone already exists
+    existing = db.query(User).filter(User.phone_number == payload.phone).first()
+    if existing:
+        raise HTTPException(status_code=400, detail="An account with this phone already exists")
+
+    # 3. Create new user with hashed PIN
+    user = User(
+        phone_number=payload.phone,
+        name=payload.name,
+        county=payload.county,
+        preferred_language="en",
+        pin_hash = hash_pin(payload.pin)
+    )
+
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+
+    return {
+        "id": user.id,
+        "phone": user.phone_number,
+        "name": user.name,
+        "county": user.county
+    }
+
+
+@app.post("/auth/login")
+def auth_login(payload: LoginRequest, db: Session = Depends(get_db)):
+    # 1. Validate PIN format
+    if not payload.pin or not payload.pin.isdigit() or len(payload.pin) != 4:
+        raise HTTPException(status_code=400, detail="PIN must be exactly 4 digits")
+
+    # 2. Find user by phone
+    user = db.query(User).filter(User.phone_number == payload.phone).first()
+
+    if not user or not user.pin_hash:
+        raise HTTPException(status_code=401, detail="Invalid phone")
+
+    # 3. Verify the PIN
+    if not verify_pin(payload.pin, user.pin_hash):
+        raise HTTPException(status_code=400, detail="Invalid PIN")
+
+
+    return {
+        "id": user.id,
+        "phone": user.phone_number,
+        "name": user.name,
+        "county": user.county
+    }
 
 
 # Test endpoint to update the status of a journey

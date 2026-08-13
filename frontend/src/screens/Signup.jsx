@@ -25,9 +25,15 @@ function Signup({
       return;
     }
 
+    // Validate 4-digit PIN
+    if (!/^\d{4}$/.test(password)) {
+      setError("PIN must be exactly 4 digits.");
+      return;
+    }
+
     setLoading(true);
     setError("");
-    const result = await signup({ name, phone, county });
+    const result = await signup({ name, phone, county, password });
     setLoading(false);
 
     if (!result.success) {
@@ -37,7 +43,6 @@ function Signup({
 
     onSignupSuccess(result.user);
   };
-
   return (
     <div className="auth-shell">
       <Navbar
@@ -93,21 +98,31 @@ function Signup({
               id="signup-pin"
               className="auth-input"
               type="password"
-              placeholder="Choose a PIN"
+              inputMode="numeric"
+              maxLength={4}
+              placeholder="4-digit PIN"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) =>
+                setPassword(e.target.value.replace(/\D/g, "").slice(0, 4))
+              }
             />
           </div>
 
           {error && <p className="auth-error">{error}</p>}
 
-          <button className="auth-submit-btn" onClick={handleSubmit} disabled={loading}>
+          <button
+            className="auth-submit-btn"
+            onClick={handleSubmit}
+            disabled={loading}
+          >
             {loading ? "Creating account…" : "Create account"}
           </button>
 
           <p className="auth-switch-text">
             Already have an account?{" "}
-            <span className="auth-switch-link" onClick={onSwitchToLogin}>Log in</span>
+            <span className="auth-switch-link" onClick={onSwitchToLogin}>
+              Log in
+            </span>
           </p>
         </div>
       </div>

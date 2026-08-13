@@ -1,15 +1,22 @@
-const BASE_URL = "http://127.0.0.1:8002";
+const BASE_URL = "http://127.0.0.1:8001";
 const CURRENT_USER_KEY = "kagua_current_user";
 
-export async function signup({ name, phone, county }) {
+export async function signup({ name, phone, county, password }) {
   try {
-    const response = await fetch(
-      `${BASE_URL}/test-user?phone=${encodeURIComponent(phone)}&county=${encodeURIComponent(county)}&name=${encodeURIComponent(name)}`,
-      { method: "POST" }
-    );
+    const response = await fetch(`${BASE_URL}/auth/signup`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, phone, county, pin: password }),
+    });
+
     if (!response.ok) {
-      return { success: false, error: "Could not create account. Is the backend running?" };
+      const data = await response.json().catch(() => ({}));
+      return {
+        success: false,
+        error: data.detail || "Could not create account.",
+      };
     }
+
     const user = await response.json();
     localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
     return { success: true, user };
@@ -18,18 +25,22 @@ export async function signup({ name, phone, county }) {
   }
 }
 
-export async function login({ phone }) {
+export async function login({ phone, password }) {
   try {
-    // Looks up the existing account by phone. If it doesn't exist yet,
-    // this will create one — acceptable for MVP since there's no real
-    // password check on the backend either way.
-    const response = await fetch(
-      `${BASE_URL}/test-user?phone=${encodeURIComponent(phone)}&county=Kiambu`,
-      { method: "POST" }
-    );
+    const response = await fetch(`${BASE_URL}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ phone, pin: password }),
+    });
+
     if (!response.ok) {
-      return { success: false, error: "Could not log in. Is the backend running?" };
+      const data = await response.json().catch(() => ({}));
+      return {
+        success: false,
+        error: data.detail || "Invalid phone or PIN.",
+      };
     }
+
     const user = await response.json();
     localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
     return { success: true, user };
@@ -37,6 +48,8 @@ export async function login({ phone }) {
     return { success: false, error: "Could not reach the server." };
   }
 }
+
+// keep logout, getCurrentUser, fetchJourneys the same
 
 export function logout() {
   localStorage.removeItem(CURRENT_USER_KEY);
@@ -49,7 +62,9 @@ export function getCurrentUser() {
 
 export async function fetchJourneys(phone) {
   try {
-    const response = await fetch(`${BASE_URL}/user/${encodeURIComponent(phone)}/journeys`);
+    const response = await fetch(
+      `${BASE_URL}/user/${encodeURIComponent(phone)}/journeys`,
+    );
     if (!response.ok) return [];
     const data = await response.json();
     return data.journeys || [];

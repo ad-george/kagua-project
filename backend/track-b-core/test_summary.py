@@ -2,7 +2,7 @@
 Test script for the /summary endpoint.
 
 Run this while your backend server is already running locally
-(the one you've been testing via Swagger at http://127.0.0.1:8002).
+(the one you've been testing via Swagger at http://192.168.100.3:8000).
 
 Usage:
     pip install requests   (if you don't already have it)
@@ -14,7 +14,7 @@ Change BASE_URL below if your server runs on a different port.
 import requests
 import json
 
-BASE_URL = "http://127.0.0.1:8002/summary"
+BASE_URL = "http://192.168.100.3:8000/summary"
 
 # Phrases that should NEVER appear in summary_text, based on everything
 # we've discussed: no announcing absent sections, no prescriptive language,
