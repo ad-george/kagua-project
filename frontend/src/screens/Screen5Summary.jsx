@@ -3,21 +3,12 @@ import ShareOptions from "../components/ShareOptions";
 import UnderstandMoreModal from "../components/UnderstandMoreModal";
 import AudioPlayer from "../components/AudioPlayer";
 import { getExplanationLabel } from "../i18n/explanationLabels";
+import { resolveDisplayLanguage } from "../i18n/languageDirection";
 import {
   generateSummaryPDF,
   buildWhatsAppLink,
 } from "../services/exportSummary";
 import "./Screen5Summary.css";
-
-// "Trusted Sources" is now one grouped card containing the three related
-// actions, per the new Screen 5 target structure. "Share Summary" stays a
-// separate, standalone action outside that group. hasFindNearby rows still
-// toggle the inline placeholder panel rather than firing onClick directly.
-const TRUSTED_SOURCE_ROWS = [
-  { id: "sources", label: "Explore Trusted Sources" },
-  { id: "agrovet", label: "Discuss with an Agrovet", hasFindNearby: true },
-  { id: "extension", label: "Discuss with an Extension Officer", hasFindNearby: true },
-];
 
 // Local bilingual fallback for the on-screen short summary, used only if
 // generate_summary.py's short_summary field is missing (call failed, or an
@@ -58,7 +49,7 @@ const SMALL_SCALE_CAUTION = {
     "Kujaribu jambo lolote kwenye sehemu ndogo ya shamba lako kwanza — si shamba lote — hupunguza unachoweza kupoteza ikiwa si uamuzi sahihi.",
 };
 
-// ── Conditional price line — only renders if price_mentioned was actually
+// ── Conditional price line — only renders if mentioned_price was actually
 // extracted (see extract_context.py); never a placeholder, never invented.
 const PRICE_QUOTE_TEMPLATE = {
   english: (price) => `That option was quoted at ${price}.`,
@@ -84,7 +75,6 @@ function Screen5Summary({
   onFinish,
   isReviewMode = false,
 }) {
-  const [openFindNearbyId, setOpenFindNearbyId] = useState(null);
   const [showShareModal, setShowShareModal] = useState(false);
   const [showSourcesModal, setShowSourcesModal] = useState(false);
 
@@ -96,7 +86,7 @@ function Screen5Summary({
     );
   }
 
-  const language = extractedContext?.language;
+  const language = resolveDisplayLanguage(extractedContext?.language, extractedContext?.raw_input);
 
   // ── Carried forward from Screen 4 (Idea 12) ──
   // Recomputes the same deterministic question Screen 4 showed her, from
@@ -115,7 +105,12 @@ function Screen5Summary({
   const hasAnyReply = screen4Replies && Object.keys(screen4Replies).length > 0;
 
   // ── Conditional price line ──
-  const priceQuote = extractedContext?.price_mentioned || null;
+  // Field name matches extract_context.py's actual output key exactly
+  // (mentioned_price) — this previously read price_mentioned, a reversed
+  // name that doesn't exist anywhere in the backend response, so the
+  // price line was silently never rendering regardless of what the
+  // farmer actually said.
+  const priceQuote = extractedContext?.mentioned_price || null;
 
   const handleShareWhatsApp = () => {
     const link = buildWhatsAppLink(extractedContext, comparison, summary);
@@ -180,18 +175,6 @@ function Screen5Summary({
     }
   };
 
-  const openFindNearby = (id) => {
-    setOpenFindNearbyId(id);
-  };
-
-  const handleActionClick = (row) => {
-    if (row.hasFindNearby) {
-      openFindNearby(row.id);
-    } else if (row.id === "sources") {
-      setShowSourcesModal(true);
-    }
-  };
-
   // Prefer the backend-generated short_summary (see generate_summary.py) —
   // falls back to a safe generic sentence only if that call failed or this
   // is an older journey reviewed/resumed from before this field existed.
@@ -220,7 +203,7 @@ function Screen5Summary({
 You came to me about your ${crop} crop, and you noticed ${problem}. 
 I have gathered your field observations and the guidance you received, and I have organized them clearly for you. 
 ${isReviewMode ? "This is a summary of your past conversation." : "This summary is meant to help you feel prepared for the next step."} 
-You can share this summary with an agrovet or extension officer, find nearby support, or explore trusted agricultural sources. 
+You can share this summary or explore trusted agricultural sources. 
 If you are unsure about the next step, the summary also highlights what still remains unclear.`;
 
     return audioText;
@@ -238,7 +221,7 @@ If you are unsure about the next step, the summary also highlights what still re
               ? "This is a summary of your past conversation."
               : "This summary brings together the information from your conversation."}
           </p>
-          <AudioPlayer text={buildPageText()} language={extractedContext?.language} />
+          <AudioPlayer text={buildPageText()} language={language} />
         </div>
       </div>
 
@@ -321,34 +304,30 @@ If you are unsure about the next step, the summary also highlights what still re
             </div>
           )}
 
-          {/* Trusted Sources — groups Explore Trusted Sources, Discuss with
-              an Agrovet, and Discuss with an Extension Officer under one
-              card, per the new Screen 5 structure. This grouping is
-              intentional: all three are ways of reaching further,
-              human-verified guidance. */}
-          <div className="screen5-trusted-sources-card screen5-info-card">
-            <p className="screen5-info-card-label">Trusted Sources</p>
-            <div className="screen5-action-grid">
-              {TRUSTED_SOURCE_ROWS.map((row) => (
-                <button
-                  key={row.id}
-                  className="screen5-action-tile"
-                  onClick={() => handleActionClick(row)}
-                >
-                  {row.label}
-                </button>
-              ))}
-            </div>
+          {/* ── Explore Trusted Sources + Share Summary ──
+              "Discuss with an Agrovet" and "Discuss with an Extension
+              Officer" have been removed. That collapsed the old "Trusted
+              Sources" group from 3 actions down to 1, so wrapping it in
+              its own labeled card + multi-column grid no longer read as
+              intentional — it looked like a leftover group-of-one. Both
+              real actions now sit together as two aligned, equal-weight
+              buttons in one row instead. */}
+          <div className="screen5-actions-row">
+            <button
+              type="button"
+              className="screen5-action-tile"
+              onClick={() => setShowSourcesModal(true)}
+            >
+              Explore Trusted Sources
+            </button>
+            <button
+              type="button"
+              className="screen5-action-tile screen5-share-standalone"
+              onClick={() => setShowShareModal(true)}
+            >
+              Share Summary
+            </button>
           </div>
-
-          {/* Share Summary — standalone, outside the Trusted Sources
-              group, matching the new target structure. */}
-          <button
-            className="screen5-action-tile screen5-share-standalone"
-            onClick={() => setShowShareModal(true)}
-          >
-            Share Summary
-          </button>
         </div>
 
       </div>
@@ -362,36 +341,6 @@ If you are unsure about the next step, the summary also highlights what still re
           {isReviewMode ? "Back to Home" : "Save & Return Home"}
         </button>
       </div>
-
-      {/* Find nearby popup — same overlay/modal treatment as Share, so it
-          appears as a centered popup rather than expanding inline. */}
-      {openFindNearbyId && (
-        <div
-          className="screen5-modal-overlay"
-          onClick={() => setOpenFindNearbyId(null)}
-        >
-          <div
-            className="screen5-share-modal"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="screen5-share-modal-header">
-              <h3 className="screen5-share-modal-title">
-                {TRUSTED_SOURCE_ROWS.find((row) => row.id === openFindNearbyId)?.label}
-              </h3>
-              <button
-                className="screen5-modal-close"
-                onClick={() => setOpenFindNearbyId(null)}
-                aria-label="Close"
-              >
-                ×
-              </button>
-            </div>
-            <p className="screen5-findnearby-modal-text">
-              Nearby agrovets and extension officers will appear here.
-            </p>
-          </div>
-        </div>
-      )}
 
       {/* Share popup */}
       {showShareModal && (

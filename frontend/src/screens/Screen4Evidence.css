@@ -1,52 +1,88 @@
-/* ── Container ── */
+/* ═══════════════════════════════════════════════════════════════════════
+   Screen 4 — "Where This Came From"
+   Tighter spacing, numbered flow so the reading sequence is unmistakable.
+   CSS counters label each panel "01" / "02" without touching JSX.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── Page background ── */
 body,
 .screen4-container {
   background-color: var(--bg-color);
 }
 
+/* ── Container — named CSS grid with step counter ── */
 .screen4-container {
   width: 100%;
   margin: 0 auto;
-  padding: 2px var(--spacing-md) 10px;
-  font-family: inherit;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  padding: 0 var(--spacing-md) 14px;
+  font-family: var(--font-family);
+  counter-reset: panel-step;          /* drives the 01 / 02 labels */
+  overflow-x: hidden;                 /* safety net against any child overflow */
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "header"
+    "sources"
+    "question"
+    "cta";
+  gap: 0;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 860px) {
   .screen4-container {
-    max-width: 1180px;
-    padding: 4px clamp(10px, 2vw, 36px) 14px;
+    max-width: 1100px;
+    padding: 0 clamp(20px, 4vw, 48px) 16px;
+    grid-template-columns: 1fr 1.4fr;
+    grid-template-areas:
+      "header  header"
+      "sources question"
+      "cta     cta";
+    column-gap: 0;
+    align-items: start;
   }
 }
 
-/* ── Header ── */
+@media (min-width: 1200px) {
+  .screen4-container { max-width: 1240px; }
+}
+
+/* ── Grid area assignments ── */
+.screen4-header         { grid-area: header;   }
+.screen4-panel-sources  { grid-area: sources;  }
+.screen4-panel-question { grid-area: question; }
+.screen4-cta            { grid-area: cta;      }
+
+/* ═══════════════════════════════════════════════
+   HEADER — compact, centred, no background
+   ═══════════════════════════════════════════════ */
 .screen4-header {
   text-align: center;
+  padding: 10px 0 10px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 0;
 }
 
 .screen4-title {
-  font-size: 1.6rem;
+  font-size: clamp(1.4rem, 3.5vw, 2rem);
   font-weight: 700;
   color: var(--primary);
-  line-height: 1.25;
+  line-height: 1.2;
   margin: 0;
+  letter-spacing: -0.03em;
 }
 
 .screen4-based-on {
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
-  font-style: normal;
   margin: 0;
+  line-height: 1.5;
+  font-weight: 400;
 }
 
-/* Subtitle and Listen button sit inline as one line, centered under the
-   title, wrapping to two lines only if the row runs out of horizontal
-   space. */
 .screen4-subtitle-row {
   display: flex;
   align-items: center;
@@ -55,275 +91,98 @@ body,
   gap: 10px;
 }
 
-@media (min-width: 1024px) {
-  .screen4-title { font-size: 2.1rem; }
-}
-
-/* NOTE: the old .screen4-columns / .screen4-column two-column grid rules
-   that used to live here have been intentionally left in place below,
-   even though the new Screen 4 (badges + question, single column) no
-   longer uses them — they're unused now but harmless, kept rather than
-   deleted since removing CSS wasn't part of this request. Safe to prune
-   later if you want a cleanup pass. */
-
-.screen4-columns {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-.screen4-column {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-@media (min-width: 1024px) {
-  .screen4-columns {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: flex-start;
-    gap: 56px;
-  }
-
-  .screen4-column {
-    gap: 56px;
-  }
-
-  .screen4-column-left {
-    gap: 28px;
-  }
-
-  .screen4-columns--single {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 1023px) {
-  .screen4-column {
-    display: contents;
-  }
-
-  .screen4-panel-reported { order: 1; }
-  .screen4-panel-observed { order: 2; }
-  .screen4-panel-advice { order: 3; }
-  .screen4-panel-unclear { order: 4; }
-  .screen4-panel-reflection { order: 5; }
-}
-
-/* ── Panel ── */
+/* ═══════════════════════════════════════════════
+   PANELS — white surface, compact padding.
+   On desktop, a single vertical hairline between
+   the two panels signals they are one block.
+   ═══════════════════════════════════════════════ */
 .screen4-panel {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  padding: 24px;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.05);
+  padding: 14px 18px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
+  box-sizing: border-box;
 }
 
+@media (min-width: 860px) {
+  .screen4-panel-sources {
+    border-right: 1px solid var(--border-color);
+    padding-right: 28px;
+  }
+  .screen4-panel-question {
+    padding-left: 28px;
+  }
+}
+
+
+/* Section label: tiny step counter prepended via CSS + descriptive text.
+   "01  WHERE THIS CAME FROM"  /  "02  ONE THING WORTH ASKING"
+   This makes the reading order explicit without changing JSX. */
 .screen4-panel-title {
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--secondary);
-  margin: 0;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--border-color);
-}
-
-/* ── Reported problem (unused by the current Screen 4, kept for the same
-   reason as the columns rules above) ── */
-.screen4-reported-text {
-  font-size: 0.95rem;
-  color: var(--text-primary);
-  line-height: 1.6;
-  margin: 0;
-}
-
-/* ── Observed pills (unused by the current Screen 4) ── */
-.screen4-observed-pills {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  counter-increment: panel-step;
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.screen4-observed-pills li {
-  background-color: #EFF6FF;
-  color: var(--secondary);
-  font-size: 0.88rem;
-  font-weight: 600;
-  padding: 6px 14px;
-  border-radius: 999px;
-  line-height: 1.4;
-}
-
-/* ── Advice stack (unused by the current Screen 4) ── */
-.screen4-advice-differs-caption {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
-  margin: -8px 0 4px;
-  font-style: italic;
-}
-
-.screen4-advice-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.screen4-advice-row {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 16px 0;
+  gap: 10px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0;
+  padding-bottom: 12px;
   border-bottom: 1px solid var(--border-color);
 }
 
-.screen4-advice-row:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.screen4-advice-source {
-  font-size: 0.7rem;
+.screen4-panel-title::before {
+  content: "0" counter(panel-step);
+  font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--secondary);
-  margin: 0;
-}
-
-.screen4-advice-view {
-  font-size: 0.92rem;
-  color: var(--text-primary);
-  line-height: 1.55;
-  margin: 0;
-  flex-grow: 1;
-}
-
-/* ── Trusted sources compact list (unused by the current Screen 4) ── */
-.screen4-sources-note {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  line-height: 1.55;
-  margin: -4px 0 4px;
-}
-
-.screen4-sources-compact-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.screen4-source-compact-item {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 2px;
-  padding: 10px 14px;
-  background: var(--bg-color);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm, 10px);
-}
-
-.screen4-source-compact-name {
-  font-weight: 700;
-  font-size: 0.85rem;
+  letter-spacing: 0.05em;
   color: var(--primary);
-}
-
-.screen4-source-compact-topic {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-}
-
-/* ── What remains unclear (unused by the current Screen 4) ── */
-.screen4-unclear-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.screen4-unclear-list li {
-  font-size: 0.95rem;
-  color: var(--text-primary);
-  line-height: 1.6;
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-}
-
-.screen4-unclear-bullet {
-  color: #B08900;
-  font-weight: 700;
   flex-shrink: 0;
-  margin-top: 2px;
 }
 
-/* ── What this means right now (unused by the current Screen 4) ── */
-.screen4-reflection-text {
-  font-size: 0.95rem;
-  color: var(--text-primary);
-  line-height: 1.7;
-  margin: 0;
-}
-
-/* ══════════════════════════════════════════════════════════════════
-   NEW — Screen 4 rebuild: source badges, question, WhatsApp send,
-   reply capture. Everything below this line is new for this pass.
-   ══════════════════════════════════════════════════════════════════ */
-
-/* ── Where this came from: per-source blocks ── */
+/* ═══════════════════════════════════════════════
+   SOURCE LIST
+   ═══════════════════════════════════════════════ */
 .screen4-source-list {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 0;
 }
 
 .screen4-source-block {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  padding: 14px 0;
 }
 
+.screen4-source-block:first-child { padding-top: 4px; }
+
 .screen4-source-block:not(:last-child) {
-  padding-bottom: 18px;
   border-bottom: 1px solid var(--border-color);
 }
 
+/* Source name — readable, primary, not tiny caps */
 .screen4-source-name {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--secondary);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--primary);
   margin: 0;
+  letter-spacing: -0.01em;
+  transition: color 0.15s ease;
 }
 
-/* Clickable source-card header, used only when there are 2+ sources (see
-   hasMultiple in Screen4Evidence.jsx). The whole row is the tap target —
-   badges below it remain plain, non-interactive spans, since they're
-   facts about the source, not actions. Reset to look like a plain row,
-   not a default <button>. */
+/* Collapsible toggle — invisible, full row is tap target */
 .screen4-source-toggle {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   padding: 0;
-  margin: 0;
   border: none;
   background: none;
   font: inherit;
@@ -332,221 +191,376 @@ body,
 }
 
 .screen4-source-toggle:hover .screen4-source-name {
-  color: var(--primary);
+  color: var(--secondary);
 }
 
 .screen4-source-chevron {
-  color: var(--text-secondary);
+  color: var(--text-muted);
   transform: rotate(0deg);
-  transition: transform 0.15s ease;
+  transition: transform 0.18s ease;
   flex-shrink: 0;
-  margin-left: 10px;
+  margin-left: 8px;
 }
 
-/* Chevron points right by default (collapsed); rotated 90° to point down
-   once the card is expanded — standard disclosure-chevron convention. */
 .screen4-source-chevron--open {
   transform: rotate(90deg);
 }
 
-/* Badges: flat and bordered, matching the existing
-   .screen4-source-compact-item convention elsewhere in this file —
-   deliberately NOT a filled pastel pill, to stay consistent with the
-   flat/bordered card style used throughout the rest of the app. */
+/* ═══════════════════════════════════════════════
+   BADGES — flat inline tags
+   ═══════════════════════════════════════════════ */
 .screen4-badges-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
 }
 
 .screen4-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
+  gap: 5px;
+  padding: 4px 10px;
   background: var(--bg-color);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm, 10px);
-  font-size: 0.85rem;
-  color: var(--text-primary);
-  line-height: 1.3;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  line-height: 1.4;
 }
 
-/* lucide-react icons inherit color via currentColor, so this just needs
-   to align them nicely with the badge text — sizing itself is set via
-   the `size` prop passed to each icon component in the JSX. */
 .screen4-badge-icon {
-  color: var(--secondary);
+  color: var(--text-muted);
   flex-shrink: 0;
 }
 
-/* ── Prebunking box — only rendered when at least one source sells a
-   product, so it always reads as tied to a specific badge above it, not
-   a standalone warning. */
+/* ═══════════════════════════════════════════════
+   PREBUNK NOTE — quiet footnote, no box
+   ═══════════════════════════════════════════════ */
 .screen4-prebunk-box {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  padding: 14px 16px;
-  background: var(--bg-color);
-  border: 1px solid var(--border-color);
-  border-left: 3px solid var(--secondary);
-  border-radius: var(--radius-sm, 10px);
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
 }
 
 .screen4-prebunk-icon {
-  color: var(--secondary);
+  color: var(--text-muted);
   flex-shrink: 0;
   margin-top: 2px;
 }
 
 .screen4-prebunk-text {
-  font-size: 0.9rem;
-  color: var(--text-primary);
-  line-height: 1.5;
-  margin: 0;
-}
-
-/* ── One thing worth asking ── */
-.screen4-question-text {
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  line-height: 1.5;
-  margin: 0;
-  font-style: italic;
-}
-
-/* "Ready to send to [Source]:" label — sits between the question and the
-   WhatsApp button so the two read as one action: "here's who + what,
-   now send it." Deliberately quieter (smaller, secondary color) than
-   the question itself, since it's framing text, not the message content. */
-.screen4-ready-to-send-label {
   font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
   color: var(--text-secondary);
-  margin: -6px 0 0;
+  line-height: 1.55;
+  margin: 0;
+  font-weight: 400;
 }
 
+/* ═══════════════════════════════════════════════
+   QUESTION PANEL
+   The question itself is the most important
+   element — headline size and weight.
+   ═══════════════════════════════════════════════ */
+.screen4-question-text {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--primary);
+  line-height: 1.5;
+  margin: 0;
+  font-style: normal;
+  letter-spacing: -0.015em;
+}
+
+/* "Ready to send to [Source]:" — smallest functional label */
+.screen4-ready-to-send-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* WhatsApp send button — clean standalone link */
 .screen4-send-whatsapp-btn {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  gap: 6px;
   align-self: flex-start;
-  padding: 10px 20px;
-  border-radius: 6px;
-  border: 1px solid var(--border-color);
-  background: var(--primary);
-  color: #fff;
-  font-size: 0.9rem;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--secondary);
+  font-size: 0.88rem;
   font-weight: 600;
+  font-family: var(--font-family);
   text-decoration: none;
   cursor: pointer;
+  letter-spacing: 0.01em;
+  transition: color 0.15s ease;
 }
 
 .screen4-send-whatsapp-btn:hover {
-  opacity: 0.9;
+  color: var(--primary);
 }
 
-/* ── Reply capture (Idea 12) ── */
+/* ═══════════════════════════════════════════════
+   REPLY CAPTURE
+   ═══════════════════════════════════════════════ */
 .screen4-reply-section {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding-top: 6px;
+  gap: 14px;
+  padding-top: 14px;
   border-top: 1px solid var(--border-color);
+  margin-top: auto;
 }
 
 .screen4-reply-prompt {
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   color: var(--text-secondary);
   margin: 0;
+  font-weight: 400;
 }
 
+/* Multiple sources sit side by side to save vertical space; a single
+   source just gets the full width, no grid needed. */
+.screen4-reply-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.screen4-reply-cards:has(.screen4-reply-row + .screen4-reply-row) {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.screen4-reply-cards:has(.screen4-reply-row + .screen4-reply-row) .screen4-reply-row {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 480px) {
+  .screen4-reply-cards:has(.screen4-reply-row + .screen4-reply-row) {
+    flex-direction: column;
+  }
+}
+
+/* One card, top to bottom: label header bar → textarea → button, all
+   sharing a single border so it reads as one box, not stacked pieces. */
 .screen4-reply-row {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: #ffffff;
 }
 
 .screen4-reply-source-label {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--secondary);
+  color: var(--text-muted);
   margin: 0;
+  padding: 8px 12px;
+  background: var(--bg-color);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .screen4-reply-input-row {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  padding: 12px;
+  min-width: 0;
+}
+
+/* No label (single source) — input area still needs its own top padding
+   since there's no header bar above it. */
+.screen4-reply-row:not(:has(.screen4-reply-source-label)) .screen4-reply-input-row {
+  padding-top: 12px;
+}
+
+/* Collapsed state — a plain low-emphasis row, not a full input card.
+   Left-aligned so it reads as an action tied to the source above it. */
+.screen4-reply-log-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  border: none;
+  background: transparent;
+  color: var(--secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: var(--font-family);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.screen4-reply-row:not(:has(.screen4-reply-source-label)) .screen4-reply-log-btn {
+  padding-top: 12px;
+}
+
+.screen4-reply-log-btn:hover {
+  background: var(--bg-color);
 }
 
 .screen4-reply-textarea {
   width: 100%;
-  min-height: 64px;
-  padding: 10px 12px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm, 10px);
-  font-family: inherit;
-  font-size: 0.92rem;
+  min-width: 0;
+  min-height: 68px;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  box-shadow: none;
+  font-family: var(--font-family);
+  font-size: 0.9rem;
   color: var(--text-primary);
-  background: var(--card-bg);
+  background: transparent;
   resize: vertical;
+  margin-bottom: 0;
+}
+
+.screen4-reply-textarea:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.screen4-reply-row:focus-within {
+  border-color: var(--secondary);
+}
+
+.screen4-reply-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .screen4-reply-save-btn {
   align-self: flex-start;
-  padding: 8px 18px;
-  border-radius: 6px;
-  border: 1px solid var(--border-color);
-  background: var(--card-bg);
+  padding: 8px 20px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border-color);
+  background: #ffffff;
   color: var(--primary);
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   font-weight: 600;
+  font-family: var(--font-family);
   cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
 }
 
 .screen4-reply-save-btn:hover {
   background: var(--bg-color);
+  border-color: #CBD5E1;
+}
+
+/* Cancel is deliberately plain (no border/background) so it doesn't
+   compete visually with the primary Save action. */
+.screen4-reply-cancel-btn {
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  font-weight: 600;
+  font-family: var(--font-family);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.screen4-reply-cancel-btn:hover {
+  color: var(--primary);
 }
 
 .screen4-reply-saved-text {
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   color: var(--text-primary);
-  line-height: 1.5;
+  line-height: 1.6;
   margin: 0;
-  padding: 10px 12px;
-  background: var(--bg-color);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm, 10px);
+  padding: 12px;
 }
 
-/* ── CTA ── */
+/* ═══════════════════════════════════════════════
+   CTA — anchored below both panels
+   ═══════════════════════════════════════════════ */
 .screen4-cta {
   display: flex;
   justify-content: center;
-  padding-top: 8px;
+  padding: 10px 0 4px;
+  border-top: 1px solid var(--border-color);
 }
 
 .screen4-continue-btn {
   width: auto !important;
   min-width: 200px;
   height: 48px;
-  padding: 0 36px;
-  border-radius: 6px;
+  padding: 0 40px;
+  border-radius: var(--radius-md);
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  font-weight: 600;
+  font-size: 0.93rem;
+  letter-spacing: 0.01em;
 }
 
-/* ── Empty state ── */
+/* ═══════════════════════════════════════════════
+   EMPTY STATE
+   ═══════════════════════════════════════════════ */
 .screen4-empty-note {
   font-size: 0.88rem;
   color: var(--text-secondary);
-  font-style: normal;
   margin: 0;
 }
+
+/* ═══════════════════════════════════════════════
+   LEGACY UNUSED RULES — kept, not deleted
+   ═══════════════════════════════════════════════ */
+.screen4-columns          { display: flex; flex-direction: column; gap: 32px; }
+.screen4-column           { display: flex; flex-direction: column; gap: 32px; }
+
+@media (min-width: 1024px) {
+  .screen4-columns          { display: grid; grid-template-columns: 1fr 1fr; align-items: flex-start; gap: 56px; }
+  .screen4-column           { gap: 56px; }
+  .screen4-column-left      { gap: 28px; }
+  .screen4-columns--single  { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 1023px) {
+  .screen4-column             { display: contents; }
+  .screen4-panel-reported     { order: 1; }
+  .screen4-panel-observed     { order: 2; }
+  .screen4-panel-advice       { order: 3; }
+  .screen4-panel-unclear      { order: 4; }
+  .screen4-panel-reflection   { order: 5; }
+}
+
+.screen4-reported-text       { font-size: 0.95rem; color: var(--text-primary); line-height: 1.6; margin: 0; }
+.screen4-observed-pills      { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.screen4-observed-pills li   { background-color: #EFF6FF; color: var(--secondary); font-size: 0.88rem; font-weight: 600; padding: 6px 14px; border-radius: var(--radius-full); line-height: 1.4; }
+.screen4-advice-differs-caption { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin: -8px 0 4px; font-style: italic; }
+.screen4-advice-stack        { display: flex; flex-direction: column; gap: 16px; }
+.screen4-advice-row          { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--border-color); }
+.screen4-advice-row:last-child { border-bottom: none; padding-bottom: 0; }
+.screen4-advice-source       { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--secondary); margin: 0; }
+.screen4-advice-view         { font-size: 0.92rem; color: var(--text-primary); line-height: 1.55; margin: 0; flex-grow: 1; }
+.screen4-sources-note        { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.55; margin: -4px 0 4px; }
+.screen4-sources-compact-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.screen4-source-compact-item { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px; padding: 10px 14px; background: var(--bg-color); border: 1px solid var(--border-color); border-radius: var(--radius-sm); }
+.screen4-source-compact-name { font-weight: 700; font-size: 0.85rem; color: var(--primary); }
+.screen4-source-compact-topic { font-size: 0.85rem; color: var(--text-secondary); }
+.screen4-unclear-list        { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.screen4-unclear-list li     { font-size: 0.95rem; color: var(--text-primary); line-height: 1.6; display: flex; align-items: flex-start; gap: 10px; }
+.screen4-unclear-bullet      { color: #B08900; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+.screen4-reflection-text     { font-size: 0.95rem; color: var(--text-primary); line-height: 1.7; margin: 0; }

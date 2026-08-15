@@ -28,6 +28,7 @@ function Screen1Input({
   const [hasUsedVoice, setHasUsedVoice] = useState(false);
 
   const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [voiceExpanded, setVoiceExpanded] = useState(false);
 
   const photoInputRef = useRef(null);
 
@@ -61,6 +62,7 @@ function Screen1Input({
     setShowTextInput(true);
     setShowVoiceRecorder(false);
     setHasUsedVoice(true);
+    setVoiceExpanded(false);
 
     setTranscriptionNotice(
       "Your recording has been converted into text. Review and edit it before continuing.",
@@ -86,6 +88,7 @@ function Screen1Input({
     setShowVoiceRecorder(true);
     setTranscriptionNotice("");
     setNoticeVisible(false);
+    setVoiceExpanded(false);
   };
 
   /* ─────────────────────────────────────────
@@ -97,6 +100,7 @@ function Screen1Input({
     setShowTextInput(true);
     setTranscriptionNotice("");
     setNoticeVisible(false);
+    setVoiceExpanded(false);
   };
 
   /* ─────────────────────────────────────────
@@ -135,7 +139,7 @@ function Screen1Input({
       ═══════════════════════════════════════ */}
 
       <button type="button" className="screen1-back-button" onClick={onBack}>
-        <ArrowLeft size={17} strokeWidth={2} />
+        {/* <ArrowLeft size={17} strokeWidth={2} /> */}
         <span>Go back</span>
       </button>
 
@@ -165,7 +169,7 @@ function Screen1Input({
           <div
             className={`screen1-option-card ${
               showVoiceRecorder ? "screen1-option-card--active" : ""
-            }`}
+            } ${voiceExpanded ? "screen1-option-card--wide" : ""}`}
           >
             <div className="screen1-option-icon">
               <Mic size={30} strokeWidth={1.9} />
@@ -186,7 +190,10 @@ function Screen1Input({
               </button>
             ) : (
               <div className="screen1-recorder-wrapper">
-                <VoiceRecorder onTranscription={handleTranscription} />
+                <VoiceRecorder
+                  onTranscription={handleTranscription}
+                  onExpandedChange={setVoiceExpanded}
+                />
               </div>
             )}
           </div>
@@ -207,11 +214,6 @@ function Screen1Input({
             <h2>Type</h2>
 
             <p>Describe what you're seeing in your own words.</p>
-
-            <span className="screen1-option-button">
-              <Pencil size={17} />
-              Type
-            </span>
           </button>
 
           {/* ═════════════════════════════
@@ -255,11 +257,11 @@ function Screen1Input({
                 </p>
               </div>
 
-              <ArrowRight
+              {/* <ArrowRight
                 className="screen1-photo-arrow"
                 size={20}
                 strokeWidth={2}
-              />
+              /> */}
             </button>
           </div>
         </div>
@@ -271,11 +273,6 @@ function Screen1Input({
         <div className="screen1-text-mode">
           <div className="screen1-input-card">
             <div className="screen1-input-card-header">
-              <div className="screen1-input-card-title">
-                <Pencil size={18} />
-                <span>Describe what you're seeing</span>
-              </div>
-
               <button
                 type="button"
                 className="screen1-switch-option"
@@ -294,7 +291,11 @@ function Screen1Input({
                 role="status"
                 aria-live="polite"
               >
-                <span className="screen1-transcription-notice-icon">✓</span>
+                <Check
+                  size={14}
+                  strokeWidth={2.5}
+                  className="screen1-transcription-notice-icon"
+                />
 
                 <span>{transcriptionNotice}</span>
               </div>
@@ -316,7 +317,7 @@ function Screen1Input({
             disabled={!inputText.trim()}
           >
             Continue
-            <ArrowRight size={17} />
+            {/* <ArrowRight size={17} /> */}
           </button>
 
           {/* Back to input choices */}
@@ -329,7 +330,7 @@ function Screen1Input({
               setShowVoiceRecorder(false);
             }}
           >
-            ← Choose another way to describe the issue
+            Choose another way to describe the issue
           </button>
         </div>
       )}

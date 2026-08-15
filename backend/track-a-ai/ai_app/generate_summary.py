@@ -177,6 +177,28 @@ STRICT RULES FOR THIS TASK:
   exists — pick the ones most useful to raise with an agrovet or extension
   officer. Two focused questions are more useful to a farmer than three
   weaker ones, so don't stretch to fill a third slot.
+  WHEN MORE THAN 2 UNCERTAINTIES EXIST, "MOST USEFUL" MEANS THIS SPECIFIC
+  TEST — NOT ORDER OF APPEARANCE: prioritize uncertainty about the
+  harvestable or sellable part of the crop (tubers, cobs/kernels, the
+  head of a cabbage, fruit, grain — whatever she'd actually dig up, pick,
+  or sell) over uncertainty that is only about foliage (leaf spots, leaf
+  colour, leaf shape) or general plant appearance. Damage to the
+  harvestable part threatens her actual yield and income more directly,
+  so clarifying its cause is more useful to raise with a professional
+  first. This is a judgment about which question is more USEFUL to ask —
+  never a diagnostic judgment about what's causing either symptom, and
+  never a claim that one symptom is medically/agronomically worse. If the
+  uncertainty items don't clearly split into "harvestable part" vs
+  "foliage only" (e.g. stem health, general vigor, an ambiguous case),
+  fall back to whichever item is most central to what the farmer herself
+  originally reported as her problem.
+  This has been an observed failure: when uncertainty included the cause
+  of leaf spots, the reason stems were weakening, AND the explanation for
+  rot found inside dug-up tubers, the two foliage items were surfaced and
+  the tuber-rot uncertainty — the one about the part of the crop she'd
+  actually harvest — was silently dropped by the cap. That is the wrong
+  choice under this rule: tuber rot should have been included ahead of at
+  least one of the two foliage-only items.
   NEVER ASK ACTION-ORIENTED QUESTIONS — Kagua does not tell the farmer what
   to do, and a question that presupposes she's choosing an action does the
   same thing indirectly. Every discussion point must be about clarifying

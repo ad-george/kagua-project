@@ -32,6 +32,15 @@ function App() {
   const [currentScreen, setCurrentScreen] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
+  // Holds a zero-arg function that re-runs whatever just failed, with its
+  // original arguments already captured in the closure — lets the error
+  // banner show a "Retry" button instead of forcing her to redo the whole
+  // step (re-record, re-type, re-select observations) after a dropped
+  // connection. Scoped intentionally: only wired into the calls most
+  // likely to block her mid-flow (Screen 1 submit, Screen 3 continue,
+  // resuming/reviewing a journey) — not a full background auto-retry
+  // queue like Screen 4's reply saves, which is a larger change.
+  const [retryAction, setRetryAction] = useState(null);
   const [screen1StartMode, setScreen1StartMode] = useState("voice");
   const [scrollToAbout, setScrollToAbout] = useState(false);
 
@@ -123,7 +132,27 @@ function App() {
     // keep retrying whenever the browser regains connectivity.
     flushPendingReplies();
     window.addEventListener("online", flushPendingReplies);
-    return () => window.removeEventListener("online", flushPendingReplies);
+
+    // If a call failed and left a retryAction queued, try it again the
+    // moment connectivity returns — the manual Retry button still covers
+    // the case where she wants to try again before that (e.g. the
+    // backend was down, not her connection), but this saves her the tap
+    // for the common "briefly lost signal" case.
+    const handleOnlineRetry = () => {
+      setRetryAction((current) => {
+        if (current) {
+          setErrorMsg(null);
+          current();
+        }
+        return current;
+      });
+    };
+    window.addEventListener("online", handleOnlineRetry);
+
+    return () => {
+      window.removeEventListener("online", flushPendingReplies);
+      window.removeEventListener("online", handleOnlineRetry);
+    };
   }, []);
 
   const handleNavigate = (nextView) => {
@@ -191,6 +220,7 @@ function App() {
   const handleContinueJourney = async (journeyId) => {
     setIsLoading(true);
     setErrorMsg(null);
+    setRetryAction(null);
     try {
       const journey = await getJourney(journeyId);
       const steps = journey.steps || {};
@@ -245,6 +275,7 @@ function App() {
       setView("flow");
     } catch (err) {
       setErrorMsg("Could not resume this conversation. Is the backend running?");
+      setRetryAction(() => () => handleContinueJourney(journeyId));
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -256,6 +287,7 @@ function App() {
   const handleSelectSummary = async (journey) => {
     setIsLoading(true);
     setErrorMsg(null);
+    setRetryAction(null);
     try {
       const journeyData = await getJourney(journey.id);
       const steps = journeyData.steps || {};
@@ -293,6 +325,7 @@ function App() {
       setView("flow");
     } catch (err) {
       setErrorMsg("Could not load this summary. Is the backend running?");
+      setRetryAction(() => () => handleSelectSummary(journey));
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -302,6 +335,7 @@ function App() {
   const handleScreen1Submit = async (text) => {
     setIsLoading(true);
     setErrorMsg(null);
+    setRetryAction(null);
     try {
       const context = await analyzeInput(text, user.county, user.phone, user.name);
 
@@ -317,6 +351,7 @@ function App() {
       setCurrentScreen(2);
     } catch (err) {
       setErrorMsg("Could not analyze your input. Is the backend running?");
+      setRetryAction(() => () => handleScreen1Submit(text));
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -364,6 +399,7 @@ function App() {
   const handleScreen3Continue = async (observations) => {
     setIsLoading(true);
     setErrorMsg(null);
+    setRetryAction(null);
     try {
       const result = await getComparison(extractedContext, observations);
       setComparison(result);
@@ -407,6 +443,7 @@ function App() {
       }
     } catch (err) {
       setErrorMsg("Could not compare information. Is the backend running?");
+      setRetryAction(() => () => handleScreen3Continue(observations));
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -552,6 +589,18 @@ function App() {
       {errorMsg && (
         <div className="app-error-banner">
           <p className="app-error-text">{errorMsg}</p>
+          {retryAction && (
+            <button
+              type="button"
+              className="app-error-retry-btn"
+              onClick={() => {
+                setErrorMsg(null);
+                retryAction();
+              }}
+            >
+              Retry
+            </button>
+          )}
         </div>
       )}
       {currentScreen === 1 && (

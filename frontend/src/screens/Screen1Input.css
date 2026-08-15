@@ -17,7 +17,7 @@ body,
   min-height: calc(100vh - 80px);
 
   margin: 0 auto;
-  padding: 18px 32px 50px;
+  padding: 2px 16px 24px;
 
   box-sizing: border-box;
 
@@ -37,7 +37,7 @@ body,
   align-items: center;
   gap: 6px;
 
-  padding: 6px 0;
+  padding: 2px 0;
 
   color: #65736d;
   background: transparent;
@@ -74,7 +74,7 @@ body,
   width: 100%;
   max-width: 720px;
 
-  margin: 10px auto 0;
+  margin: 0 auto 0;
 
   text-align: center;
 }
@@ -112,14 +112,14 @@ body,
   width: 100%;
   max-width: 760px;
 
-  margin: 42px auto 0;
+  margin: 22px auto 0;
 
   display: grid;
 
   grid-template-columns: repeat(2, minmax(0, 1fr));
 
-  column-gap: 22px;
-  row-gap: 20px;
+  column-gap: 16px;
+  row-gap: 14px;
 
   align-items: stretch;
 }
@@ -132,11 +132,11 @@ body,
   position: relative;
 
   width: 100%;
-  min-height: 275px;
+  min-height: 215px;
 
   box-sizing: border-box;
 
-  padding: 26px 24px;
+  padding: 16px 18px;
 
   display: flex;
   flex-direction: column;
@@ -144,24 +144,17 @@ body,
 
   text-align: center;
 
-  background: #ffffff;
+  background: var(--bg-color);
 
-  border: 1px solid #dbe3e8;
+  border: none;
   border-radius: 12px;
 
-  box-shadow: 0 2px 8px rgba(30, 50, 70, 0.035);
+  box-shadow: none;
 
-  transition:
-    border-color 0.18s ease,
-    box-shadow 0.18s ease,
-    transform 0.18s ease;
+  transition: transform 0.18s ease;
 }
 
 .screen1-option-card:hover {
-  border-color: #bfd4c4;
-
-  box-shadow: 0 6px 18px rgba(30, 70, 45, 0.07);
-
   transform: translateY(-2px);
 }
 
@@ -214,14 +207,16 @@ button.screen1-option-card:focus-visible {
 }
 
 .screen1-option-card > p {
-  max-width: 280px;
+  width: 100%;
+  max-width: 240px;
 
-  margin: 0 0 20px;
+  margin: 0 0 16px;
 
   color: #71808a;
 
   font-size: 0.82rem;
   line-height: 1.5;
+  text-align: center;
 }
 
 /* ═══════════════════════════════════════════════
@@ -269,6 +264,7 @@ button.screen1-option-card:focus-visible {
    ═══════════════════════════════════════════════ */
 
 .screen1-recorder-wrapper {
+  width: 100%;
   margin-top: auto;
 
   display: flex;
@@ -277,30 +273,53 @@ button.screen1-option-card:focus-visible {
 }
 
 /*
-   VoiceRecorder has its own internal label.
-   The card already tells the user "Speak", so
-   we hide the duplicate internal label.
+   VoiceRecorder has its own internal label under the idle mic icon.
+   The card already tells the user "Speak", so we hide the duplicate
+   internal label. This only targets the idle state's label span.
 */
 
 .screen1-recorder-wrapper .voice-recorder-btn-label {
   display: none !important;
 }
 
-/*
-   Keep the actual microphone recorder visible.
-*/
-
 .screen1-recorder-wrapper .voice-recorder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 100%;
 }
 
-/* If VoiceRecorder uses a button directly */
+/*
+   Only the idle "start recording" button is pulled down to a compact
+   circle to match this card's scale. The recording / transcribing /
+   playback / error states each have their own real button layout
+   (Stop, Record again, Use this recording, Try again) and must NOT
+   be touched here — a blanket `button` selector previously forced
+   every one of those into a fixed small circle, breaking them.
+*/
 
-.screen1-recorder-wrapper button {
-  margin-left: auto;
-  margin-right: auto;
+.screen1-recorder-wrapper .voice-recorder-btn {
+  padding: 4px 16px 0;
+}
+
+.screen1-recorder-wrapper .voice-recorder-btn-icon {
+  width: 56px;
+  height: 56px;
+}
+
+.screen1-recorder-wrapper .voice-recorder-btn-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+/*
+   Once recording starts, the content (status strip, or the playback
+   card with its label/helper/audio player/two buttons) needs more
+   room than a half-width option card was ever sized for. Let the
+   card grow to fit its content and span the full row so the
+   recording/playback UI has space to breathe instead of wrapping
+   and overlapping.
+*/
+
+.screen1-option-card--active {
+  min-height: 0;
 }
 
 /* ═══════════════════════════════════════════════
@@ -321,9 +340,9 @@ button.screen1-option-card:focus-visible {
 
 .screen1-photo-card {
   width: min(100%, 500px);
-  min-height: 88px;
+  min-height: 72px;
 
-  padding: 17px 20px;
+  padding: 12px 16px;
 
   display: flex;
   align-items: center;
@@ -332,30 +351,21 @@ button.screen1-option-card:focus-visible {
   text-align: left;
 
   color: #24342c;
-  background: #ffffff;
+  background: var(--bg-color);
 
-  border: 1px solid #dbe3e8;
+  border: none;
   border-radius: 12px;
 
   font-family: inherit;
 
   cursor: pointer;
 
-  box-shadow: 0 2px 8px rgba(30, 50, 70, 0.025);
+  box-shadow: none;
 
-  transition:
-    border-color 0.18s ease,
-    background 0.18s ease,
-    box-shadow 0.18s ease,
-    transform 0.18s ease;
+  transition: transform 0.18s ease;
 }
 
 .screen1-photo-card:hover {
-  border-color: #bfd4c4;
-  background: #fcfefc;
-
-  box-shadow: 0 5px 15px rgba(30, 70, 45, 0.06);
-
   transform: translateY(-1px);
 }
 
@@ -423,11 +433,6 @@ button.screen1-option-card:focus-visible {
 
 /* Selected photo */
 
-.screen1-photo-card--selected {
-  border-color: #8fc39c;
-  background: #f7fcf7;
-}
-
 .screen1-photo-card--selected .screen1-photo-icon {
   color: #238046;
   background: #e1f3e4;
@@ -441,11 +446,11 @@ button.screen1-option-card:focus-visible {
   width: 100%;
   max-width: 700px;
 
-  margin: 42px auto 0;
+  margin: 30px auto 0;
 
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 /* ═══════════════════════════════════════════════
@@ -455,22 +460,12 @@ button.screen1-option-card:focus-visible {
 .screen1-input-card {
   overflow: hidden;
 
-  background: #ffffff;
+  background: #f2f5f3;
 
-  border: 1px solid #dbe3e8;
+  border: none;
   border-radius: 12px;
 
-  box-shadow: 0 3px 12px rgba(30, 50, 70, 0.04);
-
-  transition: border-color 0.15s ease;
-}
-
-.screen1-input-card:hover {
-  border-color: #b8c7ce;
-}
-
-.screen1-input-card:focus-within {
-  border-color: #8fa8ba;
+  box-shadow: none;
 }
 
 /* ═══════════════════════════════════════════════
@@ -478,17 +473,17 @@ button.screen1-option-card:focus-visible {
    ═══════════════════════════════════════════════ */
 
 .screen1-input-card-header {
-  min-height: 52px;
+  min-height: 42px;
 
-  padding: 0 17px;
+  padding: 10px 14px 0;
 
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
 
   gap: 15px;
 
-  border-bottom: 1px solid #edf1ed;
+  border-bottom: none;
 }
 
 .screen1-input-card-title {
@@ -535,11 +530,12 @@ button.screen1-option-card:focus-visible {
   gap: 8px;
 
   margin: 0;
-  padding: 11px 16px;
+  padding: 9px 14px;
 
   background: #ecfdf3;
 
-  border-bottom: 1px solid #a7f3d0;
+  border: none;
+  border-radius: 8px;
 
   color: #166534;
 
@@ -565,8 +561,8 @@ button.screen1-option-card:focus-visible {
 }
 
 .screen1-transcription-notice-icon {
-  font-weight: 700;
   flex-shrink: 0;
+  margin-top: 2px;
 }
 
 /* ═══════════════════════════════════════════════
@@ -576,20 +572,21 @@ button.screen1-option-card:focus-visible {
 .screen1-textarea {
   width: 100%;
 
-  min-height: 170px;
+  min-height: 150px;
 
-  padding: 18px;
+  padding: 14px;
 
   box-sizing: border-box;
 
-  resize: vertical;
+  resize: none;
 
   color: var(--text-primary);
 
   background: transparent;
 
-  border: none;
-  outline: none;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 
   font-family: inherit;
   font-size: 0.95rem;
@@ -602,7 +599,9 @@ button.screen1-option-card:focus-visible {
 }
 
 .screen1-textarea:focus {
-  outline: none;
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 /* ═══════════════════════════════════════════════
@@ -653,21 +652,21 @@ button.screen1-option-card:focus-visible {
 
 @media (max-width: 700px) {
   .screen1-container {
-    padding: 15px 20px 40px;
+    padding: 10px 16px 28px;
   }
 
   .screen1-options {
     max-width: 600px;
 
-    margin-top: 32px;
+    margin-top: 24px;
 
     grid-template-columns: 1fr;
 
-    gap: 15px;
+    gap: 12px;
   }
 
   .screen1-option-card {
-    min-height: 240px;
+    min-height: 210px;
   }
 
   .screen1-photo-wrapper {
@@ -685,11 +684,11 @@ button.screen1-option-card:focus-visible {
 
 @media (max-width: 480px) {
   .screen1-container {
-    padding: 12px 16px 35px;
+    padding: 8px 12px 24px;
   }
 
   .screen1-page-header {
-    margin-top: 8px;
+    margin-top: 6px;
   }
 
   .screen1-title {
@@ -701,17 +700,17 @@ button.screen1-option-card:focus-visible {
   }
 
   .screen1-options {
-    margin-top: 26px;
+    margin-top: 20px;
   }
 
   .screen1-option-card {
-    min-height: 225px;
+    min-height: 195px;
 
-    padding: 22px 18px;
+    padding: 16px 14px;
   }
 
   .screen1-photo-card {
-    padding: 14px;
+    padding: 12px;
   }
 
   .screen1-photo-content p {
@@ -722,7 +721,7 @@ button.screen1-option-card:focus-visible {
     align-items: flex-start;
     flex-direction: column;
 
-    padding: 14px 16px;
+    padding: 12px 14px;
 
     gap: 9px;
   }

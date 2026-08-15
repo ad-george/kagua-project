@@ -1,4 +1,4 @@
-const BASE_URL = "http://127.0.0.1:8001";
+const BASE_URL = "http://127.0.0.1:8002";
 
 export async function analyzeInput(rawInput, county, phone, name) {
   const response = await fetch(`${BASE_URL}/analyze`, {

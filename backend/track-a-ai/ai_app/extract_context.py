@@ -47,6 +47,30 @@ return null for reported_problem. Never fill in a plausible-sounding value, only
 The farmer is REPORTING a problem, not confirming a diagnosis. Extract it as
 "reported_problem", not as an established fact.
 
+PREFER HER SPECIFIC PHYSICAL DESCRIPTION OVER VAGUE FRAMING LANGUAGE: Farmers
+often open with a generic, emotional framing of the problem (e.g. "my
+potatoes are failing me", "my crop is not doing well", "something is wrong
+with my maize") before describing what she actually saw. That opening phrase
+is how she introduced the topic, not an agricultural sign itself — if she
+goes on to describe a specific physical symptom anywhere in the same input,
+reported_problem should capture that specific description, not the vague
+framing phrase. This is not inference or guessing (the "never infer missing
+information" rule above still applies in full) — it is choosing the more
+useful of two things she actually said, both stated outright in the
+transcript. Only fall back to a vague phrase (or to null, per the rule
+above) if she truly gives no physical description anywhere in the input.
+Example: "My potatoes are failing me this season... I noticed large dark
+brown spots on the leaves with light green rings, and the stems are
+turning weak and blackening."
+BAD: reported_problem = "failing" (this is her generic framing, not a
+physical sign — technically something she said, but not useful, and a
+specific description is available in the same input)
+GOOD: reported_problem = "dark brown spots on leaves with light green
+rings" (the first specific physical sign she describes), with "stems
+turning weak and blackening" going into observations per the
+distinct-signs rule below — not because "failing" was wrong to extract,
+but because a more specific, more useful true statement was available.
+
 DO NOT PROMOTE A THIRD PARTY'S DIAGNOSIS INTO reported_problem: if a named
 diagnosis or disease name appears in the transcript because a neighbour,
 agrovet, or other source said it — not because the farmer is describing it
@@ -111,6 +135,15 @@ if the farmer mentions it more than once.
 If the farmer mentions weather (e.g. "rain is expected tomorrow"), capture it
 in mentioned_weather. If she mentions nothing about weather, return an empty list.
 
+PRICE MENTIONS: If the farmer states an explicit price or cost anywhere in
+her input (e.g. "the fungicide costs KES 800", "she quoted me 2,500
+shillings"), capture the exact amount as she said it, currency included, in
+mentioned_price as a short phrase (e.g. "KES 800" or "2,500 shillings"). If
+she never mentions any price or cost, return null. Do not estimate, do not
+convert currencies, do not invent a number that wasn't stated — this
+mirrors the same "never guess missing information" rule that applies to
+reported_problem and crop above.
+
 BADGE EXTRACTION — STRUCTURAL FACTS ABOUT HOW THE ADVICE ARRIVED, NEVER ABOUT
 WHETHER THE ADVICE IS CORRECT: For each advice_received entry, also extract
 three structural facts about the interaction itself. Each field must be
@@ -140,7 +173,13 @@ correct their advice sounded.
   field, the plant, or something physical brought to them like a sample
   leaf). Do not infer a visit just because the advice sounds detailed or
   authoritative — confidence in the advice is not evidence of having seen
-  anything.
+  anything. This includes advice that describes WHERE or HOW to apply a
+  remedy in physical/spatial terms (e.g. "heap it around the plants,"
+  "spray the leaves," "dig it into the soil near the roots") — that kind
+  of phrasing describes the mechanics of the remedy itself, not an
+  examination the source performed. A source can describe exactly where
+  to apply manure or spray without ever having seen the field; treat
+  remedy-application language as neutral, not as evidence of a visit.
 - "named_source": true if this is an identifiable person or specific
   service the farmer directly interacted with (a neighbour, a specific
   agrovet, an extension officer, a named organization) — referring to them
@@ -172,12 +211,15 @@ being illustrated is general and applies to whatever source types and
 phrasing appear in any transcript, not just these specific words or names.
 
 Example 1 — "My neighbour, Mzee Gitau, told me it's just cold soil and
-advised mixing manure with lime. The agrovet woman said it's early blight
-and handed me two fungicides to spray."
+advised mixing cow manure with lime and heaping it around the plants to
+warm up the roots. The agrovet woman said it's early blight and handed me
+two fungicides to spray."
 - Neighbour: saw_in_person = null (the transcript only says she asked him
   and he told her something — there is no mention of him visiting the
-  field, looking at the plants, or examining anything physical; do not
-  mark true just because his advice sounds specific or confident), named_source
+  field, looking at the plants, or examining anything physical. The
+  phrase "heap it around the plants" describes WHERE to apply the manure
+  remedy, not evidence that he saw the plants himself — do not mark true
+  based on physical/spatial remedy instructions like this), named_source
   = true (a specific, identifiable neighbour by name/role — she can go
   back to him), sells_product = false (neighbour is non-commercial and no
   product/sale is mentioned — do not return null here).
@@ -220,17 +262,6 @@ each source suggested (not their stated reasons — the concrete action):
 This is a plain factual comparison of what was suggested — never a
 judgment about which suggestion is correct, better, or more likely true.
 
-PRICE MENTIONED — ONLY IF AN EXPLICIT AMOUNT WAS STATED: also return a
-top-level "price_mentioned" field. Set it ONLY if the transcript explicitly
-states a specific price, cost, or quote anywhere (e.g. "the spray costs
-KES 2,500," "he wanted 500 bob for it," "quoted me three thousand
-shillings"). Preserve the amount and currency exactly as she said it —
-clean up only obvious spelling/spacing, never convert, round, or reformat
-the number, and never add a currency symbol she didn't use herself. If no
-price, cost, or amount of money is mentioned anywhere in the transcript,
-return null — never estimate or infer a typical price for a product or
-service that wasn't actually quoted a number.
-
 Return ONLY valid JSON, no other text, matching exactly this shape:
 {
   "reported_problem": "<short agricultural phrase, e.g. 'yellow leaves' not a full sentence, or null>",
@@ -247,8 +278,8 @@ Return ONLY valid JSON, no other text, matching exactly this shape:
     }
   ],
   "advice_agreement": "<'agree', 'disagree', or null per the rules above>",
-  "price_mentioned": "<the exact price/amount as stated, e.g. 'KES 2,500', or null if none was mentioned>",
   "mentioned_weather": ["<any weather the farmer mentioned herself, e.g. 'rain expected tomorrow'>"],
+  "mentioned_price": "<short phrase with amount/currency exactly as stated, e.g. 'KES 800', or null>",
   "language": "<'english', 'kiswahili', or 'mixed' if she code-switched>",
   "extraction_confidence": "<'high', 'medium', or 'low' depending on how clear the input was>",
   "could_not_understand": false
@@ -261,7 +292,6 @@ If the input is garbled, empty, or completely incomprehensible, return exactly:
   "observations": [],
   "advice_received": [],
   "advice_agreement": null,
-  "price_mentioned": null,
   "mentioned_weather": [],
   "language": null,
   "extraction_confidence": "low",
@@ -357,8 +387,8 @@ def extract_context(raw_input: str, county: str = "Kiambu") -> dict:
             "observations": [],
             "advice_received": [],
             "advice_agreement": None,
-            "price_mentioned": None,
             "mentioned_weather": [],
+            "mentioned_price": None,
             "language": None,
             "extraction_confidence": "low",
             "could_not_understand": True,
@@ -369,7 +399,7 @@ def extract_context(raw_input: str, county: str = "Kiambu") -> dict:
     result.setdefault("season", None)
     result.setdefault("growth_stage", None)
     result.setdefault("advice_agreement", None)
-    result.setdefault("price_mentioned", None)
+    result.setdefault("mentioned_price", None)
     result["advice_received"] = _ensure_badge_keys(result.get("advice_received") or [])
     result["advice_received"] = _apply_sells_product_backstop(result["advice_received"])
     return result

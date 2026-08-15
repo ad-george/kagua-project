@@ -1,8 +1,8 @@
 import { Mic } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./VoiceRecorder.css";
 
-function VoiceRecorder({ onTranscription }) {
+function VoiceRecorder({ onTranscription, onExpandedChange }) {
   const [isRecording, setIsRecording] = useState(false);
   const [audioURL, setAudioURL] = useState(null);
   const [isTranscribing, setIsTranscribing] = useState(false);
@@ -13,6 +13,16 @@ function VoiceRecorder({ onTranscription }) {
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
   const streamRef = useRef(null);
+
+  // Any state beyond the idle "start recording" circle needs real width
+  // (status strip, or the playback card with its label/helper/audio
+  // player/two buttons). Let the parent know so it can widen this
+  // card's layout instead of leaving it cramped in a half column.
+  useEffect(() => {
+    const needsMoreRoom =
+      isRecording || Boolean(audioURL) || isTranscribing || transcriptionFailed;
+    if (onExpandedChange) onExpandedChange(needsMoreRoom);
+  }, [isRecording, audioURL, isTranscribing, transcriptionFailed, onExpandedChange]);
 
   const startRecording = async () => {
     setError(null);

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Eye, EyeOff, User, Radio, DollarSign, Handshake, Shield, ChevronRight } from "lucide-react";
 import AudioPlayer from "../components/AudioPlayer";
 import { buildQuestionWhatsAppLink } from "../services/exportSummary";
+import { resolveDisplayLanguage } from "../i18n/languageDirection";
 import "./Screen4Evidence.css";
 
 // ── Page title/subtitle ──
@@ -121,7 +122,13 @@ function Badge({ fieldKey, value, language }) {
 }
 
 function Screen4Evidence({ extractedContext, onContinue, initialReplies, onSaveReply }) {
-  const language = extractedContext?.language;
+  // resolveDisplayLanguage turns "mixed" into whichever language actually
+  // dominates this transcript (see i18n/languageDirection.js) — every
+  // pickBilingual() call below reads this resolved value, not the raw
+  // extractedContext.language, so a mostly-English transcript with one
+  // stray Swahili word no longer shows Kiswahili labels around English
+  // generated content.
+  const language = resolveDisplayLanguage(extractedContext?.language, extractedContext?.raw_input);
   const adviceReceived = extractedContext?.advice_received || [];
   const hasMultiple = adviceReceived.length > 1;
 
@@ -134,6 +141,28 @@ function Screen4Evidence({ extractedContext, onContinue, initialReplies, onSaveR
   // letting her log more if she reaches Screen 4 again this session.
   const [replyDrafts, setReplyDrafts] = useState({});
   const [replies, setReplies] = useState(initialReplies || {});
+
+  // Reply boxes start collapsed — at the point she reaches this screen she
+  // usually hasn't asked the question yet (the WhatsApp send button is
+  // right above), so an open textarea per source is dead weight most of
+  // the time. Tapping "Log reply" expands just that source's box.
+  const [expandedReplies, setExpandedReplies] = useState({});
+
+  const openReply = (index) => {
+    setExpandedReplies((prev) => ({ ...prev, [index]: true }));
+  };
+
+  // Backing out of an opened-but-unsaved box: collapse it and drop
+  // whatever partial draft was typed, so a stray tap or a change of mind
+  // doesn't leave an orphaned empty textarea behind.
+  const closeReply = (index) => {
+    setExpandedReplies((prev) => ({ ...prev, [index]: false }));
+    setReplyDrafts((prev) => {
+      const next = { ...prev };
+      delete next[index];
+      return next;
+    });
+  };
 
   // Source cards are collapsible when there are 2+ sources — each card's
   // whole row is the tap target (not the individual badges, which are
@@ -307,11 +336,6 @@ function Screen4Evidence({ extractedContext, onContinue, initialReplies, onSaveR
         </h2>
         <p className="screen4-question-text">&ldquo;{closingQuestion}&rdquo;</p>
 
-        {/* "Ready to send to [Source]:" framing, per the design doc's
-            send-step copy — sits directly above the button so the two
-            read as one action ("here's who + what, now send it"). */}
-        <p className="screen4-ready-to-send-label">{readyToSendLine}</p>
-
         <a
           className="screen4-send-whatsapp-btn"
           href={whatsappLink}
@@ -335,33 +359,56 @@ function Screen4Evidence({ extractedContext, onContinue, initialReplies, onSaveR
               language
             )}
           </p>
-          {adviceReceived.map((a, index) => (
-            <div key={index} className="screen4-reply-row">
-              {hasMultiple && <p className="screen4-reply-source-label">{capitalize(a.source_type)}</p>}
-              {replies[index] ? (
-                <p className="screen4-reply-saved-text">{replies[index]}</p>
-              ) : (
-                <div className="screen4-reply-input-row">
-                  <textarea
-                    className="screen4-reply-textarea"
-                    value={replyDrafts[index] || ""}
-                    onChange={(e) => handleReplyChange(index, e.target.value)}
-                    placeholder={pickBilingual(
-                      { english: "Type their reply here…", kiswahili: "Andika jibu lao hapa…" },
-                      language
-                    )}
-                  />
-                  <button
-                    type="button"
-                    className="screen4-reply-save-btn"
-                    onClick={() => handleReplySave(index)}
-                  >
-                    {pickBilingual({ english: "Save", kiswahili: "Hifadhi" }, language)}
-                  </button>
+          <div className="screen4-reply-cards">
+            {adviceReceived.map((a, index) => (
+              <div key={index} className="screen4-reply-row">
+                {hasMultiple && <p className="screen4-reply-source-label">{capitalize(a.source_type)}</p>}
+                {replies[index] ? (
+                  <p className="screen4-reply-saved-text">{replies[index]}</p>
+                ) : expandedReplies[index] ? (
+                  <div className="screen4-reply-input-row">
+                    <textarea
+                      className="screen4-reply-textarea"
+                      autoFocus
+                      value={replyDrafts[index] || ""}
+                      onChange={(e) => handleReplyChange(index, e.target.value)}
+                      placeholder={pickBilingual(
+                        {
+                          english: `Type ${capitalize(a.source_type)}'s reply here…`,
+                          kiswahili: `Andika jibu la ${capitalize(a.source_type)} hapa…`,
+                        },
+                        language
+                      )}
+                    />
+                  <div className="screen4-reply-actions">
+                    <button
+                      type="button"
+                      className="screen4-reply-save-btn"
+                      onClick={() => handleReplySave(index)}
+                    >
+                      {pickBilingual({ english: "Save", kiswahili: "Hifadhi" }, language)}
+                    </button>
+                    <button
+                      type="button"
+                      className="screen4-reply-cancel-btn"
+                      onClick={() => closeReply(index)}
+                    >
+                      {pickBilingual({ english: "Cancel", kiswahili: "Ghairi" }, language)}
+                    </button>
+                  </div>
                 </div>
+              ) : (
+                <button
+                  type="button"
+                  className="screen4-reply-log-btn"
+                  onClick={() => openReply(index)}
+                >
+                  + {pickBilingual({ english: "Log reply", kiswahili: "Andika jibu" }, language)}
+                </button>
               )}
-            </div>
-          ))}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
