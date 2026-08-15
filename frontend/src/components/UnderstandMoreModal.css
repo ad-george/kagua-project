@@ -116,6 +116,13 @@
   margin: 0 0 10px;
 }
 
+.modal-source-framing {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  margin: 0 0 4px;
+}
+
 .modal-source-summary {
   font-size: 0.92rem;
   color: var(--text-primary);

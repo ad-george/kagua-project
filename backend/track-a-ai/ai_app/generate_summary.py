@@ -173,9 +173,48 @@ STRICT RULES FOR THIS TASK:
   if included, must arise naturally from the uncertainty listed — never
   invent generic checklist-style questions just to fill space. Keep each
   one SHORT — one plain question a farmer could ask out loud in a single
-  breath, roughly 8-12 words. Limit to at most 3, even if more uncertainty
+  breath, roughly 8-12 words. Limit to at most 2, even if more uncertainty
   exists — pick the ones most useful to raise with an agrovet or extension
-  officer.
+  officer. Two focused questions are more useful to a farmer than three
+  weaker ones, so don't stretch to fill a third slot.
+  NEVER ASK ACTION-ORIENTED QUESTIONS — Kagua does not tell the farmer what
+  to do, and a question that presupposes she's choosing an action does the
+  same thing indirectly. Every discussion point must be about clarifying
+  the situation or gathering more information — never about deciding or
+  performing an action.
+  BANNED PATTERNS (do not write anything shaped like these):
+  "What should I do?"
+  "What are the next steps?"
+  "Which treatment should I use?"
+  "Which option should I choose?"
+  "What should I apply?"
+  "Should I spray/treat/uproot/replace...?"
+  ALLOWED PATTERNS (write things shaped like these instead):
+  "What could be causing [symptom]?"
+  "What additional information would help clarify this?"
+  "What observations could help identify the cause?"
+  "What would you ask an agricultural professional about this?"
+  THE BANNED/ALLOWED DISTINCTION IS ABOUT WHAT'S BEING CLARIFIED, NOT JUST
+  THE SENTENCE SHAPE — a question can match an ALLOWED template word-for-word
+  and still violate this rule if the thing it asks to clarify is a
+  solution, treatment, or remedy rather than a cause or situation. Filling
+  an allowed template's blank with solution-language is the same violation
+  wearing a different shape. Before using "clarify this" or "clarify [X]",
+  check what X actually refers to: a symptom, cause, or situation is fine;
+  a treatment, solution, remedy, product, or course of action is not,
+  even inside an otherwise-allowed sentence structure.
+  BAD (this exact failure has occurred — an ALLOWED template filled with
+  solution-language instead of cause-language): "What additional
+  information would help clarify the most effective solution to address
+  the problem?" — the sentence shape matches an allowed pattern, but "the
+  most effective solution" is exactly the treatment-decision content the
+  banned patterns exist to block; this must be rewritten around the CAUSE
+  instead (e.g. "What additional information would help clarify what's
+  causing the damage?") or dropped entirely.
+  Before finalizing, check each discussion point against this list: does it
+  ask what's unclear about the SITUATION, or does it ask what to do about
+  it (even indirectly, even inside an allowed-looking template)? If it
+  asks what to do, rewrite it around the cause/situation instead, or drop it.
 - Keep sentences short and simple, suitable for a low-literacy rural farmer.
 - Always begin the summary with the header "KAGUA SUMMARY" exactly as written,
   ONCE only, when the response language is English. For Kiswahili responses,
@@ -186,9 +225,74 @@ STRICT RULES FOR THIS TASK:
   matching heading set for the selected response language so the structure is
   fully localized, not just the descriptive content.
 
+SHORT_SUMMARY — A SEPARATE, VERY SHORT FIELD FOR THE ON-SCREEN "YOUR KAGUA
+SUMMARY" HEADLINE:
+This is a different field from summary_text and serves a different purpose.
+summary_text is the full document used for sharing/printing. short_summary is
+a one- or two-sentence headline shown directly on screen, so the farmer can
+see at a glance what the Kagua process was useful for.
+
+STRICT RULES FOR short_summary:
+- At most two short sentences.
+- Focus on what Kagua HELPED CLARIFY — not a repetition of the farmer's
+  reported problem, observations, or advice received. The farmer already
+  stated those herself; short_summary should not just echo them back to her.
+- Do not restate the crop, the reported problem, or a list of observations.
+- Do not diagnose, recommend, rank sources, or invent a cause.
+- Ground it only in comparison_result (confidence, whether multiple
+  perspectives existed, whether uncertainty remains) — never invent
+  content not present there.
+- If confidence is LOW, keep the tone plain and encouraging, not alarming.
+- PREFER ACTIVE, SPECIFIC VERBS OVER VAGUE ONES: when multiple perspectives
+  were compared, say so plainly — "compared," "identified," "found" — rather
+  than a vague catch-all like "organized," which undersells what actually
+  happened and reads the same whether there was one piece of advice or five.
+  "Organized" is acceptable only when there truly was nothing to compare
+  (e.g. a single perspective, or no perspectives at all) — never as a
+  default when multiple perspectives existed.
+- WRITE ONE SENTENCE. Use a second sentence only if a single sentence
+  genuinely cannot hold the idea — this should be rare, not the default.
+  A known failure mode: producing two sentences that each separately
+  restate "there were different explanations" in slightly different words
+  — that is one idea said twice, not two ideas. If your two sentences
+  overlap in what they're saying, delete one of them rather than keep both.
+- THE EXAMPLES BELOW ARE SEPARATE, COMPLETE, ALTERNATIVE OUTPUTS — NEVER
+  INGREDIENTS TO COMBINE: each example shows one full, finished
+  short_summary for a given case. They are options to choose between, not
+  fragments to stitch together. Producing an output that reads like two
+  examples pasted back-to-back (even paraphrased) is the single most
+  common mistake with this field — pick the one style that fits, write
+  only that, and stop.
+Examples (invented placeholder shapes only, not real content — do not
+reuse the specific wording, and never merge two of these into one output):
+GOOD (multiple perspectives, uncertainty remains): "Kagua compared the
+different explanations and identified what still needs to be confirmed."
+An acceptable alternative style leads with what the farmer received rather
+than what Kagua did — e.g. opening with "you received two different
+explanations" before naming what Kagua helped clarify about them — but
+this is a DIFFERENT style to choose INSTEAD of the example above, never
+something to add alongside it. Use one style or the other, never both in
+the same output.
+GOOD (single source, low confidence): "Kagua reviewed the information
+available, though it does not yet confirm the exact cause."
+WEAKER (vague verb undersells a genuine comparison — avoid when multiple
+perspectives existed): "Kagua compared the advice you received and
+organized what still needs to be confirmed."
+BAD (just repeats the farmer's input): "Your maize has yellow leaves and you
+received advice to spray."
+BAD (merges two separate example styles into one bloated output — this
+exact failure has occurred and must not happen again): "Kagua compared
+the different explanations and identified what still needs to be
+confirmed. You received two different explanations for what's happening,
+and Kagua helped you see what those explanations are based on and what
+still needs to be checked." — this says "there were different
+explanations" twice in two different phrasings; it should have been ONE
+sentence in ONE of the two styles, not both stitched together.
+
 Return ONLY valid JSON, no other text, matching exactly this shape:
 {
   "summary_text": "<the full natural-language Kagua Summary through 'What remains uncertain' only — no Discussion Points section — as short labeled sections or short paragraphs, ready to be read aloud or displayed as-is>",
+  "short_summary": "<the very short, non-repetitive on-screen headline described above, following the SHORT_SUMMARY rules exactly, in the farmer's response language>",
   "discussion_points": [<0 or more short, natural discussion points for talking with an agrovet or extension officer — omit or leave empty if none genuinely apply>]
 }
 """
@@ -198,6 +302,7 @@ Return ONLY valid JSON, no other text, matching exactly this shape:
 # always receives a usable shape rather than nulls it has to guard against.
 SUMMARY_FALLBACK = {
     "summary_text": None,
+    "short_summary": None,
     "discussion_points": [],
 }
 
@@ -294,6 +399,7 @@ def generate_summary(context: dict, comparison: dict) -> dict:
         result = dict(SUMMARY_FALLBACK)
 
     result.setdefault("summary_text", None)
+    result.setdefault("short_summary", None)
     result.setdefault("discussion_points", [])
 
     # Deterministic cleanup — see _strip_empty_stacked_labels docstring for

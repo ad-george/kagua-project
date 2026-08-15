@@ -146,7 +146,7 @@ function Screen2Context({ extractedContext, onConfirm, onRecordAgain, onTypeInst
             </div>
             <div className="screen2-summary-divider" />
             <div className="screen2-summary-row">
-              <span className="screen2-summary-label">Problem:</span>
+              <span className="screen2-summary-label">Reported problem:</span>
               <span className="screen2-summary-value">{reported_problem}</span>
             </div>
             <div className="screen2-summary-divider" />

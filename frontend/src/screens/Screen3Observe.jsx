@@ -103,13 +103,13 @@ function Screen3Observe({ onContinue }) {
   const hasSelection = selected.length > 0;
   const hasDraftNote = otherText.trim().length > 0;
   const hasCommittedNotes = customNotes.length > 0;
-  // Continue only becomes visible once there's committed input (a selected
-  // option, or a note that's been through Enter/blur) — not the instant
-  // someone starts typing. A live, uncommitted draft (hasDraftNote) no
-  // longer counts here, so the button doesn't light up mid-word on an
-  // unfinished thought. Submission itself is unaffected: handleSubmit
-  // still includes any leftover draft text if Continue is clicked while
-  // one is present (e.g. after already committing an earlier note).
+  // No longer gates Continue (see canContinue below) — kept as a named
+  // value because it still drives the reassurance text shown when the
+  // farmer hasn't added anything. A completely empty observation list is
+  // a normal, fully-supported state everywhere else in the app
+  // (get_comparison.py, generate_summary.py, Screen 4's empty states all
+  // already handle "nothing recorded" gracefully) — this was the one
+  // place still treating it as a blocking error instead of a valid answer.
   const hasMeaningfulInput = hasSelection || hasCommittedNotes;
   const hasSomethingSelected = hasSelection || hasCommittedNotes;
 
@@ -120,7 +120,23 @@ function Screen3Observe({ onContinue }) {
   //    and "Anything else?" is skipped (they already have custom text)
   const showSomethingElseInput = somethingElseOpen;
   const showAnythingElse = hasSelection && !somethingElseOpen && hasMore !== false;
-  const canContinue = hasMeaningfulInput && (!hasSelection || hasMore !== null);
+  // Continue is now always reachable EXCEPT while a Yes/No decision is
+  // actively pending (hasSelection is true and she hasn't answered
+  // hasMore yet) — that specific friction is intentional and unchanged.
+  // When nothing is selected at all, `!hasSelection` alone already makes
+  // this true, so an empty Screen 3 no longer traps the farmer.
+  const canContinue = !hasSelection || hasMore !== null;
+
+  // The reassurance line ("Nothing else to add? You can continue.") is
+  // meant for one specific moment: the farmer has added nothing at all
+  // AND isn't currently looking at an open input box. If either input
+  // path is open — "Something else" tapped, or "Yes" answered on the
+  // Anything else? prompt — showing "nothing to add, you're done" right
+  // next to an active textbox/mic contradicts what's on screen. So this
+  // is gated on both input paths being closed, not just on there being
+  // no committed input yet.
+  const isInputPathOpen = somethingElseOpen || hasMore === true;
+  const showEmptyReassurance = !hasMeaningfulInput && canContinue && !isInputPathOpen;
 
   return (
     <div className="screen3-container">
@@ -241,9 +257,7 @@ function Screen3Observe({ onContinue }) {
                   <p className="screen3-other-label">
                     Anything else you've noticed?
                   </p>
-                  <p className="screen3-prompt-help">
-                    Choose No if you are done, or add one more detail.
-                  </p>
+
                   <div className="screen3-yesno">
                     <button
                       className="btn btn-secondary screen3-yesno-btn"
@@ -307,6 +321,21 @@ function Screen3Observe({ onContinue }) {
                 </div>
               )}
             </div>
+          )}
+
+          {/* Reassurance text — only shown when nothing has been added yet
+              AND no input box is currently open, so a farmer who genuinely
+              has nothing else to report doesn't wonder whether the button
+              is broken or whether she's expected to select something
+              regardless. It deliberately disappears the moment "Something
+              else" or the "Yes" branch opens an input, since "nothing to
+              add" and "type your observation here" next to each other reads
+              as contradictory. Not a selectable option, just a one-line
+              confirmation that proceeding with nothing is fine. */}
+          {showEmptyReassurance && (
+            <p className="screen3-empty-reassurance">
+              Nothing else to add? You can continue.
+            </p>
           )}
 
           {/* Continue button in left column */}
@@ -382,5 +411,4 @@ function Screen3Observe({ onContinue }) {
     </div>
   );
 }
-
 export default Screen3Observe;

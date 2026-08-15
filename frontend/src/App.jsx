@@ -17,7 +17,13 @@ import {
   completeJourney,
   getJourney,
   getSummary,
+  saveScreen4Replies,
 } from "./services/trackA";
+import {
+  getPendingQueue,
+  queueReplies,
+  clearQueuedReplies,
+} from "./services/replyQueue";
 import "./App.css";
 
 function App() {
@@ -34,6 +40,17 @@ function App() {
   const [summary, setSummary] = useState(null);
   const [sourceDetails, setSourceDetails] = useState([]);
   const [isReviewMode, setIsReviewMode] = useState(false);
+
+  // Screen 4's "reply capture" (Idea 12 in the design doc): what the
+  // farmer logged after sending the shaped question to a source. Keyed by
+  // advice_received index. Persisted server-side via saveScreen4Replies
+  // (PUT /journey/{id}/replies), stored inside journey.steps.screen4_replies
+  // — so it survives a resumed journey fetched fresh from getJourney() on
+  // a different device/session. Now saved the moment each reply is typed
+  // and confirmed (see handleSaveReply below), not just at final Continue
+  // — with a localStorage retry queue (services/replyQueue.js) covering
+  // the case where that save fails, e.g. dropped connectivity.
+  const [screen4Replies, setScreen4Replies] = useState({});
 
   // ── Draft persistence ──
   // Saves journey progress to localStorage after each screen so the farmer
@@ -61,12 +78,52 @@ function App() {
     }
   };
 
+  // ── Screen 4 reply save + retry queue ──
+  // Attempts to persist `replies` (the full replies object for this
+  // journey, not just the newest one — the backend endpoint replaces
+  // journey.steps.screen4_replies wholesale, so a partial payload would
+  // erase anything not included) to the backend. On failure, queues it
+  // for retry instead of silently dropping it.
+  const trySaveReplies = async (journeyId, replies) => {
+    if (!journeyId || !replies || Object.keys(replies).length === 0) return;
+    try {
+      await saveScreen4Replies(journeyId, replies);
+      clearQueuedReplies(journeyId);
+    } catch (err) {
+      console.error("Could not save reply — queued for retry:", err);
+      queueReplies(journeyId, replies);
+    }
+  };
+
+  // Retries every journey currently sitting in the pending queue. Safe to
+  // call opportunistically (on mount, on reconnect) — a journey that's
+  // still failing just stays queued for the next attempt, and a journey
+  // that succeeds is cleared immediately so it isn't retried again.
+  const flushPendingReplies = async () => {
+    const queue = getPendingQueue();
+    const journeyIds = Object.keys(queue);
+    for (const jid of journeyIds) {
+      try {
+        await saveScreen4Replies(jid, queue[jid]);
+        clearQueuedReplies(jid);
+      } catch {
+        // Still offline or still failing — leave it queued.
+      }
+    }
+  };
+
   useEffect(() => {
     const existingUser = getCurrentUser();
     if (existingUser) {
       setUser(existingUser);
       setView("home");
     }
+    // Attempt to clear any replies left over from a previous session that
+    // failed to save (e.g. the farmer closed the app while offline), and
+    // keep retrying whenever the browser regains connectivity.
+    flushPendingReplies();
+    window.addEventListener("online", flushPendingReplies);
+    return () => window.removeEventListener("online", flushPendingReplies);
   }, []);
 
   const handleNavigate = (nextView) => {
@@ -121,6 +178,7 @@ function App() {
     setComparison(null);
     setSummary(null);
     setSourceDetails([]);
+    setScreen4Replies({});
     setIsReviewMode(false);
     clearDraft();
     setView("flow");
@@ -174,6 +232,14 @@ function App() {
       // generated fresh when Screen 4 is completed.
       setSummary(steps.summary || null);
 
+      // Restore any Screen 4 replies saved via saveScreen4Replies on a
+      // prior visit — now persisted server-side, so a journey resumed on
+      // a different device/session can still see what was logged. Also
+      // merge in anything still sitting in the local retry queue for this
+      // journey, in case a save failed right before the app was closed.
+      const queuedForThisJourney = getPendingQueue()[journey.id] || {};
+      setScreen4Replies({ ...(steps.screen4_replies || {}), ...queuedForThisJourney });
+
       setIsReviewMode(false);
       setCurrentScreen(steps.current_screen || 1);
       setView("flow");
@@ -204,6 +270,11 @@ function App() {
       setExtractedContext(restoredContext);
       setComparison(steps.comparison);
       setSummary(steps.summary || null);
+      // Same restoration as handleContinueJourney — a reviewed past
+      // summary should still show whatever replies were logged on
+      // Screen 4 during that conversation.
+      const queuedForThisJourney = getPendingQueue()[journeyData.id] || {};
+      setScreen4Replies({ ...(steps.screen4_replies || {}), ...queuedForThisJourney });
 
       // Re-fetch source details for the "Explore Trusted Sources" modal
       if (steps.comparison.sources_used?.length > 0) {
@@ -264,25 +335,60 @@ function App() {
     setCurrentScreen(1);
   };
 
+  // Shared by both paths that end a conversation at Screen 5: the normal
+  // path (farmer taps Continue on Screen 4) and the Scenario A skip path
+  // (no advice/sources at all, so Screen 4 is skipped entirely — see the
+  // Screen 4 design doc's Scenario A). Generating the summary is
+  // non-critical either way: a failure here still advances to Screen 5
+  // with summary=null, since Screen5Summary already has its own fallback
+  // narration for that case.
+  const goToScreen5 = async (context, comp) => {
+    try {
+      const result = await getSummary(context, comp);
+      setSummary(result);
+    } catch (err) {
+      console.error("Could not generate Kagua Summary:", err);
+      setSummary(null);
+    } finally {
+      setCurrentScreen(5);
+    }
+  };
+
   // Source details (used by Screen 5's "Explore Trusted Sources" modal) are
   // supplementary to the comparison itself — Screen 4 renders straight from
-  // `comparison.sources_used`, not from `sourceDetails`. So a source-details
-  // failure is handled the same non-critical way as in
+  // the farmer's own advice_received now (badges live there, not on
+  // `comparison`), not from sourceDetails. So a source-details failure is
+  // handled the same non-critical way as in
   // handleContinueJourney/handleSelectSummary: its own try/catch, falls back
-  // to an empty list, and never blocks advancing to Screen 4. Previously
-  // this was inside the same try block as getComparison, which meant a
-  // source-details hiccup both (a) showed the wrong error — "Could not
-  // compare information" — even though the comparison itself had already
-  // succeeded, and (b) left the farmer stuck on Screen 3 with a valid
-  // comparison sitting unused in state.
+  // to an empty list, and never blocks advancing past Screen 3.
   const handleScreen3Continue = async (observations) => {
     setIsLoading(true);
     setErrorMsg(null);
     try {
       const result = await getComparison(extractedContext, observations);
       setComparison(result);
-      saveDraft(4, extractedContext, result);
-      setCurrentScreen(4);
+
+      // Merge field observations into extractedContext so they're available in Screen 5
+      const updatedContext = {
+        ...extractedContext,
+        observations: [...(extractedContext.observations || []), ...observations],
+      };
+      setExtractedContext(updatedContext);
+
+      // Scenario A (per the Screen 4 design doc): if there's no advice at
+      // all, Screen 4 has nothing genuine to teach her about — badges,
+      // the "one thing worth asking" question, and the WhatsApp send flow
+      // all depend on there being at least one source. Rather than
+      // invent generic filler content, Screen 4 is skipped entirely and
+      // the flow goes straight from Screen 3 to Screen 5.
+      const hasAdvice = (updatedContext.advice_received || []).length > 0;
+
+      if (hasAdvice) {
+        saveDraft(4, updatedContext, result);
+        setCurrentScreen(4);
+      } else {
+        saveDraft(5, updatedContext, result);
+      }
 
       if (result.sources_used && result.sources_used.length > 0) {
         try {
@@ -295,6 +401,10 @@ function App() {
       } else {
         setSourceDetails([]);
       }
+
+      if (!hasAdvice) {
+        await goToScreen5(updatedContext, result);
+      }
     } catch (err) {
       setErrorMsg("Could not compare information. Is the backend running?");
       console.error(err);
@@ -303,25 +413,36 @@ function App() {
     }
   };
 
-  // Generates the Kagua Summary before advancing to Screen 5. Treated as
-  // non-critical: if it fails, we still advance to Screen 5 with
-  // summary=null — the farmer's data (SummaryCard, options) is fully
-  // intact either way, Screen5Summary just falls back to its own simpler
-  // local narration for "Listen to this page" rather than blocking the
-  // farmer from reaching their own summary over a non-essential feature.
-  const handleScreen4Continue = async () => {
+  // Called from Screen4Evidence the instant she confirms an individual
+  // reply (taps "Save" on one source's reply box) — not just at the end
+  // of the whole screen. Updates local state immediately so the UI
+  // reflects it right away, and fires the backend save in the background
+  // via trySaveReplies, which queues it for retry if it fails. This is
+  // what closes the "typed a reply, lost connectivity, closed the tab"
+  // gap that existed when saving only happened on the final Continue tap.
+  const handleSaveReply = (index, text) => {
+    const updated = { ...screen4Replies, [index]: text };
+    setScreen4Replies(updated);
+    const journeyId = extractedContext?.journey_id;
+    trySaveReplies(journeyId, updated);
+  };
+
+  // Called when the farmer taps Continue on Screen 4. Replies have
+  // already been autosaved individually via handleSaveReply as she typed
+  // them, so this call is a safety net — it re-sends the final replies
+  // object (harmless if already saved, since the endpoint just overwrites
+  // with the same data) to catch any reply whose individual save silently
+  // failed without getting queued for some reason.
+  const handleScreen4Continue = async (replies) => {
+    if (replies) setScreen4Replies(replies);
     setIsLoading(true);
     setErrorMsg(null);
-    try {
-      const result = await getSummary(extractedContext, comparison);
-      setSummary(result);
-    } catch (err) {
-      console.error("Could not generate Kagua Summary:", err);
-      setSummary(null);
-    } finally {
-      setIsLoading(false);
-      setCurrentScreen(5);
-    }
+
+    const journeyId = extractedContext?.journey_id;
+    await trySaveReplies(journeyId, replies || screen4Replies);
+
+    await goToScreen5(extractedContext, comparison);
+    setIsLoading(false);
   };
 
   const handleFinishConversation = async () => {
@@ -447,8 +568,13 @@ function App() {
       {currentScreen === 3 && (
         <Screen3Observe onContinue={handleScreen3Continue} />
       )}
-      {currentScreen === 4 && comparison && (
-        <Screen4Evidence comparison={comparison} extractedContext={extractedContext} onContinue={handleScreen4Continue} />
+      {currentScreen === 4 && comparison && extractedContext && (
+        <Screen4Evidence
+          extractedContext={extractedContext}
+          initialReplies={screen4Replies}
+          onSaveReply={handleSaveReply}
+          onContinue={handleScreen4Continue}
+        />
       )}
       {currentScreen === 5 && extractedContext && comparison && (
         <Screen5Summary
@@ -456,6 +582,7 @@ function App() {
           comparison={comparison}
           summary={summary}
           sourceDetails={sourceDetails}
+          screen4Replies={screen4Replies}
           onFinish={handleFinishConversation}
           isReviewMode={isReviewMode}
         />

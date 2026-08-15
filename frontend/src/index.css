@@ -146,8 +146,9 @@ button {
 }
 
 .btn-secondary:hover {
-  background-color: #F1F5F9;
-  border-color: var(--secondary);
+  background-color: #F8FAFC;
+  border-color: #CBD5E1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .btn-accent {

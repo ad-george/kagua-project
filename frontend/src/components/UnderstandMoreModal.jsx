@@ -15,8 +15,9 @@ function UnderstandMoreModal({ sourceDetails, selectionReason, onClose }) {
 
         <h2 className="modal-title">Trusted Sources</h2>
         <p className="modal-intro">
-          This is what verified agricultural guidance says about your situation.
-          Use this to prepare questions for your agrovet or extension officer.
+          Kagua found relevant information from trusted agricultural sources
+          related to your situation. Use this to prepare questions for your
+          agrovet or extension officer.
         </p>
 
         {sourceDetails.length === 0 ? (
@@ -43,6 +44,13 @@ function UnderstandMoreModal({ sourceDetails, selectionReason, onClose }) {
               <div key={index} className="modal-source">
                 <h3 className="modal-source-name">{source.name}</h3>
                 <p className="modal-source-topic">{source.topic}</p>
+                {/* Framing line, distinct from the summary itself — makes
+                    clear this is Kagua's simplified rendering of the
+                    source's material, not a direct quote from the source
+                    or a statement about this specific farmer's crop. */}
+                <p className="modal-source-framing">
+                  Relevant information from {source.name}'s agricultural material:
+                </p>
                 <p className="modal-source-summary">{source.summary}</p>
 
                 {/* Clarifying questions — written in plain farmer language,

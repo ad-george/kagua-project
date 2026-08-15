@@ -71,3 +71,18 @@ export async function saveFollowUp(journeyId, outcome, rating) {
   if (!response.ok) throw new Error("Could not save follow-up");
   return response.json();
 }
+
+// Persists Screen 4's reply-capture answers (Idea 12) to the journey, so
+// they survive a resumed journey fetched fresh from getJourney() on a
+// different device/session — previously these lived in client state only.
+// `replies` is keyed by advice_received index (as a string) -> verbatim
+// reply text, matching what Screen4Evidence already tracks in state.
+export async function saveScreen4Replies(journeyId, replies) {
+  const response = await fetch(`${BASE_URL}/journey/${journeyId}/replies`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ replies }),
+  });
+  if (!response.ok) throw new Error("Could not save replies");
+  return response.json();
+}

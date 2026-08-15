@@ -116,3 +116,19 @@ export function buildWhatsAppLink(extractedContext, comparison, summary) {
 
   return `https://wa.me/?text=${encodeURIComponent(message)}`;
 }
+
+// Builds a WhatsApp deep link pre-filled with a single question, for
+// Screen 4's "Send via WhatsApp" button (Idea 3 in the Screen 4/5 design
+// doc). No phone number is included — same convention as
+// buildWhatsAppLink above — so tapping it opens WhatsApp's own contact
+// picker rather than a fixed recipient. This is the right behavior here
+// specifically: Kagua doesn't have phone numbers for the farmer's sources,
+// and in the "sources disagree" scenario the question is deliberately
+// addressed to "either of them," not one named person, so letting her
+// pick the recipient herself is correct, not a workaround.
+export function buildQuestionWhatsAppLink(question, language) {
+  const useKiswahili = language === "kiswahili" || language === "mixed";
+  const lead = useKiswahili ? "Swali kutoka kwa Kagua:" : "A question from Kagua:";
+  const message = `${lead}\n\n"${question}"`;
+  return `https://wa.me/?text=${encodeURIComponent(message)}`;
+}

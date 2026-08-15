@@ -1,5 +1,4 @@
 import { useState } from "react";
-import SummaryCard from "../components/SummaryCard";
 import ShareOptions from "../components/ShareOptions";
 import UnderstandMoreModal from "../components/UnderstandMoreModal";
 import AudioPlayer from "../components/AudioPlayer";
@@ -10,21 +9,78 @@ import {
 } from "../services/exportSummary";
 import "./Screen5Summary.css";
 
-// All four "what to do next" actions live together in one card, in this
-// order. "hasFindNearby" rows toggle an inline placeholder panel instead
-// of firing onClick directly; the other two open their respective modals.
-const ACTION_ROWS = [
+// "Trusted Sources" is now one grouped card containing the three related
+// actions, per the new Screen 5 target structure. "Share Summary" stays a
+// separate, standalone action outside that group. hasFindNearby rows still
+// toggle the inline placeholder panel rather than firing onClick directly.
+const TRUSTED_SOURCE_ROWS = [
+  { id: "sources", label: "Explore Trusted Sources" },
   { id: "agrovet", label: "Discuss with an Agrovet", hasFindNearby: true },
   { id: "extension", label: "Discuss with an Extension Officer", hasFindNearby: true },
-  { id: "sources", label: "Explore Trusted Sources" },
-  { id: "share", label: "Share Summary" },
 ];
+
+// Local bilingual fallback for the on-screen short summary, used only if
+// generate_summary.py's short_summary field is missing (call failed, or an
+// older reviewed journey saved before this field existed). Deliberately
+// generic and non-diagnostic, matching the safety bar of every other
+// fallback in this app.
+const SHORT_SUMMARY_FALLBACK = {
+  english: "Kagua organized the information from this conversation.",
+  kiswahili: "Kagua imepanga taarifa kutoka kwenye mazungumzo haya.",
+};
+
+// ── "What you asked" (Idea 12 carry-forward) ──
+// SCENARIO_QUESTIONS is intentionally duplicated from Screen4Evidence.jsx
+// rather than imported from a shared file — you'd already applied that
+// file, so this avoids touching it again for this pass. Both copies must
+// stay in sync if the wording ever changes; flagged here so that's not
+// forgotten later.
+const SCENARIO_QUESTIONS = {
+  single: {
+    english: "What made you confident about this?",
+    kiswahili: "Ni nini kilichokufanya uwe na uhakika kuhusu hili?",
+  },
+  disagree: {
+    english: "How are you telling this apart from what the other person thinks it is?",
+    kiswahili: "Unatofautishaje hili na anachofikiria mtu mwingine?",
+  },
+  agree: {
+    english: "What are you basing this on?",
+    kiswahili: "Unaegemeza hili kwenye nini?",
+  },
+};
+
+// ── Always-present small-scale caution (per the Screen 4/5 design doc) ──
+const SMALL_SCALE_CAUTION = {
+  english:
+    "Trying anything on a small part of your field first — not all of it — limits what you'd lose if it's the wrong call.",
+  kiswahili:
+    "Kujaribu jambo lolote kwenye sehemu ndogo ya shamba lako kwanza — si shamba lote — hupunguza unachoweza kupoteza ikiwa si uamuzi sahihi.",
+};
+
+// ── Conditional price line — only renders if price_mentioned was actually
+// extracted (see extract_context.py); never a placeholder, never invented.
+const PRICE_QUOTE_TEMPLATE = {
+  english: (price) => `That option was quoted at ${price}.`,
+  kiswahili: (price) => `Chaguo hilo lilitajwa kugharimu ${price}.`,
+};
+
+function pickBilingual(entry, language) {
+  const useKiswahili = language === "kiswahili" || language === "mixed";
+  return useKiswahili ? entry.kiswahili : entry.english;
+}
+
+function capitalize(word) {
+  if (!word) return word;
+  return word.charAt(0).toUpperCase() + word.slice(1);
+}
 
 function Screen5Summary({
   extractedContext,
   comparison,
   summary,
   sourceDetails,
+  screen4Replies,
   onFinish,
   isReviewMode = false,
 }) {
@@ -42,6 +98,25 @@ function Screen5Summary({
 
   const language = extractedContext?.language;
 
+  // ── Carried forward from Screen 4 (Idea 12) ──
+  // Recomputes the same deterministic question Screen 4 showed her, from
+  // the same inputs (advice_received length + advice_agreement) — this is
+  // never re-interpreted, only carried forward as-is, per the design doc.
+  // Only rendered when advice actually existed (Screen 4 wasn't skipped).
+  const adviceReceived = extractedContext?.advice_received || [];
+  const hasAdvice = adviceReceived.length > 0;
+  const hasMultipleAdvice = adviceReceived.length > 1;
+
+  let scenarioKey = "single";
+  if (hasMultipleAdvice) {
+    scenarioKey = extractedContext?.advice_agreement === "disagree" ? "disagree" : "agree";
+  }
+  const carriedQuestion = hasAdvice ? pickBilingual(SCENARIO_QUESTIONS[scenarioKey], language) : null;
+  const hasAnyReply = screen4Replies && Object.keys(screen4Replies).length > 0;
+
+  // ── Conditional price line ──
+  const priceQuote = extractedContext?.price_mentioned || null;
+
   const handleShareWhatsApp = () => {
     const link = buildWhatsAppLink(extractedContext, comparison, summary);
     window.open(link, "_blank");
@@ -52,7 +127,25 @@ function Screen5Summary({
   };
 
   const handleShareSMS = () => {
-    alert("SMS sharing is being prepared for your next update. For now, use WhatsApp or PDF sharing.");
+  const message = summary?.summary_text
+    ? `${summary.summary_text}\n\nPrepared by Kagua.`
+    : `Kagua Summary
+
+  Crop: ${extractedContext?.crop || "Not specified"}
+  Reported problem: ${extractedContext?.reported_problem || "Not specified"}
+
+  What remains uncertain:
+  ${
+    comparison?.uncertainty?.length > 0
+      ? comparison.uncertainty.join("; ")
+      : "No major uncertainties were flagged."
+  }
+
+  Prepared by Kagua.`;
+
+    const smsUrl = `sms:?body=${encodeURIComponent(message)}`;
+
+    window.location.href = smsUrl;
   };
 
   const handleCopyText = async () => {
@@ -96,37 +189,13 @@ function Screen5Summary({
       openFindNearby(row.id);
     } else if (row.id === "sources") {
       setShowSourcesModal(true);
-    } else if (row.id === "share") {
-      setShowShareModal(true);
     }
   };
 
-  // ── What Kagua did this session ──
-  // Reads the comparison object already present — no API call needed.
-  // Framed as things Kagua organized/surfaced for the farmer, not skills
-  // the farmer practiced — Kagua isn't teaching a lesson, it's helping
-  // organize information.
-  // Each bullet is independently conditional on its own data (multiple
-  // perspectives, observations, uncertainty, trusted sources), so a
-  // session with no trusted sources simply omits that one line rather
-  // than needing separate handling — the card as a whole only disappears
-  // when none of the four conditions are met.
-  const getSessionSummaryPoints = () => {
-    if (!comparison) return [];
-    const points = [];
-    if (comparison.perspectives && comparison.perspectives.length > 1)
-      points.push("Reviewed information from different sources");
-    if (extractedContext?.observations && extractedContext.observations.length > 0)
-      points.push("Organised your field observations");
-    if (comparison.uncertainty && comparison.uncertainty.length > 0)
-      points.push("Identified what remains uncertain");
-    if (comparison.sources_used && comparison.sources_used.length > 0)
-      points.push("Drew on trusted agricultural sources");
-    return points;
-  };
-
-  const sessionSummaryPoints = getSessionSummaryPoints();
-  const showSessionSummary = !isReviewMode && sessionSummaryPoints.length > 0;
+  // Prefer the backend-generated short_summary (see generate_summary.py) —
+  // falls back to a safe generic sentence only if that call failed or this
+  // is an older journey reviewed/resumed from before this field existed.
+  const shortSummaryText = summary?.short_summary || pickBilingual(SHORT_SUMMARY_FALLBACK, language);
 
   // Build the complete page text for audio playback in logical order.
   // Prefers the backend-generated summary.summary_text (properly reflects
@@ -134,7 +203,8 @@ function Screen5Summary({
   // over this hand-built version, which is now only a fallback for cases
   // where no generated summary is available: the /summary call failed, or
   // this is an older journey reviewed/resumed from before this feature
-  // existed and so has nothing saved in its steps.
+  // existed and so has nothing saved in its steps. Unchanged from the
+  // previous version of this file.
   const buildPageText = () => {
     if (summary?.summary_text) {
       return summary.summary_text;
@@ -159,13 +229,7 @@ If you are unsure about the next step, the summary also highlights what still re
   return (
     <div className="screen5-container">
 
-      {/* ── Page header — full width, centered above both columns ──
-          Moved out of the left column so "Your Kagua Summary" centers
-          against the whole page instead of just the narrow left column,
-          matching Screen4's header pattern. The Listen button now sits
-          inline next to the subtitle here (no card wrapper) instead of
-          living in its own card in the right column — also matching
-          Screen4. */}
+      {/* ── Page header — full width, centered above both columns ── */}
       <div className="screen5-page-header">
         <h1 className="screen5-title">Your Kagua Summary</h1>
         <div className="screen5-subtitle-row">
@@ -180,58 +244,92 @@ If you are unsure about the next step, the summary also highlights what still re
 
       <div className="screen5-grid">
 
-        {/* ── Left column: what was gathered ── */}
+        {/* ── Left column: the short, non-repetitive Kagua Summary ──
+            Replaces the old SummaryCard, which repeated crop, reported
+            problem, observations, advice, and confidence — all of which
+            the farmer already saw on Screens 2–4. This now shows only
+            generate_summary.py's short_summary: what Kagua helped
+            clarify, not a repeat of her own input. */}
         <div className="screen5-left">
-          <SummaryCard
-            crop={extractedContext?.crop}
-            reportedProblem={extractedContext?.reported_problem}
-            observations={extractedContext?.observations}
-            adviceReceived={extractedContext?.advice_received}
-            confidence={comparison?.confidence}
-          />
+          <div className="screen5-short-summary screen5-info-card">
+            <p className="screen5-short-summary-text">{shortSummaryText}</p>
+          </div>
         </div>
 
         {/* ── Right column: what to do next ── */}
         <div className="screen5-main">
 
-          {/* "During this conversation" — session recap, sits first. */}
-          {showSessionSummary && (
-            <div className="screen5-session-summary screen5-info-card">
-              <p className="screen5-info-card-label">{getExplanationLabel("duringThisConversation", language)}</p>
-              <ul className="screen5-session-summary-list">
-                {sessionSummaryPoints.map((point, index) => (
-                  <li key={index}>{point}</li>
-                ))}
-              </ul>
+          {/* Always present, per the design doc — a general small-scale
+              caution applicable regardless of what was found, plus the
+              conditional price line right beneath it if one was actually
+              quoted. Placed first since it's a safety-relevant reminder,
+              not tied to any particular finding above. */}
+          <div className="screen5-caution-card screen5-info-card">
+            <p className="screen5-caution-text">{pickBilingual(SMALL_SCALE_CAUTION, language)}</p>
+            {priceQuote && (
+              <p className="screen5-price-text">
+                {pickBilingual(PRICE_QUOTE_TEMPLATE, language)(priceQuote)}
+              </p>
+            )}
+          </div>
+
+          {/* "What you asked" — carries forward the question Screen 4
+              shaped for her, plus any reply she logged (Idea 12), exactly
+              as she recorded it. Only renders if advice existed at all
+              (Screen 4 wasn't skipped as Scenario A). A source's reply
+              line only appears if she actually saved one — no "no reply
+              yet" placeholder, matching this app's established rule of
+              never announcing an absence (see generate_summary.py). */}
+          {hasAdvice && (
+            <div className="screen5-asked-card screen5-info-card">
+              <p className="screen5-info-card-label">
+                {pickBilingual({ english: "What you asked", kiswahili: "Ulichouliza" }, language)}
+              </p>
+              <p className="screen5-asked-question">&ldquo;{carriedQuestion}&rdquo;</p>
+              {hasAnyReply && (
+                <div className="screen5-asked-replies">
+                  {adviceReceived.map((a, index) =>
+                    screen4Replies[index] ? (
+                      <div key={index} className="screen5-asked-reply-row">
+                        {hasMultipleAdvice && (
+                          <p className="screen5-asked-reply-source">{capitalize(a.source_type)}</p>
+                        )}
+                        <p className="screen5-asked-reply-text">{screen4Replies[index]}</p>
+                      </div>
+                    ) : null
+                  )}
+                </div>
+              )}
             </div>
           )}
 
-          {/* Discussion points from the generated summary — only renders
-              when there's something real to show (matches
-              generate_summary.py's own rule: it leaves this list empty
-              rather than inventing generic questions when there's nothing
-              specific to ask). */}
+          {/* Questions you can ask — only renders when there's something
+              real to show (matches generate_summary.py's own rule: it
+              leaves this list empty rather than inventing generic
+              questions when there's nothing specific to ask). Capped to 2
+              here as a defensive backstop — generate_summary.py already
+              caps to 2, but a journey saved before that cap was tightened
+              (e.g. reviewed from history) may still have 3 stored. */}
           {summary?.discussion_points && summary.discussion_points.length > 0 && (
             <div className="screen5-discussion-points screen5-info-card">
               <p className="screen5-info-card-label">{getExplanationLabel("questionsToAsk", language)}</p>
               <ul className="screen5-discussion-list">
-                {summary.discussion_points.map((point, index) => (
+                {summary.discussion_points.slice(0, 2).map((point, index) => (
                   <li key={index}>{point}</li>
                 ))}
               </ul>
             </div>
           )}
 
-          {/* Actions: same shared card styling as the other info cards.
-              Laid out 2-by-2 rather than stacked, so this card's height
-              stays in line with the others instead of running long. */}
-          <div className="screen5-actions-card screen5-info-card">
-            <p className="screen5-info-card-label">
-              {isReviewMode ? "What would you like to do?" : "Continue with your summary"}
-            </p>
-
+          {/* Trusted Sources — groups Explore Trusted Sources, Discuss with
+              an Agrovet, and Discuss with an Extension Officer under one
+              card, per the new Screen 5 structure. This grouping is
+              intentional: all three are ways of reaching further,
+              human-verified guidance. */}
+          <div className="screen5-trusted-sources-card screen5-info-card">
+            <p className="screen5-info-card-label">Trusted Sources</p>
             <div className="screen5-action-grid">
-              {ACTION_ROWS.map((row) => (
+              {TRUSTED_SOURCE_ROWS.map((row) => (
                 <button
                   key={row.id}
                   className="screen5-action-tile"
@@ -242,6 +340,15 @@ If you are unsure about the next step, the summary also highlights what still re
               ))}
             </div>
           </div>
+
+          {/* Share Summary — standalone, outside the Trusted Sources
+              group, matching the new target structure. */}
+          <button
+            className="screen5-action-tile screen5-share-standalone"
+            onClick={() => setShowShareModal(true)}
+          >
+            Share Summary
+          </button>
         </div>
 
       </div>
@@ -269,7 +376,7 @@ If you are unsure about the next step, the summary also highlights what still re
           >
             <div className="screen5-share-modal-header">
               <h3 className="screen5-share-modal-title">
-                {ACTION_ROWS.find((row) => row.id === openFindNearbyId)?.label}
+                {TRUSTED_SOURCE_ROWS.find((row) => row.id === openFindNearbyId)?.label}
               </h3>
               <button
                 className="screen5-modal-close"

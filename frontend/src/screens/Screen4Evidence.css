@@ -44,9 +44,9 @@ body,
   margin: 0;
 }
 
-/* Subtitle and Listen button sit inline as one line — "Here's what we
-   know so far.   Listen" — centered under the title, wrapping to two
-   lines only if the row runs out of horizontal space. */
+/* Subtitle and Listen button sit inline as one line, centered under the
+   title, wrapping to two lines only if the row runs out of horizontal
+   space. */
 .screen4-subtitle-row {
   display: flex;
   align-items: center;
@@ -59,14 +59,13 @@ body,
   .screen4-title { font-size: 2.1rem; }
 }
 
-/* ── Two independent columns, side by side on desktop ──
-   Replaces the old paired-row layout (.screen4-row). Still a 2-column
-   layout side by side on desktop — same visual arrangement as before.
-   The difference: each column now stacks and sizes to its OWN content,
-   instead of two rows each forcing left/right to match height. That
-   shared-row height was what created the dead space; a taller-card
-   fix alone couldn't remove it because the grid row track height was
-   never about the card's own height. */
+/* NOTE: the old .screen4-columns / .screen4-column two-column grid rules
+   that used to live here have been intentionally left in place below,
+   even though the new Screen 4 (badges + question, single column) no
+   longer uses them — they're unused now but harmless, kept rather than
+   deleted since removing CSS wasn't part of this request. Safe to prune
+   later if you want a cleanup pass. */
+
 .screen4-columns {
   display: flex;
   flex-direction: column;
@@ -95,28 +94,21 @@ body,
     gap: 28px;
   }
 
-  /* No advice and no trusted sources — right column isn't rendered at
-     all (see JSX), so the left column runs full width instead of
-     sitting in a half-width track with an empty gutter beside it. */
   .screen4-columns--single {
     grid-template-columns: 1fr;
   }
 }
 
-/* Mobile: dissolve the column wrapper so the panels become direct flex
-   children of .screen4-columns, then use `order` to restore the
-   observed → advice → unclear → reflection reading sequence (Reflection
-   now lives in the left column's DOM position, ahead of Advice, which
-   would otherwise read out of order on mobile). */
 @media (max-width: 1023px) {
   .screen4-column {
     display: contents;
   }
 
-  .screen4-panel-observed { order: 1; }
-  .screen4-panel-advice { order: 2; }
-  .screen4-panel-unclear { order: 3; }
-  .screen4-panel-reflection { order: 4; }
+  .screen4-panel-reported { order: 1; }
+  .screen4-panel-observed { order: 2; }
+  .screen4-panel-advice { order: 3; }
+  .screen4-panel-unclear { order: 4; }
+  .screen4-panel-reflection { order: 5; }
 }
 
 /* ── Panel ── */
@@ -141,7 +133,16 @@ body,
   border-bottom: 1px solid var(--border-color);
 }
 
-/* ── Observed pills ── */
+/* ── Reported problem (unused by the current Screen 4, kept for the same
+   reason as the columns rules above) ── */
+.screen4-reported-text {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Observed pills (unused by the current Screen 4) ── */
 .screen4-observed-pills {
   list-style: none;
   margin: 0;
@@ -161,7 +162,15 @@ body,
   line-height: 1.4;
 }
 
-/* ── Advice stack ── */
+/* ── Advice stack (unused by the current Screen 4) ── */
+.screen4-advice-differs-caption {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: -8px 0 4px;
+  font-style: italic;
+}
+
 .screen4-advice-stack {
   display: flex;
   flex-direction: column;
@@ -198,12 +207,7 @@ body,
   flex-grow: 1;
 }
 
-/* ── Trusted sources — compact list, not full-paragraph cards ──
-   Previously each source rendered as a bordered block with a full
-   snippet paragraph (up to 3 of them). That's now deliberately
-   removed — full reading detail lives in the "Explore Trusted
-   Sources" modal on Screen 5 instead; Screen 4 only needs to signal
-   that relevant sources exist and roughly what each covers. */
+/* ── Trusted sources compact list (unused by the current Screen 4) ── */
 .screen4-sources-note {
   font-size: 0.85rem;
   color: var(--text-secondary);
@@ -214,8 +218,7 @@ body,
 .screen4-sources-compact-list {
   list-style: none;
   margin: 0;
-  padding: 4px 0 4px 14px;
-  border-left: 2px solid var(--secondary);
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -226,6 +229,10 @@ body,
   flex-wrap: wrap;
   align-items: baseline;
   gap: 2px;
+  padding: 10px 14px;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm, 10px);
 }
 
 .screen4-source-compact-name {
@@ -239,11 +246,7 @@ body,
   color: var(--text-secondary);
 }
 
-/* ── What remains unclear ──
-   Previously wrapped in its own bordered/rounded box nested inside the
-   panel — two cards stacked inside each other. That box is removed;
-   the amber accent color on the bullets is kept so this content still
-   reads as distinct, without being boxed. */
+/* ── What remains unclear (unused by the current Screen 4) ── */
 .screen4-unclear-list {
   list-style: none;
   margin: 0;
@@ -269,15 +272,257 @@ body,
   margin-top: 2px;
 }
 
-/* ── What this means right now ──
-   Was also wrapped in its own bordered/rounded box nested inside the
-   panel — removed for the same reason as Unclear above; the text now
-   sits directly in the outer panel. */
+/* ── What this means right now (unused by the current Screen 4) ── */
 .screen4-reflection-text {
   font-size: 0.95rem;
   color: var(--text-primary);
   line-height: 1.7;
   margin: 0;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   NEW — Screen 4 rebuild: source badges, question, WhatsApp send,
+   reply capture. Everything below this line is new for this pass.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── Where this came from: per-source blocks ── */
+.screen4-source-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.screen4-source-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.screen4-source-block:not(:last-child) {
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.screen4-source-name {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  margin: 0;
+}
+
+/* Clickable source-card header, used only when there are 2+ sources (see
+   hasMultiple in Screen4Evidence.jsx). The whole row is the tap target —
+   badges below it remain plain, non-interactive spans, since they're
+   facts about the source, not actions. Reset to look like a plain row,
+   not a default <button>. */
+.screen4-source-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.screen4-source-toggle:hover .screen4-source-name {
+  color: var(--primary);
+}
+
+.screen4-source-chevron {
+  color: var(--text-secondary);
+  transform: rotate(0deg);
+  transition: transform 0.15s ease;
+  flex-shrink: 0;
+  margin-left: 10px;
+}
+
+/* Chevron points right by default (collapsed); rotated 90° to point down
+   once the card is expanded — standard disclosure-chevron convention. */
+.screen4-source-chevron--open {
+  transform: rotate(90deg);
+}
+
+/* Badges: flat and bordered, matching the existing
+   .screen4-source-compact-item convention elsewhere in this file —
+   deliberately NOT a filled pastel pill, to stay consistent with the
+   flat/bordered card style used throughout the rest of the app. */
+.screen4-badges-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.screen4-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm, 10px);
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+/* lucide-react icons inherit color via currentColor, so this just needs
+   to align them nicely with the badge text — sizing itself is set via
+   the `size` prop passed to each icon component in the JSX. */
+.screen4-badge-icon {
+  color: var(--secondary);
+  flex-shrink: 0;
+}
+
+/* ── Prebunking box — only rendered when at least one source sells a
+   product, so it always reads as tied to a specific badge above it, not
+   a standalone warning. */
+.screen4-prebunk-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-left: 3px solid var(--secondary);
+  border-radius: var(--radius-sm, 10px);
+}
+
+.screen4-prebunk-icon {
+  color: var(--secondary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.screen4-prebunk-text {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ── One thing worth asking ── */
+.screen4-question-text {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin: 0;
+  font-style: italic;
+}
+
+/* "Ready to send to [Source]:" label — sits between the question and the
+   WhatsApp button so the two read as one action: "here's who + what,
+   now send it." Deliberately quieter (smaller, secondary color) than
+   the question itself, since it's framing text, not the message content. */
+.screen4-ready-to-send-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-secondary);
+  margin: -6px 0 0;
+}
+
+.screen4-send-whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.screen4-send-whatsapp-btn:hover {
+  opacity: 0.9;
+}
+
+/* ── Reply capture (Idea 12) ── */
+.screen4-reply-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 6px;
+  border-top: 1px solid var(--border-color);
+}
+
+.screen4-reply-prompt {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.screen4-reply-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.screen4-reply-source-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  margin: 0;
+}
+
+.screen4-reply-input-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.screen4-reply-textarea {
+  width: 100%;
+  min-height: 64px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm, 10px);
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--text-primary);
+  background: var(--card-bg);
+  resize: vertical;
+}
+
+.screen4-reply-save-btn {
+  align-self: flex-start;
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.screen4-reply-save-btn:hover {
+  background: var(--bg-color);
+}
+
+.screen4-reply-saved-text {
+  font-size: 0.92rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin: 0;
+  padding: 10px 12px;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm, 10px);
 }
 
 /* ── CTA ── */

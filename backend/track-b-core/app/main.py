@@ -75,6 +75,15 @@ class SourceDetailsRequest(BaseModel):
     sources_used: list
 
 
+# Define request model for the Screen 4 reply-capture endpoint (Idea 12).
+# Keyed by advice_received index (as a string, since JSON object keys are
+# always strings) -> the verbatim reply text the farmer logged. Stored
+# as-is, no evaluation or reshaping — matches the "closes the loop"
+# behavior described in the Screen 4/5 design doc.
+class RepliesRequest(BaseModel):
+    replies: Dict[str, str]
+
+
 @app.get("/")
 async def root():
     return {"message": "Kagua Track B is running!", "status": "healthy"}
@@ -138,10 +147,16 @@ async def compare(request: CompareRequest, db: Session = Depends(get_db)):
     # farmer has now reached Screen 4, this is what lets "Continue" resume
     # at the correct screen instead of always restarting at Screen 1.
     if journey_id:
+        # Also update extracted_context.observations to include field observations
+        # so they're available when displaying the summary in Screen 5
+        updated_context = dict(request.context)
+        updated_context["observations"] = combined_observations
+        
         updates = {
             "current_screen": 4,
             "field_observation": request.field_observation,
             "comparison": result,
+            "extracted_context": updated_context,
             "timestamp": str(datetime.utcnow()),
         }
         update_journey_step(db, journey_id, updates)
@@ -181,6 +196,25 @@ async def source_details(request: SourceDetailsRequest):
     """Forward source details retrieval to Track A"""
     result = get_source_details(request.sources_used)
     return result
+
+
+# Screen 4 reply-capture endpoint (Idea 12): persists what the farmer
+# logged after sending the shaped question to a source. Stored inside
+# `steps.screen4_replies` via the same merge-not-overwrite helper used by
+# /compare and /summary, so it survives a resumed journey fetched fresh
+# from GET /journey/{id} on a different device/session — closing the gap
+# that used to leave this client-state-only.
+@app.put("/journey/{journey_id}/replies")
+async def update_replies(journey_id: int, request: RepliesRequest, db: Session = Depends(get_db)):
+    """Save the farmer's Screen 4 reply-capture answers, verbatim."""
+    from app.services.journey_service import update_journey_step
+
+    journey = db.query(DecisionJourney).filter(DecisionJourney.id == journey_id).first()
+    if not journey:
+        return {"error": "Journey not found", "journey_id": journey_id}
+
+    update_journey_step(db, journey_id, {"screen4_replies": request.replies})
+    return {"message": "Replies saved", "journey_id": journey_id}
 
 
 # Test endpoint to create or get a user
