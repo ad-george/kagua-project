@@ -1,4 +1,7 @@
-/* ── Container ── */
+/* ══════════════════════════════════════════════
+   SCREEN 5 — SUMMARY
+   ══════════════════════════════════════════════ */
+
 body,
 .screen5-container {
   background-color: var(--bg-color);
@@ -6,388 +9,898 @@ body,
 
 .screen5-container {
   width: 100%;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 4px var(--spacing-md) 14px;
+
+  padding: 4px var(--spacing-sm, 12px) 8px;
+
   font-family: var(--font-family);
+  box-sizing: border-box;
 }
 
-/* ── Page header — matches Screen4's header pattern: title, then a
-   subtitle line with the Listen button sitting inline next to it. ── */
+
+/* ══════════════════════════════════════════════
+   PAGE HEADER
+   ══════════════════════════════════════════════ */
+
 .screen5-page-header {
   text-align: center;
+
   display: flex;
   flex-direction: column;
+
   gap: 6px;
+
   padding: 10px 0 14px;
+
   border-bottom: 1px solid var(--border-color);
+
   margin-bottom: 16px;
 }
 
 .screen5-subtitle-row {
   display: flex;
+
   align-items: center;
   justify-content: center;
+
   flex-wrap: wrap;
+
   gap: 10px;
 }
 
-/* ── Grid ── */
-.screen5-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.screen5-left {
-  display: flex;
-  flex-direction: column;
-}
-
-.screen5-main {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-/* ── Title ── */
 .screen5-title {
   font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+
   font-weight: 700;
+
   color: var(--primary);
+
   line-height: 1.2;
+
   margin: 0;
+
   letter-spacing: -0.03em;
 }
 
 .screen5-transition-note {
   font-size: 0.9rem;
+
   color: var(--text-secondary);
+
   line-height: 1.5;
+
   margin: 0;
+
   font-weight: 400;
 }
 
-/* ── Shared card styling — matches Screen4's .screen4-panel: real white
-   surface + shadow, not the same flat tone as the page background, so
-   each card actually reads as a distinct block. ── */
+
+/* ══════════════════════════════════════════════
+   MAIN GRID
+   ══════════════════════════════════════════════ */
+
+.screen5-grid {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.screen5-left {
+  display: flex;
+
+  flex-direction: column;
+}
+
+.screen5-main {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+
+/* ══════════════════════════════════════════════
+   HERO CARD
+   ══════════════════════════════════════════════ */
+
+.screen5-hero-card {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 14px;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 18px 20px;
+
+  background: #ffffff;
+
+  border: 1px solid var(--border-color);
+
+  border-left: 4px solid var(--secondary);
+
+  border-radius: var(--radius-md);
+
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+}
+
+.screen5-hero-icon-badge {
+  flex-shrink: 0;
+
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: rgba(46, 134, 193, 0.1);
+
+  color: var(--secondary);
+}
+
+.screen5-hero-body {
+  min-width: 0;
+}
+
+.screen5-hero-eyebrow {
+  margin: 0 0 5px;
+
+  font-size: 0.68rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.1em;
+
+  text-transform: uppercase;
+
+  color: var(--text-muted);
+}
+
+.screen5-hero-text {
+  margin: 0;
+
+  font-size: 1.05rem;
+
+  font-weight: 600;
+
+  line-height: 1.5;
+
+  color: var(--primary);
+}
+
+
+/* ══════════════════════════════════════════════
+   INFORMATION CARDS
+   ══════════════════════════════════════════════ */
+
 .screen5-info-card {
   background: #ffffff;
+
+  border: 1px solid var(--border-color);
+
   box-shadow: 0 1px 4px rgba(15, 23, 42, 0.05);
+
   border-radius: var(--radius-sm);
+
   padding: 14px 16px;
+
   box-sizing: border-box;
 }
 
-.screen5-info-card-label {
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin: 0 0 10px;
+
+/* ══════════════════════════════════════════════
+   CARD HEADERS
+   ══════════════════════════════════════════════ */
+
+.screen5-card-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  margin-bottom: 11px;
+
   padding-bottom: 10px;
+
   border-bottom: 1px solid var(--border-color);
 }
 
-/* ── "Your Kagua Summary" short-summary card — the single most important
-   thing on this screen, so it gets a bit more visual weight: an accent
-   rule instead of the plain label bar the other cards use. ── */
-.screen5-short-summary {
-  border-left: 3px solid var(--secondary);
+.screen5-card-icon-badge {
+  width: 30px;
+  height: 30px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
 }
 
-.screen5-short-summary-text {
-  font-size: 1.02rem;
-  font-weight: 600;
-  color: var(--primary);
-  line-height: 1.5;
+.screen5-card-header-label {
   margin: 0;
-  letter-spacing: -0.01em;
+
+  font-size: 0.68rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.1em;
+
+  text-transform: uppercase;
 }
 
-/* ── Caution card — always present, safety-relevant, so it gets a quiet
-   warm tint (same spirit as Screen4's prebunk note) rather than blending
-   into the neutral white of the other cards. ── */
+
+/* Card tones */
+
+.screen5-tone-primary {
+  color: var(--primary);
+}
+
+.screen5-tone-primary
+  .screen5-card-icon-badge {
+  background: rgba(30, 58, 95, 0.08);
+
+  color: var(--primary);
+}
+
+.screen5-tone-secondary {
+  color: var(--secondary);
+}
+
+.screen5-tone-secondary
+  .screen5-card-icon-badge {
+  background: rgba(46, 134, 193, 0.1);
+
+  color: var(--secondary);
+}
+
+.screen5-tone-caution {
+  color: #9a6700;
+}
+
+.screen5-tone-caution
+  .screen5-card-icon-badge {
+  background: rgba(245, 158, 11, 0.12);
+
+  color: #9a6700;
+}
+
+
+/* ══════════════════════════════════════════════
+   CAUTION
+   ══════════════════════════════════════════════ */
+
 .screen5-caution-card {
-  background: #FFFBEB;
-  border: 1px solid #FDE9B8;
+  background: #fffbeb;
+
+  border: 1px solid #fde9b8;
+
   box-shadow: none;
 }
 
 .screen5-caution-text {
   font-size: 0.92rem;
+
   color: var(--text-primary);
+
   line-height: 1.55;
+
   margin: 0;
 }
 
 .screen5-price-text {
   font-size: 0.88rem;
+
   color: var(--text-secondary);
+
   line-height: 1.5;
+
   margin: 8px 0 0;
+
   padding-top: 8px;
-  border-top: 1px solid #FDE9B8;
+
+  border-top: 1px solid #fde9b8;
 }
 
-/* ── "What you asked" card ── */
+
+/* ══════════════════════════════════════════════
+   UNCERTAINTY
+   ══════════════════════════════════════════════ */
+
+.screen5-uncertainty-list {
+  margin: 0;
+
+  padding: 0;
+
+  list-style: none;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.screen5-uncertainty-list li {
+  position: relative;
+
+  padding-left: 15px;
+
+  font-size: 0.92rem;
+
+  color: var(--text-primary);
+
+  line-height: 1.5;
+}
+
+.screen5-uncertainty-list li::before {
+  content: "•";
+
+  position: absolute;
+
+  left: 0;
+
+  color: var(--secondary);
+
+  font-weight: 700;
+}
+
+
+/* ══════════════════════════════════════════════
+   UNCERTAINTY + ACTIONS GROUP
+   Keeps the Share / Explore buttons directly
+   below the uncertainty card, in whichever
+   grid column that card lands on.
+   ══════════════════════════════════════════════ */
+
+.screen5-uncertainty-group {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 14px;
+
+  min-width: 0;
+}
+
+
+/* ══════════════════════════════════════════════
+   WHAT YOU ASKED
+   ══════════════════════════════════════════════ */
+
 .screen5-asked-question {
   font-size: 1.02rem;
+
   font-weight: 600;
+
   color: var(--primary);
+
   line-height: 1.5;
+
   margin: 0;
+
   letter-spacing: -0.01em;
+}
+
+.screen5-asked-action-line {
+  font-size: 0.88rem;
+
+  color: var(--text-secondary);
+
+  line-height: 1.5;
+
+  margin: 10px 0 0;
 }
 
 .screen5-asked-replies {
   display: flex;
+
   flex-direction: column;
+
   gap: 10px;
+
   margin-top: 12px;
+
   padding-top: 12px;
+
   border-top: 1px solid var(--border-color);
 }
 
 .screen5-asked-reply-row {
   display: flex;
+
   flex-direction: column;
+
   gap: 2px;
 }
 
 .screen5-asked-reply-source {
   font-size: 0.68rem;
+
   font-weight: 700;
+
   letter-spacing: 0.08em;
+
   text-transform: uppercase;
+
   color: var(--text-muted);
+
   margin: 0;
 }
 
 .screen5-asked-reply-text {
   font-size: 0.92rem;
+
   color: var(--text-primary);
+
   line-height: 1.5;
+
   margin: 0;
 }
 
-/* ── "Questions you may want to ask" card ── */
+
+/* ══════════════════════════════════════════════
+   QUESTIONS TO ASK
+   ══════════════════════════════════════════════ */
+
 .screen5-discussion-list {
   list-style: none;
+
   margin: 0;
+
   padding: 0;
+
   display: flex;
+
   flex-direction: column;
+
   gap: 8px;
 }
 
 .screen5-discussion-list li {
   font-size: 0.92rem;
+
   color: var(--text-primary);
+
   line-height: 1.5;
+
   padding-left: 14px;
+
   position: relative;
 }
 
 .screen5-discussion-list li::before {
   content: "•";
+
   position: absolute;
+
   left: 0;
+
   color: var(--secondary);
+
   font-weight: 700;
 }
 
-/* ── Actions row — two equal-weight buttons, styled to match the flat
-   bordered-button family used for Save/Cancel on Screen4. ── */
+
+/* ══════════════════════════════════════════════
+   ACTION BUTTONS
+   ══════════════════════════════════════════════ */
+
 .screen5-actions-row {
   display: flex;
-  gap: 10px;
+
+  flex-direction: column;
+
+  gap: 8px;
 }
 
 .screen5-action-tile {
-  flex: 1;
+  min-height: 40px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
   background: #ffffff;
+
   border: 1.5px solid var(--border-color);
+
   border-radius: var(--radius-md);
-  padding: 12px 14px;
+
+  padding: 8px 14px;
+
   font-family: var(--font-family);
-  font-size: 0.88rem;
+
+  font-size: 0.85rem;
+
   font-weight: 600;
+
   color: var(--primary);
+
   line-height: 1.35;
+
   text-align: center;
+
   cursor: pointer;
+
   outline: none;
+
   -webkit-tap-highlight-color: transparent;
-  transition: background 0.15s ease, border-color 0.15s ease;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
 }
 
-.screen5-action-tile:hover,
-.screen5-action-tile:active {
+.screen5-action-tile:hover {
   background: var(--bg-color);
-  border-color: #CBD5E1;
-  outline: none;
+
+  border-color: var(--secondary);
 }
 
-.screen5-action-tile:focus:not(:focus-visible) {
-  outline: none;
+.screen5-action-tile:active {
+  transform: translateY(1px);
 }
 
 .screen5-action-tile:focus-visible {
   outline: 2px solid var(--secondary);
+
   outline-offset: 2px;
 }
 
-/* ── Find nearby modal body text ── */
-.screen5-findnearby-modal-text {
-  font-size: 0.92rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
-  margin: 0;
-}
 
-.screen5-findnearby-placeholder p {
-  font-size: 0.88rem;
-  color: var(--text-secondary);
-  margin: 0;
-  line-height: 1.5;
-}
+/* ══════════════════════════════════════════════
+   FINISH
+   ══════════════════════════════════════════════ */
 
-/* ── Save & Return — centered below both columns, matches Screen4's
-   continue-button treatment (bordered top divider, generous tap size). ── */
 .screen5-finish-row {
   display: flex;
+
   justify-content: center;
+
   padding: 16px 0 4px;
+
   border-top: 1px solid var(--border-color);
+
   margin-top: 18px;
 }
 
 .screen5-finish-btn {
   width: auto !important;
+
   min-width: 200px;
+
   height: 48px;
+
   padding: 0 40px;
+
   border-radius: var(--radius-md);
+
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
+
   font-weight: 600;
+
   font-size: 0.93rem;
+
   letter-spacing: 0.01em;
 }
 
-/* ── Share popup ── */
-@keyframes screen5-modal-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
 
-@keyframes screen5-modal-pop-in {
-  from {
-    opacity: 0;
-    transform: scale(0.96) translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
+/* ══════════════════════════════════════════════
+   MODAL OVERLAY
+   ══════════════════════════════════════════════ */
 
 .screen5-modal-overlay {
   position: fixed;
+
   inset: 0;
-  background: rgba(15, 23, 42, 0.45);
+
+  background: rgba(15, 23, 42, 0.48);
+
   display: flex;
+
   align-items: center;
   justify-content: center;
+
   padding: var(--spacing-md);
-  z-index: 100;
+
+  z-index: 1000;
+
   animation: screen5-modal-fade-in 0.15s ease;
 }
 
+
+/* ══════════════════════════════════════════════
+   SHARE MODAL
+   ══════════════════════════════════════════════ */
+
 .screen5-share-modal {
   width: 100%;
-  max-width: 300px;
-  background: var(--card-bg);
+
+  max-width: 420px;
+
+  max-height: 90vh;
+
+  overflow-y: auto;
+
+  background: var(--card-bg, #ffffff);
+
   border-radius: var(--radius-md, 14px);
-  padding: 16px 18px;
-  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.22);
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 20px 50px rgba(15, 23, 42, 0.22);
+
   animation: screen5-modal-pop-in 0.18s ease;
 }
 
 .screen5-share-modal-header {
   display: flex;
-  align-items: center;
+
+  align-items: flex-start;
+
   justify-content: space-between;
-  margin-bottom: 14px;
+
+  gap: 16px;
+
+  margin-bottom: 18px;
 }
 
 .screen5-share-modal-title {
-  font-size: 1.05rem;
+  font-size: 1.15rem;
+
   font-weight: 700;
+
   color: var(--primary);
+
   margin: 0;
+
+  line-height: 1.3;
+}
+
+.screen5-share-modal-subtitle {
+  margin: 5px 0 0;
+
+  color: var(--text-secondary);
+
+  font-size: 0.86rem;
+
+  line-height: 1.4;
 }
 
 .screen5-modal-close {
-  background: none;
+  flex-shrink: 0;
+
+  width: 34px;
+
+  height: 34px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  background: transparent;
+
   border: none;
-  font-size: 1.4rem;
-  line-height: 1;
+
+  border-radius: 50%;
+
   color: var(--text-secondary);
+
+  font-size: 1.5rem;
+
+  line-height: 1;
+
   cursor: pointer;
-  padding: 2px 6px;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
 }
 
 .screen5-modal-close:hover {
+  background: var(--bg-color);
+
   color: var(--primary);
 }
 
+.screen5-modal-close:focus-visible {
+  outline: 2px solid var(--secondary);
 
-/* ══════════════════════════════════════════
+  outline-offset: 2px;
+}
+
+
+/* ══════════════════════════════════════════════
+   MODAL ANIMATIONS
+   ══════════════════════════════════════════════ */
+
+@keyframes screen5-modal-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes screen5-modal-pop-in {
+  from {
+    opacity: 0;
+
+    transform:
+      scale(0.96)
+      translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      scale(1)
+      translateY(0);
+  }
+}
+
+
+/* ══════════════════════════════════════════════
    RESPONSIVE
-   ══════════════════════════════════════════ */
+   ══════════════════════════════════════════════ */
 
 @media (min-width: 480px) {
   .screen5-container {
-    padding: 8px var(--spacing-lg, 24px) 16px;
+    padding:
+      6px
+      var(--spacing-md, 16px)
+      10px;
   }
 }
+
 
 @media (min-width: 640px) {
   .screen5-container {
-    padding: 10px var(--spacing-xl) 18px;
+    padding:
+      8px
+      var(--spacing-lg, 24px)
+      12px;
   }
 }
 
+
+/* ══════════════════════════════════════════════
+   DESKTOP
+   ══════════════════════════════════════════════ */
+
 @media (min-width: 860px) {
+
   .screen5-container {
     max-width: 1100px;
-    padding: 4px clamp(20px, 4vw, 48px) 24px;
+
+    padding:
+      4px
+      clamp(16px, 3vw, 36px)
+      16px;
   }
 
   .screen5-grid {
     display: grid;
-    grid-template-columns: minmax(320px, 1fr) 1.4fr;
-    grid-template-rows: min-content;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(0, 1fr);
+
     align-items: start;
-    align-content: start;
-    column-gap: 40px;
+
+    column-gap: 24px;
+
     row-gap: 14px;
   }
 
-  .screen5-left {
-    padding-top: 0;
+  /*
+    The hero spans the entire page.
+    This removes the large empty space
+    caused by treating the hero as its
+    own left column.
+  */
+
+  .screen5-hero-card {
+    grid-column: 1 / -1;
   }
+
+  /*
+    Main content also spans the page.
+    Cards are arranged naturally instead
+    of leaving a large empty left column.
+  */
 
   .screen5-main {
-    padding-top: 0;
+    grid-column: 1 / -1;
+
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(0, 1fr);
+
+    gap: 14px 24px;
   }
+
+  /*
+    Only the fallback actions row (used when
+    there's no uncertainty card to sit under)
+    spans the full width. When grouped with the
+    uncertainty card, it stays in that card's
+    column instead.
+  */
+
+  .screen5-actions-standalone {
+    grid-column: 1 / -1;
+  }
+
 }
 
+
+/* ══════════════════════════════════════════════
+   LARGE DESKTOP
+   ══════════════════════════════════════════════ */
+
 @media (min-width: 1200px) {
+
   .screen5-container {
     max-width: 1240px;
   }
+
+}
+
+
+/* ══════════════════════════════════════════════
+   MOBILE
+   ══════════════════════════════════════════════ */
+
+@media (max-width: 639px) {
+
+  .screen5-share-modal {
+    max-width: 100%;
+
+    padding: 18px;
+
+    border-radius: 16px;
+  }
+
+  .screen5-hero-card {
+    padding: 16px;
+  }
+
+  .screen5-hero-text {
+    font-size: 0.98rem;
+  }
+
 }
