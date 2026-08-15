@@ -11,6 +11,7 @@ class User(Base):
     name = Column(String, nullable=True)
     county = Column(String)
     preferred_language = Column(String, default="en")
+    pin_hash = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
     journeys = relationship("DecisionJourney", back_populates="user")

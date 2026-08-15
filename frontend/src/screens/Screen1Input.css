@@ -1,204 +1,558 @@
-/* ── Page background ── */
+/* ═══════════════════════════════════════════════
+   KAGUA - SCREEN 1 INPUT
+   ═══════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════
+   PAGE
+   ═══════════════════════════════════════════════ */
+
 body,
 .screen1-container {
   background-color: var(--bg-color);
 }
 
-/* ── Container ── */
 .screen1-container {
   width: 100%;
+  max-width: 1120px;
+  min-height: calc(100vh - 80px);
+
   margin: 0 auto;
-  padding: 8px var(--spacing-md) 20px;
-  min-height: auto;
+  padding: 18px 32px 50px;
+
+  box-sizing: border-box;
+
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-lg, 24px);
+  align-items: stretch;
 }
+
+/* ═══════════════════════════════════════════════
+   GO BACK
+   ═══════════════════════════════════════════════ */
+
+.screen1-back-button {
+  align-self: flex-start;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 6px 0;
+
+  color: #65736d;
+  background: transparent;
+
+  border: none;
+
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.screen1-back-button:hover {
+  color: #1f713b;
+  transform: translateX(-2px);
+}
+
+.screen1-back-button:focus-visible {
+  outline: 2px solid #248346;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ═══════════════════════════════════════════════
+   PAGE HEADER
+   ═══════════════════════════════════════════════ */
 
 .screen1-page-header {
-  margin-bottom: 12px;
+  width: 100%;
+  max-width: 720px;
+
+  margin: 10px auto 0;
+
+  text-align: center;
 }
 
-.screen1-content {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-/* ── Left column: header/explanation/guidance ── */
-.screen1-header {
-  display: flex;
-  flex-direction: column;
-}
-
-/* ── Right column: the actual interaction (recorder / text input) ── */
-.screen1-main {
-  display: flex;
-  flex-direction: column;
-}
-
-/* ── Brand ── */
-.screen1-brand {
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--secondary);
-  margin: 0 0 var(--spacing-sm);
-}
-
-/* ── Title ── */
 .screen1-title {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: var(--primary);
-  line-height: 1.25;
   margin: 0 0 10px;
+
+  color: #183c68;
+
+  font-size: clamp(1.8rem, 3vw, 2.45rem);
+  font-weight: 700;
+
+  line-height: 1.15;
+  letter-spacing: -0.035em;
 }
 
-/* ── Subtitle ── */
 .screen1-subtitle {
-  font-size: 1rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  margin: 0 0 12px;
+  max-width: 660px;
+
+  margin: 0 auto;
+
+  color: #687681;
+
+  font-size: 0.96rem;
+  font-weight: 400;
+
+  line-height: 1.55;
 }
 
-/* ── Voice mode ── */
-.screen1-voice-mode {
+/* ═══════════════════════════════════════════════
+   THREE INPUT OPTIONS
+   ═══════════════════════════════════════════════ */
+
+.screen1-options {
+  width: 100%;
+  max-width: 760px;
+
+  margin: 42px auto 0;
+
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  column-gap: 22px;
+  row-gap: 20px;
+
+  align-items: stretch;
+}
+
+/* ═══════════════════════════════════════════════
+   SPEAK + TYPE CARDS
+   ═══════════════════════════════════════════════ */
+
+.screen1-option-card {
+  position: relative;
+
+  width: 100%;
+  min-height: 275px;
+
+  box-sizing: border-box;
+
+  padding: 26px 24px;
+
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  gap: 24px;
+
+  text-align: center;
+
+  background: #ffffff;
+
+  border: 1px solid #dbe3e8;
+  border-radius: 12px;
+
+  box-shadow: 0 2px 8px rgba(30, 50, 70, 0.035);
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
 }
 
-/* Hide VoiceRecorder's own label — not needed in row layout */
-.screen1-voice-mode .voice-recorder-btn-label {
+.screen1-option-card:hover {
+  border-color: #bfd4c4;
+
+  box-shadow: 0 6px 18px rgba(30, 70, 45, 0.07);
+
+  transform: translateY(-2px);
+}
+
+/* Type card is a button, so reset button defaults */
+
+button.screen1-option-card {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+button.screen1-option-card:focus-visible {
+  outline: 2px solid #248346;
+  outline-offset: 3px;
+}
+
+/* ═══════════════════════════════════════════════
+   OPTION ICON
+   ═══════════════════════════════════════════════ */
+
+.screen1-option-icon {
+  width: 48px;
+  height: 48px;
+
+  margin-bottom: 13px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #2385bd;
+
+  background: #eaf5ed;
+
+  border-radius: 11px;
+}
+
+/* ═══════════════════════════════════════════════
+   OPTION TEXT
+   ═══════════════════════════════════════════════ */
+
+.screen1-option-card h2 {
+  margin: 0 0 8px;
+
+  color: #183c68;
+
+  font-size: 1.08rem;
+  font-weight: 700;
+
+  line-height: 1.3;
+}
+
+.screen1-option-card > p {
+  max-width: 280px;
+
+  margin: 0 0 20px;
+
+  color: #71808a;
+
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════
+   OPTION BUTTON
+   ═══════════════════════════════════════════════ */
+
+.screen1-option-button {
+  min-height: 42px;
+
+  margin-top: auto;
+
+  padding: 9px 19px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  color: #ffffff;
+  background: #1f426d;
+
+  border: none;
+  border-radius: 22px;
+
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+
+  text-decoration: none;
+
+  box-sizing: border-box;
+
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.screen1-option-button:hover {
+  background: #163555;
+  transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════════
+   VOICE RECORDER
+   ═══════════════════════════════════════════════ */
+
+.screen1-recorder-wrapper {
+  margin-top: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*
+   VoiceRecorder has its own internal label.
+   The card already tells the user "Speak", so
+   we hide the duplicate internal label.
+*/
+
+.screen1-recorder-wrapper .voice-recorder-btn-label {
+  display: none !important;
+}
+
+/*
+   Keep the actual microphone recorder visible.
+*/
+
+.screen1-recorder-wrapper .voice-recorder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* If VoiceRecorder uses a button directly */
+
+.screen1-recorder-wrapper button {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ═══════════════════════════════════════════════
+   PHOTO CARD
+   ═══════════════════════════════════════════════ */
+
+.screen1-photo-wrapper {
+  grid-column: 1 / -1;
+
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.screen1-photo-input {
   display: none;
 }
 
-/* ── "or type instead" side block ── */
-.screen1-voice-alt {
+.screen1-photo-card {
+  width: min(100%, 500px);
+  min-height: 88px;
+
+  padding: 17px 20px;
+
   display: flex;
   align-items: center;
-  gap: 20px;
-}
+  gap: 15px;
 
-.screen1-voice-alt-label {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--primary);
-}
-
-.screen1-voice-alt-or {
-  font-size: 1rem;
-  color: var(--text-secondary);
-  font-weight: 400;
-}
-
-/* ── "Prefer to type instead" ── */
-.screen1-type-instead-link {
-  background: none;
-  border: none;
-  color: var(--secondary);
-  font-family: inherit;
-  font-size: 1rem;
-  font-weight: 700;
-  padding: 0;
-  cursor: pointer;
   text-align: left;
-  min-height: 44px;
+
+  color: #24342c;
+  background: #ffffff;
+
+  border: 1px solid #dbe3e8;
+  border-radius: 12px;
+
+  font-family: inherit;
+
+  cursor: pointer;
+
+  box-shadow: 0 2px 8px rgba(30, 50, 70, 0.025);
+
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
 }
 
-.screen1-type-instead-link:hover {
-  color: var(--primary);
+.screen1-photo-card:hover {
+  border-color: #bfd4c4;
+  background: #fcfefc;
+
+  box-shadow: 0 5px 15px rgba(30, 70, 45, 0.06);
+
+  transform: translateY(-1px);
 }
 
-.screen1-type-instead-link:focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
-  border-radius: var(--radius-sm);
+.screen1-photo-card:focus-visible {
+  outline: 2px solid #248346;
+  outline-offset: 3px;
 }
 
-/* ── Examples card ── */
-.screen1-examples {
-  margin-top: 0;
-  padding: 16px 18px;
-  background-color: var(--bg-color);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
+/* Photo icon */
+
+.screen1-photo-icon {
+  flex: 0 0 44px;
+
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #2385bd;
+
+  background: #eaf5ed;
+
+  border-radius: 10px;
 }
 
-.screen1-examples-label {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-secondary);
-  margin: 0 0 10px;
+/* Photo text */
+
+.screen1-photo-content {
+  min-width: 0;
+  flex: 1;
 }
 
-.screen1-example-item {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
+.screen1-photo-content h2 {
+  margin: 0 0 4px;
+
+  color: #183c68;
+
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.screen1-photo-content p {
   margin: 0;
-  padding: 7px 0;
-  border-bottom: 1px solid var(--border-color);
-  opacity: 0.85;
+
+  overflow: hidden;
+
+  color: #71808a;
+
+  font-size: 0.78rem;
+  line-height: 1.4;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.screen1-example-item:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
+/* Photo arrow */
+
+.screen1-photo-arrow {
+  flex: 0 0 auto;
+
+  color: #66746e;
 }
 
-.screen1-example-item:first-child {
-  padding-top: 0;
+/* Selected photo */
+
+.screen1-photo-card--selected {
+  border-color: #8fc39c;
+  background: #f7fcf7;
 }
 
-/* ── Text mode ── */
+.screen1-photo-card--selected .screen1-photo-icon {
+  color: #238046;
+  background: #e1f3e4;
+}
+
+/* ═══════════════════════════════════════════════
+   TEXT INPUT MODE
+   ═══════════════════════════════════════════════ */
+
 .screen1-text-mode {
+  width: 100%;
+  max-width: 700px;
+
+  margin: 42px auto 0;
+
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
-  width: 100%;
-  max-width: 620px;
-  margin: 0 auto;
+  gap: 16px;
 }
 
-/* ── Unified input card ── */
+/* ═══════════════════════════════════════════════
+   INPUT CARD
+   ═══════════════════════════════════════════════ */
+
 .screen1-input-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
   overflow: hidden;
-  box-shadow: none;
+
+  background: #ffffff;
+
+  border: 1px solid #dbe3e8;
+  border-radius: 12px;
+
+  box-shadow: 0 3px 12px rgba(30, 50, 70, 0.04);
+
   transition: border-color 0.15s ease;
 }
 
 .screen1-input-card:hover {
-  border-color: #B0B8C1;
+  border-color: #b8c7ce;
 }
 
 .screen1-input-card:focus-within {
-  border-color: #9AA3AE;
+  border-color: #8fa8ba;
 }
+
+/* ═══════════════════════════════════════════════
+   INPUT HEADER
+   ═══════════════════════════════════════════════ */
+
+.screen1-input-card-header {
+  min-height: 52px;
+
+  padding: 0 17px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  border-bottom: 1px solid #edf1ed;
+}
+
+.screen1-input-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: #183c68;
+
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.screen1-switch-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 5px 0;
+
+  color: #247a43;
+  background: transparent;
+
+  border: none;
+
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.screen1-switch-option:hover {
+  color: #185d31;
+}
+
+/* ═══════════════════════════════════════════════
+   TRANSCRIPTION NOTICE
+   ═══════════════════════════════════════════════ */
 
 .screen1-transcription-notice {
   display: flex;
   align-items: flex-start;
   gap: 8px;
+
   margin: 0;
-  padding: 12px var(--spacing-md);
-  background: #ECFDF3;
-  border-bottom: 1px solid #A7F3D0;
+  padding: 11px 16px;
+
+  background: #ecfdf3;
+
+  border-bottom: 1px solid #a7f3d0;
+
   color: #166534;
-  font-size: 0.9rem;
+
+  font-size: 0.82rem;
   line-height: 1.5;
+
   opacity: 0;
+
   transform: translateY(-4px);
-  transition: opacity 220ms ease, transform 220ms ease;
+
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
 }
 
 .screen1-transcription-notice.is-visible {
@@ -213,156 +567,167 @@ body,
 .screen1-transcription-notice-icon {
   font-weight: 700;
   flex-shrink: 0;
-  margin-top: 1px;
 }
 
-/* ── "Use voice instead" strip ── */
-.screen1-voice-switch-btn {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  width: 100%;
-  background: var(--card-bg);
-  border: none;
-  border-bottom: 1px solid var(--border-color);
-  outline: none;
-  box-shadow: none;
-  color: var(--secondary);
-  font-family: inherit;
-  font-size: 0.88rem;
-  font-weight: 600;
-  padding: 12px var(--spacing-md);
-  cursor: pointer;
-  text-align: left;
-  transition: color 0.15s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.screen1-voice-switch-btn:hover {
-  color: var(--primary);
-}
-
-.screen1-voice-switch-icon {
-  font-size: 1rem;
-  line-height: 1;
-}
+/* ═══════════════════════════════════════════════
+   TEXTAREA
+   ═══════════════════════════════════════════════ */
 
 .screen1-textarea {
   width: 100%;
-  padding: 16px var(--spacing-md);
-  font-size: 1rem;
-  font-family: inherit;
+
+  min-height: 170px;
+
+  padding: 18px;
+
+  box-sizing: border-box;
+
+  resize: vertical;
+
   color: var(--text-primary);
+
   background: transparent;
+
   border: none;
   outline: none;
-  box-shadow: none;
-  resize: none;
-  min-height: 130px;
+
+  font-family: inherit;
+  font-size: 0.95rem;
+
   line-height: 1.65;
-  box-sizing: border-box;
-  display: block;
+}
+
+.screen1-textarea::placeholder {
+  color: #9ca3af;
 }
 
 .screen1-textarea:focus {
   outline: none;
-  box-shadow: none;
-  border: none;
 }
 
-.screen1-textarea::placeholder {
-  color: #9CA3AF;
-  font-size: 0.95rem;
-}
+/* ═══════════════════════════════════════════════
+   CONTINUE BUTTON
+   ═══════════════════════════════════════════════ */
 
-/* ── Submit button ── */
 .screen1-submit-btn {
-  width: auto;
-  padding: 10px 28px;
-  min-height: 44px;
-  margin-top: 4px;
   align-self: flex-start;
+
+  min-height: 44px;
+
+  padding: 10px 22px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
-/* ══════════════════════════════════════════
-   RESPONSIVE
-   ══════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════
+   CHANGE METHOD
+   ═══════════════════════════════════════════════ */
 
-@media (min-width: 480px) {
+.screen1-change-method {
+  align-self: center;
+
+  padding: 5px;
+
+  color: #68766f;
+  background: transparent;
+
+  border: none;
+
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+.screen1-change-method:hover {
+  color: #247a43;
+}
+
+/* ═══════════════════════════════════════════════
+   TABLET
+   ═══════════════════════════════════════════════ */
+
+@media (max-width: 700px) {
   .screen1-container {
-    padding: 12px var(--spacing-lg, 24px) 24px;
+    padding: 15px 20px 40px;
+  }
+
+  .screen1-options {
+    max-width: 600px;
+
+    margin-top: 32px;
+
+    grid-template-columns: 1fr;
+
+    gap: 15px;
+  }
+
+  .screen1-option-card {
+    min-height: 240px;
+  }
+
+  .screen1-photo-wrapper {
+    grid-column: auto;
+  }
+
+  .screen1-photo-card {
+    width: 100%;
   }
 }
 
-@media (min-width: 640px) {
-  .screen1-container {
-    padding: 14px var(--spacing-xl) 24px;
-  }
+/* ═══════════════════════════════════════════════
+   MOBILE
+   ═══════════════════════════════════════════════ */
 
-  .screen1-title {
-    font-size: 1.9rem;
-  }
-}
-
-/* Desktop: two-column grid, sized to content rather than viewport. */
-@media (min-width: 1024px) {
+@media (max-width: 480px) {
   .screen1-container {
-    max-width: 1180px;
-    padding: 18px clamp(24px, 4vw, 64px) 32px;
-    margin: 0 auto;
+    padding: 12px 16px 35px;
   }
 
   .screen1-page-header {
-    max-width: 980px;
-    margin: 0 auto 8px;
-    text-align: center;
-  }
-
-  /* Voice mode: examples + recorder side by side. */
-  .screen1-content {
-    display: grid;
-    grid-template-columns: 420px 520px;
-    justify-content: center;
-    gap: 40px;
-    align-items: start;
-    margin-top: -12px;
-  }
-
-  /* Force both columns to start at the exact same top line,
-     regardless of each child's own internal spacing/padding. */
-  .screen1-examples,
-  .screen1-main {
-    margin-top: 0;
-    padding-top: 0;
-  }
-
-  /* Text mode: single column — centering handled by .screen1-text-mode
-     itself via max-width + margin: 0 auto. */
-  .screen1-content--text {
-    display: block;
+    margin-top: 8px;
   }
 
   .screen1-title {
-    font-size: 2.1rem;
+    font-size: 1.7rem;
   }
 
   .screen1-subtitle {
-    font-size: 1.05rem;
-  }
-}
-
-@media (min-width: 1440px) {
-  .screen1-container {
-    max-width: 1320px;
+    font-size: 0.88rem;
   }
 
-  .screen1-content {
-    grid-template-columns: minmax(360px, 460px) 1fr;
+  .screen1-options {
+    margin-top: 26px;
   }
-}
 
-@media (max-width: 359px) {
-  .screen1-title {
-    font-size: 1.5rem;
+  .screen1-option-card {
+    min-height: 225px;
+
+    padding: 22px 18px;
+  }
+
+  .screen1-photo-card {
+    padding: 14px;
+  }
+
+  .screen1-photo-content p {
+    white-space: normal;
+  }
+
+  .screen1-input-card-header {
+    align-items: flex-start;
+    flex-direction: column;
+
+    padding: 14px 16px;
+
+    gap: 9px;
+  }
+
+  .screen1-submit-btn {
+    width: 100%;
   }
 }

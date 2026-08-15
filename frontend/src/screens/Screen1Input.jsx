@@ -1,25 +1,35 @@
-import { useEffect, useState } from "react";
-import { Mic } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import {
+  Mic,
+  Pencil,
+  Camera,
+  ArrowLeft,
+  ArrowRight,
+  Check,
+} from "lucide-react";
+
 import VoiceRecorder from "../components/VoiceRecorder";
 import "./Screen1Input.css";
 
-// Example phrasings shown under the voice recorder, to give first-time
-// users a sense of what "describing what you see" can sound like.
-const EXAMPLE_PROMPTS = [
-  "My maize leaves are turning yellow",
-  "My neighbour says wait, the agrovet says spray",
-  "My beans are wilting after heavy rain",
-];
-
-function Screen1Input({ onSubmit, startMode = "voice" }) {
-  // Text mode is only entered explicitly (via "Prefer to type instead" or
-  // being routed in with startMode="text"), or automatically once a voice
-  // transcription comes back, so the person can review/edit it as text.
+function Screen1Input({
+  onSubmit,
+  onBack,
+  onPhotoSubmit,
+  startMode = "voice",
+}) {
   const [showTextInput, setShowTextInput] = useState(startMode === "text");
+  const [showVoiceRecorder, setShowVoiceRecorder] = useState(
+    startMode === "voice",
+  );
+
   const [inputText, setInputText] = useState("");
   const [transcriptionNotice, setTranscriptionNotice] = useState("");
   const [noticeVisible, setNoticeVisible] = useState(false);
   const [hasUsedVoice, setHasUsedVoice] = useState(false);
+
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
+
+  const photoInputRef = useRef(null);
 
   useEffect(() => {
     if (!transcriptionNotice) {
@@ -28,8 +38,13 @@ function Screen1Input({ onSubmit, startMode = "voice" }) {
     }
 
     setNoticeVisible(true);
+
     const hideTimer = window.setTimeout(() => setNoticeVisible(false), 6000);
-    const clearTimer = window.setTimeout(() => setTranscriptionNotice(""), 6500);
+
+    const clearTimer = window.setTimeout(
+      () => setTranscriptionNotice(""),
+      6500,
+    );
 
     return () => {
       window.clearTimeout(hideTimer);
@@ -37,117 +52,287 @@ function Screen1Input({ onSubmit, startMode = "voice" }) {
     };
   }, [transcriptionNotice]);
 
+  /* ─────────────────────────────────────────
+     VOICE TRANSCRIPTION
+  ───────────────────────────────────────── */
+
   const handleTranscription = (transcribedText) => {
     setInputText(transcribedText);
     setShowTextInput(true);
+    setShowVoiceRecorder(false);
     setHasUsedVoice(true);
+
     setTranscriptionNotice(
-      "Your recording has been converted into text. Review and edit it before continuing."
+      "Your recording has been converted into text. Review and edit it before continuing.",
     );
   };
 
+  /* ─────────────────────────────────────────
+     TEXT SUBMIT
+  ───────────────────────────────────────── */
+
   const handleSubmit = () => {
     if (!inputText.trim()) return;
+
     onSubmit(inputText);
   };
 
-  const handleSwitchToVoice = () => {
+  /* ─────────────────────────────────────────
+     OPEN VOICE MODE
+  ───────────────────────────────────────── */
+
+  const handleChooseVoice = () => {
     setShowTextInput(false);
-    setInputText("");
+    setShowVoiceRecorder(true);
     setTranscriptionNotice("");
     setNoticeVisible(false);
-    setHasUsedVoice(false);
+  };
+
+  /* ─────────────────────────────────────────
+     OPEN TEXT MODE
+  ───────────────────────────────────────── */
+
+  const handleChooseText = () => {
+    setShowVoiceRecorder(false);
+    setShowTextInput(true);
+    setTranscriptionNotice("");
+    setNoticeVisible(false);
+  };
+
+  /* ─────────────────────────────────────────
+     PHOTO
+  ───────────────────────────────────────── */
+
+  const handlePhotoClick = () => {
+    if (photoInputRef.current) {
+      photoInputRef.current.click();
+    }
+  };
+
+  const handlePhotoChange = (event) => {
+    const file = event.target.files?.[0];
+
+    if (!file) return;
+
+    setSelectedPhoto(file);
+
+    /*
+     * If the parent already provides an onPhotoSubmit handler,
+     * send the selected image to it.
+     *
+     * This keeps the component compatible with your existing
+     * onSubmit text flow.
+     */
+    if (onPhotoSubmit) {
+      onPhotoSubmit(file);
+    }
   };
 
   return (
     <div className="screen1-container">
-      {/* ── Page header: title + explanation, always visible ── */}
+      {/* ═══════════════════════════════════════
+          GO BACK
+      ═══════════════════════════════════════ */}
+
+      <button type="button" className="screen1-back-button" onClick={onBack}>
+        <ArrowLeft size={17} strokeWidth={2} />
+        <span>Go back</span>
+      </button>
+
+      {/* ═══════════════════════════════════════
+          PAGE HEADER
+      ═══════════════════════════════════════ */}
+
       <div className="screen1-page-header">
         <h1 className="screen1-title">What are you seeing in your field?</h1>
-        {/* Third-person, descriptive copy rather than first-person "I'm here to
-            help you" — Kagua is positioned as a tool, not an assistant/chatbot. */}
+
         <p className="screen1-subtitle">
-          Kagua helps you compare advice and understand what is still uncertain.
+          Describe what you notice. Kagua helps you compare information and
+          understand what is still uncertain.
         </p>
       </div>
 
-      {/* screen1-content--text drives centering in CSS when the examples
-          box isn't rendered (text mode) — see Screen1Input.css */}
-      <div
-        className={`screen1-content ${
-          showTextInput ? "screen1-content--text" : ""
-        }`}
-      >
-        {!showTextInput && (
-          <div className="screen1-examples">
-            <p className="screen1-examples-label">Others have asked about</p>
-            {EXAMPLE_PROMPTS.map((example, index) => (
-              <p key={index} className="screen1-example-item">"{example}"</p>
-            ))}
-          </div>
-        )}
+      {/* ═══════════════════════════════════════
+          INPUT OPTIONS
+      ═══════════════════════════════════════ */}
 
-        {/* ── The actual interaction ── */}
-        <div className="screen1-main">
-          {!showTextInput ? (
-            /* ── Voice mode: recording is the primary action on this screen ── */
-            <div className="screen1-voice-mode">
-              <VoiceRecorder onTranscription={handleTranscription} />
-              <div className="screen1-voice-alt">
-                <span className="screen1-voice-alt-or">or</span>
-                <button
-                  className="screen1-type-instead-link"
-                  onClick={() => setShowTextInput(true)}
-                >
-                  type instead
-                </button>
-              </div>
+      {!showTextInput ? (
+        <div className="screen1-options">
+          {/* ─────────────────────────────
+              SPEAK CARD
+          ───────────────────────────── */}
+
+          <div
+            className={`screen1-option-card ${
+              showVoiceRecorder ? "screen1-option-card--active" : ""
+            }`}
+          >
+            <div className="screen1-option-icon">
+              <Mic size={30} strokeWidth={1.9} />
             </div>
-          ) : (
-            /* ── Text mode: same input card pattern used across the app's
-                 forms (border, focus ring), with a toggle back to voice ── */
-            <div className="screen1-text-mode">
-              <div className="screen1-input-card">
-                <button
-                  className="screen1-voice-switch-btn"
-                  onClick={handleSwitchToVoice}
-                >
-                  <Mic size={15} strokeWidth={2} />
-                  {hasUsedVoice ? "Record again" : "Use voice instead"}
-                </button>
 
-                {transcriptionNotice && (
-                  <div
-                    className={`screen1-transcription-notice ${noticeVisible ? "is-visible" : "is-hidden"}`}
-                    role="status"
-                    aria-live="polite"
-                  >
-                    <span className="screen1-transcription-notice-icon">✓</span>
-                    <span>{transcriptionNotice}</span>
-                  </div>
+            <h2>Speak</h2>
+
+            <p>Tell Kagua what you're seeing in your field.</p>
+
+            {!showVoiceRecorder ? (
+              <button
+                type="button"
+                className="screen1-option-button"
+                onClick={handleChooseVoice}
+              >
+                <Mic size={17} />
+                Speak
+              </button>
+            ) : (
+              <div className="screen1-recorder-wrapper">
+                <VoiceRecorder onTranscription={handleTranscription} />
+              </div>
+            )}
+          </div>
+
+          {/* ─────────────────────────────
+              TYPE CARD
+          ───────────────────────────── */}
+
+          <button
+            type="button"
+            className="screen1-option-card screen1-option-card--button"
+            onClick={handleChooseText}
+          >
+            <div className="screen1-option-icon">
+              <Pencil size={29} strokeWidth={1.9} />
+            </div>
+
+            <h2>Type</h2>
+
+            <p>Describe what you're seeing in your own words.</p>
+
+            <span className="screen1-option-button">
+              <Pencil size={17} />
+              Type
+            </span>
+          </button>
+
+          {/* ═════════════════════════════
+              PHOTO CARD
+          ═════════════════════════════ */}
+
+          <div className="screen1-photo-wrapper">
+            <input
+              ref={photoInputRef}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              className="screen1-photo-input"
+              onChange={handlePhotoChange}
+            />
+
+            <button
+              type="button"
+              className={`screen1-photo-card ${
+                selectedPhoto ? "screen1-photo-card--selected" : ""
+              }`}
+              onClick={handlePhotoClick}
+            >
+              <div className="screen1-photo-icon">
+                {selectedPhoto ? (
+                  <Check size={25} strokeWidth={2.3} />
+                ) : (
+                  <Camera size={27} strokeWidth={1.9} />
                 )}
+              </div>
 
-                <textarea
-                  className="screen1-textarea"
-                  value={inputText}
-                  onChange={(e) => setInputText(e.target.value)}
-                  placeholder="Describe what you're seeing. If you've received advice from neighbours, agrovets, or others, include that too."
-                  rows={5}
-                  autoFocus
-                />
+              <div className="screen1-photo-content">
+                <h2>
+                  {selectedPhoto ? "Photo added" : "Add a photo of the issue"}
+                </h2>
+
+                <p>
+                  {selectedPhoto
+                    ? selectedPhoto.name
+                    : "Take a photo or choose one from your device."}
+                </p>
+              </div>
+
+              <ArrowRight
+                className="screen1-photo-arrow"
+                size={20}
+                strokeWidth={2}
+              />
+            </button>
+          </div>
+        </div>
+      ) : (
+        /* ═══════════════════════════════════════
+           TEXT INPUT MODE
+        ═══════════════════════════════════════ */
+
+        <div className="screen1-text-mode">
+          <div className="screen1-input-card">
+            <div className="screen1-input-card-header">
+              <div className="screen1-input-card-title">
+                <Pencil size={18} />
+                <span>Describe what you're seeing</span>
               </div>
 
               <button
-                className="btn btn-primary screen1-submit-btn"
-                onClick={handleSubmit}
-                disabled={!inputText.trim()}
+                type="button"
+                className="screen1-switch-option"
+                onClick={handleChooseVoice}
               >
-                Continue
+                <Mic size={15} strokeWidth={2} />
+                Use voice instead
               </button>
             </div>
-          )}
+
+            {transcriptionNotice && (
+              <div
+                className={`screen1-transcription-notice ${
+                  noticeVisible ? "is-visible" : "is-hidden"
+                }`}
+                role="status"
+                aria-live="polite"
+              >
+                <span className="screen1-transcription-notice-icon">✓</span>
+
+                <span>{transcriptionNotice}</span>
+              </div>
+            )}
+
+            <textarea
+              className="screen1-textarea"
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              placeholder="Describe what you're seeing. If you've received advice from neighbours, agrovets, or others, include that too."
+              rows={6}
+              autoFocus
+            />
+          </div>
+
+          <button
+            className="btn btn-primary screen1-submit-btn"
+            onClick={handleSubmit}
+            disabled={!inputText.trim()}
+          >
+            Continue
+            <ArrowRight size={17} />
+          </button>
+
+          {/* Back to input choices */}
+
+          <button
+            type="button"
+            className="screen1-change-method"
+            onClick={() => {
+              setShowTextInput(false);
+              setShowVoiceRecorder(false);
+            }}
+          >
+            ← Choose another way to describe the issue
+          </button>
         </div>
-      </div>
+      )}
     </div>
   );
 }
